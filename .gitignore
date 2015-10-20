@@ -1,0 +1,18 @@
+# Tex Ignore List
+*.aux
+*.bbl
+*.blg
+thesis-blg.*
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.pyg
+*.synctex.gz
+*.toc
