@@ -1,0 +1,32 @@
+Notes
+
+- Introduction
+   - Actor Model general trends
+   - Run to completeion vs restriction on await (cooperative scheduling) and Ian's thesis - 09366627545
+   - Design pattern
+      - Efficiency
+      - Real-time features
+      - Scheduling policies
+      - Guideline
+      - Java 8
+      - Remote and distributed messaging
+      - Limitations of Java with threads and stack vs C++
+         - Do not support this
+         - but we support real-time
+         - and scheduling policy
+- Benchmarking
+- await and COG on ABS API
+- Landscape of languages and libraries
+- Apache Mesos modelling in ABS
+
+This document was typeset using LATEX, with a mixture of classicthesis1 1
+developed by André Miede and tufte-latex, 2 which is based on Edward 2
+Tue’s Beautiful Evidence  . e bibliography was processed by Biblatex.3
+
+3 Robert Slimbach’s Minion Pro acts as both the text and display type-face. Sans-serif text is typeset in Slimbach and Carol Twombly’s Myriad
+Pro; monospaced text uses Jim Lyles’s Bitstream Vera Mono (“Bera Mono”).
+Donald Knuth’s Computer Modern is used throughout, but I’m not saying
+where.
+
+http://code.google.com/p/classicthesis/ 
+https://code.google.com/p/tufte-latex/

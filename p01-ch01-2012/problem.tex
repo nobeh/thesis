@@ -1,0 +1,30 @@
+In this section we briefly sketch the main software engineering problem of deploying 
+application-level scheduling of Creol objects onto multicore.
+
+
+A simple implementation  maps each Creol object unto a single Java thread (e.g., {\jtt{java.lang.Thread}}) which
+executes messages taken from a message queue according to some
+scheduling policy.  The major drawback of this implementation strategy
+is scalability.  OS-level threads are costly resources, and a typical
+system written in object-oriented style might instantiate tens of
+thousands of objects at runtime.  Thus, any real-world program would
+quickly overwhelm current operating systems, see for example our case study in Section \ref{sec:caseStudy}.
+Another major software engineering problem of this scheme is that it requires an implementation of  asynchronous method calls 
+(e.g., polling/waiting for return values and storing/retrieving local variables).
+
+The basic mechanism of asynchronous method calls is in fact provided by the {\jtt{java.util.\-concurrent}} package by
+means of thread pools
+which leverage hardware level constructs  to allow a reduction of the overhead of the multi-threaded Java programs by using lock-free, and wait-free thread-safety mechanisms.
+This package, e.g., the implementation of {\jtt{FutureTask}}, requires another implementation strategy for a Java backend for Creol which uses
+one Java thread per Creol process and allows for a one-to-one translation of Creol classes and methods to Java classes and methods.
+However,  one of the major problems in leveraging scheduling issues is that this package does not allow high-level control of the scheduling of the threads.
+The main contribution of the paper is the introduction of a general architecture on top of the {\jtt{java.util.\-concurrent}} package
+to provide such high-level control for concurrent objects.
+
+
+
+
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "paper.tex"
+% End:

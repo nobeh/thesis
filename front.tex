@@ -1,0 +1,144 @@
+%!TEX root =  thesis.tex
+
+%% This is the standard `front matter' to be used with the illcdiss.cls
+%% Latex2e document class or the illc_diss.sty Latex2.09 style file
+%%
+%%first of all the cover.
+
+{\pagestyle{empty}
+\newcommand{\printtitle}{
+~\\[1cm]
+{\Huge\textbf Actors At Work}
+\\[0.2cm]
+} 
+
+\begin{titlingpage}
+\par\vskip 2cm
+\begin{center}
+\printtitle
+\vfill
+{\LARGE\textbf Behrooz Nobakht}                           %PERSONALIZE
+\vskip 2cm
+\end{center}
+\end{titlingpage}
+%
+% Skip a page to start on a right page again.
+% If you're printing single-sided, simply delete    %PERSONALIZE
+% the following line.
+%
+\mbox{}\newpage
+\setcounter{page}{1}
+
+%%the very first page: the `franse pagina'
+%\par\vskip 2cm
+%\begin{center}
+%\printtitle
+%\end{center}
+
+%%%the second page: the `illc pagina'
+%\clearpage
+%\par\vskip 2cm
+%\begin{center}
+%ILLC Dissertation Series DS-200X-NN                 %PERSONALIZE
+%\par\vspace {4cm}
+%\illclogo{10cm}
+%\par\vspace {4cm}
+%\noindent%
+%For further information about ILLC-publications, please contact\\[2ex]
+%Institute for Logic, Language and Computation\\
+%Universiteit van Amsterdam\\
+%Science Park 904\\
+%1098 XH Amsterdam\\
+%phone: +31-20-525 6051\\
+%fax: +31-20-525 5206\\
+%e-mail: {\tt illc@uva.nl}\\
+%homepage: {\tt http://www.illc.uva.nl/}
+%\end{center}
+
+%%the third page: the `titelblad'
+\clearpage
+\par\vskip 2cm
+\begin{center}
+\printtitle
+\par\vspace {2.1cm}
+{\large \textsc Proefschrift}
+\par\vspace {1.5cm}
+{\large ter verkrijging van\\[.5cm]
+de graad van doctor aan de Universiteit Leiden\\[.5cm]
+\makebox[0pt][c]{op gezag van de Rector Magnificus prof. mr. F.S. de Boer,}\\[.5cm]
+volgens besluit van het College voor Promoties\\[.5cm]
+te verdedigen %in de Aula der Universiteit \\        
+op woensdag 18 december 2013\\[.5cm]
+klokke 10.00 uur \\[.5cm] }
+\par\vspace {1cm} {\large door}
+\par \vspace {.5cm} % Note: next should be your _full_ name
+{\Large Behrooz Nobakht}    
+\par%\vspace {1cm} % and your birthplace
+{\large geboren te Tehran, Iran, in 1981} %PERSONALIZE
+% Note: include your country of birth IF AND ONLY IF you were not born
+% in the Netherlands
+\end{center}
+%%the fourth page: promotores, ISBN etc.
+\clearpage
+\noindent%
+{\textbf PhD committee}\\[.5cm]
+
+\begin{tabular}{lll}
+Promotor:    & Prof.\ Dr.\ F.S. de Boer & \\
+Co-promotor: & Dr.\ M. M. Bonsangue & \\[12pt]
+Other members:\\
+& Prof.\ Dr.\ F. Arbab & \\
+& Prof.\ Dr.\ J.N. Kok & \\
+& Prof.\ Dr.\ O. Owe & University of Oslo, Norway\\
+& Prof.\ Dr.\ K.R. Apt & University of Amsterdam\\
+\end{tabular}
+
+\vfill
+\vspace{5.5cm}
+
+\hspace{-0.5cm}
+\begin{tabular}{lll}
+\includegraphics[height=0.8cm]{figs/cwi.png} &
+\includegraphics[height=1.2cm]{figs/envisage-logo} &
+\end{tabular}
+\\ \\
+
+% If you're supported by NWO adapt the following 6 lines;
+% otherwise simply delete them.
+%
+\noindent
+The work reported in this thesis has been carried out at the Center for Mathematics and Computer Science (CWI) in Amsterdam and Leiden Institute of Advanced Computer Science at Leiden University.
+This research was supported by the European FP7-231620 project ENVISAGE on Engineering Virtualized Resources.
+\par\vspace {1cm}
+
+% If you want to add CIP data (a summary of all the data used in
+% library catalogs in a standard format), uncomment the following
+% three lines and add the CIP data in between
+%
+%\noindent%
+%{\tt CIP gegevens}                                 % PERSONALIZE
+%\\[4ex]                                            %PERSONALIZE
+
+%Copyright and accreditation stuff, plus ISBN
+%
+\noindent%
+% Copyright: put your name here
+Copyright \copyright\ 2015 by Behrooz Nobakht. All rights reserved. \\ [2ex] %PERSONALIZE
+% Cover design, if your cover was designed by someone else
+%The cover illustration depicts a real-time solution to the dining philosophers problem.
+%This solution is referred to as ``A Late Philosopher'' in Section \ref{sec::late}.
+\\
+%Cover design by Samira Sedghi.\\                       %PERSONALIZE
+%Maybe some additional info on the production of the dissertation.
+%Don't forget your printing shop
+%Printed and bound by your printer.\\[2ex]           %PERSONALIZE
+%ISBN number: ask your faculty library how to obtain one
+%ISBN:  978-90-6464-445-0                              %PERSONALIZE
+
+% Dedication, table of contents and acknowledgements
+% are handled in the main file
+
+\clearpage
+} % Back to \pagestyle{plain}
+
+%%%%%%%%%%%%%%%%%%%%%%%END of FRONT MATTER%%%%%%%%%%%%%%%%%%%%%%%%%%%

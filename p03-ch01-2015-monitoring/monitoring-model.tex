@@ -1,0 +1,32 @@
+\lstset{language=abs}
+\begin{lstlisting}[float=t,caption=Monitoring Model in ABS,label=lst:monitoring]
+data Agreement = Map<String, String>
+data Measurement = Map<String, String>
+data Metadata = Map<String, String>
+
+interface Resource {
+	String getURI();
+	Metadata getProperties();
+}
+
+interface Platform {
+	Resource allocate(Service s);
+	Resource deallocate(Service s);
+	Service instantiate(String s, Agreement a);
+	Unit publish(Measurement m);
+}
+
+interface Service {
+	Unit serve();
+}
+
+interface Monitor {
+	Measurement check();
+}
+
+class MonitorWorker(Service s, Agreement a) implements Monitor {
+	Measurement check() {
+		// Implementation Details
+	}
+}
+\end{lstlisting}

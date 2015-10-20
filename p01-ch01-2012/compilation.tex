@@ -1,0 +1,83 @@
+******************************************************************
+
+In this section, we briefly discuss how different constructs in Creol and Java
+co-relate to one another in the compilation process.
+Figure \ref{fig:creol_object} depicts a general concurrent object in Creol that is transformed 
+to an equivalent Java object with a single thread of execution on a processor.
+
+\subsubsection{Active Objects to Task Objects}
+In the transformation process, one of the most important questions is that: how
+Creol's concurrency model maps to concurrent Java?
+
+Based on Creol's notion of active objects, each object conceptually possesses
+one processing core in Creol. It means that each object is a thread of execution
+and sends messages to other objects. Each Creol object is mapped to one Java
+object and one concurrent task. One major advantage of this approach is that
+since all the object's belongings stay on the same core, the problems of
+synchronization and shared state issues will not occur.
+
+Every object maintains a storage of the messages that is used to receive and
+store messages sent from other objects (mailbox). At some time $t_i$, a message
+is received in the object's mailbox. However, $t_i$ is not necessarily the time
+that the message is processed as the same as what happens in Creol. As some
+other $t_e$, the objects looks in the mailbox to select a message to process (it
+can be the case that $t_i = t_e$). 
+
+In the ``Active Segment'' in Figure \ref{fig:creol_object}, when a method
+invocation is received in the object, it carries information on priority
+specification possibly from both the client and the server. This information is
+used by a ``priority manager'' component in the object to assign the message a
+final priority value based on which the message is stored in the mailbox of the object.
+On the other hand, each object consists of a ``scheduler'' responsible to select
+one message at a time for execution. The scheduler component may use predefined
+policies specified by the user programmer how to select one message at a time.
+It may also be developed and injected by the user programmer to provide further
+extensibility and customization. When a message is selected, the object executes
+the requested method.
+
+The Java object has access to an instance of
+{\footnotesize\texttt{ExecutorService}} to encapsulate a single thread of
+execution on a processor. Each method invocation is transformed to a variation
+of  {\footnotesize\texttt{Callable}} and stored in the object's mailbox. The
+method invocations return instances of {\footnotesize\texttt{Future}} to hold
+the eventual result of the method.
+
+\subsubsection{Asynchronous Method Calls}
+With an asynchronous method call in Creol, the object continues with the
+next instruction after the call and the response from the invoked method will be
+stored in a labeled variable that can be later checked or fetched. Creol can
+also model a synchronous method with an asynchronous method call.
+ 
+Similarly, concurrent Java provides an implementation of
+{\footnotesize\texttt{Future}}\footnote{\texttt{java.util.concurrent.Future}}
+computation. It encapsulates a value that will be determined sometime later in
+the time of execution or cancelled during execution. Having a future variable in
+Java, a Creol asynchronous method call can be mapped to an instance of
+{\footnotesize\texttt{FutureTask}}\footnote{\texttt{java.util.concurrent.FutureTask}}.
+
+When a method invocation request is received in the object, an instance of
+{\footnotesize\texttt{FutureTask}} is created to encapsulate the original method
+invocation. As the same time, an instance of {\footnotesize\texttt{Future}} is
+returned as the ``future'' result of this method invocation. The actual result
+will be eventually available when the message is selected for execution. On the
+other hand, the incoming message carries priority scheduling specification. So,
+the priority manager of the object uses such information to map different levels
+of priorities possibly specified for the method invocation to a final priority
+value. This value is assigned to the message being stored in the mailbox and is
+used by the scheduler. When the scheduler of the object selects one method
+invocation from the mailbox, it uses the mapped final priority values.
+
+\subsubsection{Creol Processor Release Points}
+One of the most important primitives in Creol language is the ability to
+\textit{manually} release a processor. Creol allows the programmer to decide
+through syntax whether to yield the processor or continue the process. On the
+other hand, using concurrent Java provides the same functionality using
+{\footnotesize\texttt{Condition}}s\footnote{\texttt{java.util.concurrent.locks.Condition}}.
+When a program in Java takes advantage of a condition object, it is actually
+controlling the enclosing executing thread. The condition mechanism is in
+analogy with the older Java's Object {\footnotesize\texttt{wait}} and
+{\footnotesize\texttt{notify}} mechanism. The transformation process utilizes
+this feature in Java to provide the explicit {\footnotesize\texttt{await}}
+syntax in Creol.
+
+

@@ -1,0 +1,34 @@
+\begin{figure}[t]
+\begin{align}
+L ::=& \; L_P \; \to \; \{ \; L_B \; \} \\
+L_P ::=& \; I \; | \; ( \: P_{\mathsf{list}}^? \: ) \; | \; ( \: P_{\mathsf{list}}^i \: ) \\
+P_{\mathsf{list}}^i ::=& \; I \; | \; P_{\mathsf{list}}^i \; , \; I \\
+L_B ::=& \; E \; | \; K \\
+P_{\mathsf{list}} ::=& \; P_{\mathsf{last}} \; | \; P \; , \; P_{\mathsf{last}} \\
+P ::=& \; P_{\mathsf{single}} \; | \; P \; , \; P_{\mathsf{single}} \\
+P_{\mathsf{single}} ::=& \; F^? \; T \; I \\
+P_{\mathsf{last}} ::=& \; F^? \; T... \; I \; | \; P_{\mathsf{single}} \\
+M ::=& \; [I.]^? \; I \; ( \; A_{\mathsf{list}}^? \; )  \\
+A_{\mathsf{list}} ::=& \; E \; | \; A_{\mathsf{list}} \; , \; E \\
+M_{\mathsf{ref}} ::=& \; (C \; | \; I) \; :: \; I \; | \\
+                 ::=& \; C \; :: \; \bfjtt{new}
+\end{align} 
+\caption{
+In the above grammar, $L$ is Lambda Expression block in Java; 
+$L_P$ is Lambda's parameters and $L_B$ is Lambda's body; 
+$I$ is a Java identifier;
+$P_{\mathsf{list}}$ is Java's formal parameter \emph{list};
+$P_{\mathsf{list}}^i$ is inferred formal parameter \emph{list};
+$E$ is a Java expression and $L$ is \emph{also} an expression;
+$K$ is Java code block wrapped in \jtt{\{\}};
+$P_{\mathsf{last}}$ is the ``last'' formal parameter in which $T...$ refers to Java's \emph{varargs} feature;
+$P_{\mathsf{single}}$ is a Java formal parameter;
+$F$ is standard Java variable modifiers such as \jtt{final} or \jtt{static};
+$T$ is a Java type;
+$M$ denotes a method invocation in Java;
+$A_{\mathsf{list}}$ is the optional argument list;
+$M_{\mathsf{ref}}$ denotes a method reference in Java 8;
+$C$ is (possibly) a fully qualified Java class name that introduces the method to be referred to.
+}
+\label{fig:java8:syntax}
+\end{figure}

@@ -1,0 +1,164 @@
+
+
+% The (simplified) syntax of Creol is given in Fig.~\ref{fig::creolSyntax}.
+% Here we introduce the basic concepts of Creol.
+%
+%
+% \newcommand{\trans}[1]{\,{\stackrel{{#1}}{\longrightarrow}}\,}
+% \newcommand{\gtrans}[2]{\,{\stackrel{{#2}}{\longrightarrow_{#1}}}\,}
+% \newcommand{\transtwo}[1]{\, { \stackrel {{  \stackrel{{#1}}{\longrightarrow} }} {{#1}} }   \,}
+% \newcommand{\M}{\mathcal{M}}
+% \newcommand{\Nat}{\mathbb N}
+% \newcommand{\Act}{\Sigma}
+% \newcommand{\id}[1]{\mathit{#1}}
+% 
+% \begin{figure}[t]
+% \begin{center}
+% \begin{tabular}{l@{~~~}l}
+% \begin{math}
+% \begin{array}{lcl}
+% \id{IF} & ::= & \id{\bf interface}\ N
+% %\{[\{N\}_,^+]\}^?
+% \{(\id{Par})\}^?
+% %\\~&~&
+% \{\id{\bf inherits}\ \id{Inh}\}^?  \\
+% ~   & ~ &  \id{\bf begin}\ \{\id{\bf with}\ \id{N}\ \id{Msig}^+\}^?\ \id{\bf end} \\
+% %\id{Type} & ::= & N\{[\{\id{Type}\}_,^+]\}^? \\
+% \id{Inh}  & ::= & \{\id{N}\{(E)\}^?\}_,^+ \\
+% \id{Par} & ::= & \{\{v\}_,^+ :\id{N}\}_,^+ \\
+% \id{Msig} & ::= & \id{\bf op}\ N \{(\{\id{\bf in}\ \id{Par}\}^?\ \{\id{\bf out}\ \id{Par}\}^?)\}^? \\
+% \id{CL} & ::= & \id{\bf class}\ N
+% %\{[\{N\}_,^+]\}^?\
+% \{(\id{Par})\}^?
+% \\
+% ~&~&
+%  \{\id{\bf contracts}\ \id{Inh}\}^? \  \{\id{\bf inherits}\ \id{Inh}\}^?  \\
+% ~ & ~ & \id{\bf begin} \ \id{Vdcl}^? \{\{\id{\bf with}\ \id{N}\}^?\ \id{Mtd}\}^*\ \id{\bf end} \\
+% \id{Vdcl} & ::= & \id{\bf var}\ \{\{v\}_,^+: \id{N}\{=e\}^?\}_,^+ \\
+% \end{array}
+% \end{math}
+% &
+% \begin{math}
+% \begin{array}{l}
+% \id{Mtd} ::= \{\id{Msig} ==\{\id{Vdcl};\}^? \ S\}^+ \\
+% g\ ::=\ b\ |\ t?\ |\ \lnot g\ |\ g \land g \\
+% p\ ::= \ x.m \ |\ m \\
+% S\ ::=\ \epsilon\ | \ s;S \\
+% s\ ::=\ (S)\ |\ V := E\ |\ \id{\bf skip} \\
+% ~~~~~ |\ v := \id{\bf new}\ N(E)\ | \ !p(E) \\
+% ~~~~~ | \ t!p(E) \ | \ t?(V)\ | \ p(E;V) \\
+% ~~~~~ | \ \id{\bf if}\ b\ \id{\bf then}\ S\ \id{\bf else}\ S\ \id{\bf end}\\
+% ~~~~~ | \ \id{\bf await}\ g \ | \ \id{\bf await}\  t?(V)\\
+% ~~~~~ | \ \id{\bf await}\  p(E;V)\ |\ \id{\bf release} \\
+% \end{array}
+% \end{math}
+% \end{tabular}
+% \end{center}
+% \caption{BNF grammar for Creol. Curly
+% brackets are used as meta parenthesis, superscript ? for optional
+% parts, superscript * for repetition zero or more times, whereas
+% $\{. . .\}_,^+$  denotes repetition one or more times with �,� as delimiter. Identifiers N denote interface, class, type, or method names.
+% %The language syntax for method definitions, with typical
+% %terms for each category.
+% Capitalized terms such as $E$, $V$, and $S$,
+% denote lists of the syntactic categories of the corresponding lower-case terms~\cite{johnsen07sosym,JohnsenOY06}.}\label{fig::creolSyntax}
+% \end{figure}
+
+
+Creol~\cite{creol:broch_owe} (Concurrent Reflective Object-oriented Language) is
+an object oriented modeling language designed for specifying distributed
+systems. A Creol object implicitly has a dedicated processor and thus
+encapsulates an execution thread. Different objects communicate only by
+asynchronous method calls, i.e., similar to message passing in Actor models
+\cite{actors:agha};  however in Creol, the caller can poll or wait for return
+values or termination of the called method. This can also be used to simulate
+synchronous method calls. % we can say: like RPC We use an exclusive resource
+%object as a running example, shown in Listing \ref{lst:exres}.
+
+When an object is created, its local state is initialized by executing the \footnotesizett{init} method.
+Then the object starts its active behavior by executing its
+\footnotesizett{run} method if defined. % (e.g., in class \footnotesizett{User}). 
+When receiving a method call a new process is created to execute the method. 
+Methods can have processor release points which define interleaving points explicitly.
+When a process is executing, it is not interrupted until it finishes or reaches a release point.
+Release points can be conditional:
+%, e.g.,  \footnotesizett{await mutex.request()} in Listing \ref{lst:exres} checks for termination of \footnotesizett{request}. 
+if the guard at a release point evaluates to true, the
+process keeps the control, otherwise, it releases the processor and becomes
+disabled as long as the guard is not true. Whenever the processor is free, an
+enabled process is {\em nondeterministically} selected for execution, i.e.,
+scheduling is left unspecified in Creol in favor of more abstract modeling.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subsection{Creol}
+% Creol \cite{creol:web} stands for Concurrent Reflective Object-oriented
+% Language. Creol is a language that provides programming constructs and
+% reasoning control in the context of open distributed systems
+%  taking an object-oriented approach
+% \cite{creol:web,creol:broch_owe,mpd:andrews}.
+% 
+% Johnson and Owe \cite{creol:broch_owe} focus on synchronization of distributed systems
+% and the challenges. They argue that it is difficult to combine active and
+% passive behavior in concurrent objects; so, they propose Creol as an
+% object-oriented language for the solution mainly taking advantage of
+% \textit{processor release points} and a notion of \textit{asynchronous method
+% call}. Creol is designed to unite object orientation and distribution and helps
+% to dynamically change between active and reactive behavior.
+% 
+% %According to \cite{creol:broch_owe,mpd:andrews}, the basic interaction models
+% %for concurrent processors are \textsl{shared variables}, \textsl{remote method
+% %calls}, and \textsl{message passing}. Shared variables do not generalize well
+% %with distributed environments. In remote method call (RMI), the caller is
+% %blocked until the response is received. In contrast, as message passing does not
+% %transfer control between concurrent objects is not blocking. Message passing can
+% %either be \textit{synchronous} or \textit{asynchronous}. In synchronous mode,
+% %both sender and receiver should be ready to take part in the interaction,
+% %however, in asynchronous mode, a message can be sent at any time regardless of
+% %when the receiver accepts the message.
+% 
+% Creol's message passing is analogous to Actor Model \cite{actors:agha}. However,
+% they \cite{creol:broch_owe} believe that actors do not distinguish replies from
+% invocations, so capturing method calls with actors quickly becomes unmanageable.
+% In Creol, method calls are taken as the communication primitive for concurrent
+% objects. In Creol, an object encapsulates an execution thread.
+% %Thus, some data types are not considered objects inside an
+% %object such as basic data types. Each object has a unique identity (name)
+% %through which the communication with other objects occurs.  Object names are
+% %exchanged with one another. 
+% 
+% Creol is a language by \textsl{interface}. Every object implements an interface
+% in the language \cite{creol:broch_owe,creol_overview:blanchette}. Creol
+% introduces the notion of \textsl{cointerface} to be used when the callee may
+% need to access to caller object. In this case, a \texttt{with} clause is used to
+% specify and restrict access to different objects supporting different
+% interfaces. 
+% 
+% %Creol provides inheritance a bit different of what is generally perceived. A
+% %\textsl{class} can \texttt{implement} an interface, \texttt{contract} an
+% %interface, or \texttt{inherit} a class. The difference lies in the semantics
+% %that is passed down to the hierarchy. In case of contracting, the signature of
+% %super interfaces are also present in the semantics of the object of the class.
+% %However, in the case of inheriting, the semantics of the super class is not
+% %passed down \cite{creol_overview:blanchette}.
+% 
+% In Creol, an asynchronous message can be sent at any time
+% \cite{creol:broch_owe}. Also, \textit{method overtaking} is allowed; i.e. if
+% some methods offered by some object are invoked in the same order, it is up to
+% the object to reorder the \textit{method instances} in execution. When the
+% caller needs the return values from the callee, it may ask for it in which case
+% it may be suspended based on the processor release points in Creol. Moreover, a
+% message can be synchronous causing the caller to suspend till the reply is
+% ready. In Creol, a callee does \textit{not} distinguishes synchronous and
+% asynchronous invocation.
+% 
+% Creol introduces the notion of processor release point
+% \cite{creol:broch_owe,creol_overview:blanchette} to provide an explicit
+% mechanism to release or acquire processing unit during execution. Essentially,
+% clause \texttt{await g} releases processor if guard expression \texttt{g}
+% evaluates to false and grabs it again later when \texttt{g} is true. Also,
+% \texttt{wait} explicitly releases processor. Creol's asynchronous message
+% passing takes advantage of such processor release point model.
+% 
+

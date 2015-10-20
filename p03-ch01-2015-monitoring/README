@@ -1,0 +1,12 @@
+# Paper: A monitoring model based on ABS actor to maintain certain properties in a distributed environment
+
+Please contact bnobakht@sdl, pwong@sdl.com, or frb@cwi.nl about this paper.
+
+# Build
+
+To build the paper, you most likely need to have `gnuplot`:
+
+```bash
+pdflatex --shell-escape --enable-write18 paper.tex 
+```
+

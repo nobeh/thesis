@@ -1,0 +1,208 @@
+%!TEX root = thesis.tex
+
+% **************************************************
+% Debug LaTeX Information
+% **************************************************
+%\listfiles
+
+% **************************************************
+% Information and Commands for Reuse
+% **************************************************
+\newcommand{\thesisTitle}{Actors at Work}
+\newcommand{\thesisName}{Behrooz Nobakht}
+\newcommand{\thesisSubject}{Actors at Work}
+\newcommand{\thesisDate}{October 31, 2015}
+\newcommand{\thesisVersion}{v1.0}
+
+\newcommand{\thesisFirstReviewer}{Frank S. de Boer}
+\newcommand{\thesisFirstReviewerUniversity}{\protect{Leiden University}}
+\newcommand{\thesisFirstReviewerDepartment}{Leiden Advanced Institute of Compute Science}
+
+\newcommand{\thesisSecondReviewer}{John Doe}
+\newcommand{\thesisSecondReviewerUniversity}{\protect{Clean Thesis Style University}}
+\newcommand{\thesisSecondReviewerDepartment}{Department of Clean Thesis Style}
+
+\newcommand{\thesisFirstSupervisor}{Jane Doe}
+\newcommand{\thesisSecondSupervisor}{John Smith}
+
+\newcommand{\thesisUniversity}{\protect{Clean Thesis Style University}}
+\newcommand{\thesisUniversityDepartment}{Department of Clean Thesis Style}
+\newcommand{\thesisUniversityInstitute}{Institut for Clean Thesis Dev}
+\newcommand{\thesisUniversityGroup}{Clean Thesis Group (CTG)}
+\newcommand{\thesisUniversityCity}{City}
+\newcommand{\thesisUniversityStreetAddress}{Street address}
+\newcommand{\thesisUniversityPostalCode}{Postal Code}
+
+% **************************************************
+% Load and Configure Packages
+% **************************************************
+\usepackage[utf8]{inputenc}      % defines file's character encoding
+\usepackage[english]{babel} % babel system, adjust the language of the content
+\usepackage[               % clean thesis style
+   figuresep=colon,%
+   sansserif=false,%
+   hangfigurecaption=false,%
+   hangsection=true,%
+   hangsubsection=true,%
+   colorize=full,%
+   colortheme=bluemagenta,%
+   bibsys=bibtex,%
+   bibfile=refs/mrefs,%
+   bibstyle=numeric,%
+]{cleanthesis}
+
+\hypersetup{               % setup the hyperref-package options
+   pdftitle={\thesisTitle},   %  - title (PDF meta)
+   pdfsubject={\thesisSubject},%    - subject (PDF meta)
+   pdfauthor={\thesisName},   %  - author (PDF meta)
+   plainpages=false,       %  -
+   colorlinks=false,       %  - colorize links?
+   pdfborder={0 0 0},         %  -
+   breaklinks=true,        %  - allow line break inside links
+   bookmarksnumbered=true,    %
+   bookmarksopen=true         %
+}
+
+% Keep these in aL_Phabetical order
+\usepackage{algorithm}
+% \usepackage{algorithmic}
+\usepackage{alltt}
+\usepackage{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{caption}
+% \DeclareCaptionType{copyrightbox}
+% \usepackage[usenames,dvipsnames]{color}
+% \usepackage{colortbl}
+% \usepackage[Sonny]{fncychap}
+\usepackage{framed}
+\usepackage{graphics}
+% \usepackage[pdftex]{graphicx}
+% should be after graphics
+\usepackage{enumitem}
+\usepackage{epstopdf}
+\usepackage[gen]{eurosym}
+\usepackage{footnote}
+\makesavenoteenv{tabular}
+\makesavenoteenv{table}
+% \usepackage[bookmarks=true, colorlinks=true, linkcolor=black, citecolor=black, urlcolor=black, bookmarksdepth=2]{hyperref}
+\usepackage{import}
+\usepackage{listing}
+\usepackage{listings}
+\usepackage{makeidx}
+\usepackage{mathtools}
+\usepackage{minted}
+\usepackage{multicol}
+\usepackage{pgf}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{pifont}
+% \usepackage{sectsty}
+\usepackage{setspace}
+\usepackage{soul}
+\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{arrows,automata}
+% \usepackage{titlesec}
+% \usepackage{tocloft}
+\usepackage{url}
+\usepackage{wrapfig}
+% \usepackage{xcolor}
+\usepackage{xspace}
+
+\usepackage{amssymb,amsmath,amsthm, mathtools}
+
+% Commands
+\newcommand{\Crisp}{{$\mathcal{C}$risp}\xspace}
+\newcommand{\MethodInvocation}{{\ftt{Meth\-od\-In\-vo\-ca\-tion}}\xspace}
+\newcommand{\thickhline}{\noalign{\hrule height 1.0pt}}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+\newcommand{\ftt}[1]{{\footnotesize\texttt{#1}}}
+\newcommand{\jtt}[1]{{\scriptsize\texttt{#1}}}
+\newcommand{\bfjtt}[1]{\textbf{\scriptsize\texttt{#1}}}
+\newcommand{\textsfb}[1]{\textbf{\textsf{#1}}}
+\newcommand{\parbf}[1]{\noindent\parskip2pt\newline\textbf{#1}}
+\newcommand{\surl}[1]{{\footnotesize\url{#1}}}
+\newcommand{\this}{\mbox{\rm this}}
+\newcommand{\Var}{\mbox{\it Var}}
+\newcommand{\Val}{\mbox{\it Val}}
+\newcommand{\ESA}{\jtt{Executor\-Service\-Actor} } 
+\newcommand{\qps}{\textsf{QPS}\xspace}
+\newcommand{\frhcsp}{Fredhopper Cloud Services\xspace}
+
+% 2013 paper
+\newcommand{\gett}{{\textnormal{\textbf{\jtt{get}}}}}
+\newcommand{\trycatch}[4]{\jtt{try}\{ #1 \}\jtt{catch}(\jtt{#2} \; #3)\{#4\}}
+
+% LLNCS
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip\noindent\keywordname\enspace\ignorespaces#1}
+
+\newcommand{\Behrooz}[1]{{\color{blue}{\sffamily Behrooz: \textit{#1}\newline}}}
+
+\theoremstyle{definition}
+\newtheorem{assm}{Assumption}
+\newtheorem{defn}{Definition}
+\newtheorem{thm}{Theorem}
+\newtheorem{rul}{Rule}
+\newtheorem{exmp}{Example}
+\newtheorem{corl}{Corollary}
+
+% Chapter Authors
+\makeatletter
+\newcommand{\chapterauthor}[1]{%
+  {\parindent0pt\vspace*{-25pt}%
+  \linespread{1.1}\slshape#1%
+  \par\nobreak\vspace*{35pt}}
+  \@afterheading%
+}
+\makeatother
+
+\lstdefinelanguage{Creol}{
+  morekeywords={class,extends, implements, interface, false,for,if, then, else, priority,
+    new,null,return,this,true,var,while,with,yield,begin,end,await,op, scheduling, policy,
+   sender,foreach,empty,in,skip,random,def,try,catch,do,deadline,get,super,boolean,scheduler},
+  otherkeywords={==}, %=>,<-,<\%,<:,>:,\#,@,:=},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]""",
+  literate={/=}{{$\not =$}}1
+}
+
+\lstdefinelanguage{abs}{keywords=
+{dyndelta,new,data,type,def,case,of,cog,class,interface,extends,implements,if,else,await,get,Fut,return,skip,while,module, import, export, from, suspend, delta,adds,modifies,removes,original,productline,features,core,corefeatures,optionalfeatures,after,when,product,hasAttribute,hasMethod,root,extension,group,allof,oneof,require,exclude,original,ifin,ifout,opt}, sensitive=true, comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]"}
+
+% Monospace fonts and code listings
+% \usepackage[T1]{fontenc}
+% \usepackage{luximono}
+\lstset{
+         basicstyle=\scriptsize\ttfamily,
+         numbers=left,
+         numberstyle=\scriptsize,
+         numbersep=5pt,
+         tabsize=2,
+         extendedchars=true,
+         breaklines=true,
+         showspaces=false,
+         showtabs=false,
+         xleftmargin=17pt,
+         xrightmargin=6pt,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+         showstringspaces=false
+         keywordstyle=\color[rgb]{0,0,1},
+         commentstyle=\color[rgb]{0.133,0.545,0.133},
+         stringstyle=\color[rgb]{0.627,0.126,0.941},
+         numberbychapter=false,
+}

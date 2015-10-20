@@ -1,0 +1,50 @@
+%!TEX root = ../thesis.tex
+
+\chapter[Formal verification of service level agreements through distributed monitoring]{Formal verification of service level agreements through distributed monitoring%
+\footnote{This paper is funded by the EU project FP7-610582 ENVISAGE: Engineering Virtualized
+Services, \url{http://www.envisage-project.eu}.}}
+% 
+\label{ch:p03:ch01}
+% 
+\chapterauthor{Behrooz Nobakht, Stijn de Gouw, Frank S. de Boer}
+
+\section*{Abstract}
+\label{abstract}
+In this paper, we introduce a  formal model of the  availability, budget compliance
+and  sustainability of distributed services, where service   sustainability is
+a new concept which arises as 
+% an extension of 
+the composition of 
+service  availability and budget compliance.
+The model formalizes a distributed  platform for monitoring the above
+service characteristics in terms of a parallel composition of task automata,
+where dynamically generated tasks model asynchronous events with deadlines.
+The main result of this paper is a formal model to optimize and reason about service characteristics
+through monitoring.
+In particular, we use schedulability analysis of the
+underlying timed automata to optimize and guarantee service sustainability.
+
+%to capture characteristics of a distributed deployment environment.
+%In the distributed deployment, a service runs across several resources in a virtualized environment.
+%We formalize characteristics of a distributed service by service availability and service budget compliance.
+%We introduce service sustainability as an extension and composition of the two.
+%We design timed automata to ensure the given service level agreement for each characteristic.
+%The formal model is realized by devising an actor-based distributed monitoring platform using the Abstract Behavioral Specification language ABS.
+%We discuss how the characteristics of the model can be utilized in the application and business in different aspects.
+%In addition, we discuss how monitoring model parameters; e.g. monitoring window; influence maintaining service characteristics in a distributed environment.
+% We present algorithms to generate the monitoring platform components given input parameters in order to guarantee the defined service level agreements.
+
+% \keywords{runtime monitoring, service availability, budget compliance, service sustainability, distributed architecture, cloud computing, service level agreement}
+
+\input{sec01-intro}
+\input{sec02-related}
+\input{sec03-frh-example}
+\input{sec045-defs}
+\input{sec05-monitoring-model}
+\input{sec06-impl}
+\input{sec07-conclusion}
+
+% \bibliographystyle{abbrv}
+% \bibliography{refs}
+
+% \end{document}

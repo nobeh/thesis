@@ -1,0 +1,132 @@
+% fix some latex issues see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
+\RequirePackage{fix-cm} 
+
+% \documentclass[%
+% 11pt,%
+% twosided,%
+% showtrims%
+% ]{memoir}
+
+\documentclass[%
+   paper=A4,               % paper size --> A4 is default in Germany
+   twoside=true,           % onesite or twoside printing
+   openright,              % doublepage cleaning ends up right side
+   parskip=full,           % spacing value / method for paragraphs
+   chapterprefix=true,        % prefix for chapter marks
+   11pt,                % font size
+   headings=normal,        % size of headings
+   bibliography=totoc,        % include bib in toc
+   listof=totoc,           % include listof entries in toc
+   titlepage=on,           % own page for each title page
+   captions=tableabove,    % display table captions above the float env
+   draft=false,            % value for draft version
+]{scrreprt}%
+
+\input{preamble}
+\bibliography{refs/mrefs.bib}
+\makeindex
+
+\begin{document}
+
+% --------------------------
+% Front matter
+% --------------------------
+% roman page numbing (invisible for empty page style)
+\pagenumbering{roman}         
+% no header or footers
+\pagestyle{empty}          
+% \include{front}
+% INCLUDE: all titlepages
+\input{titlepages}    
+\cleardoublepage
+
+% display just page numbers
+\pagestyle{plain}          
+% INCLUDE: the abstracts (english and german)
+\input{abstract}      
+\cleardoublepage
+%
+% INCLUDE: acknowledgement
+\input{acknowledgement} 
+\cleardoublepage
+%
+% define depth of toc
+\setcounter{tocdepth}{2}      
+% display table of contents
+\tableofcontents           
+\cleardoublepage
+
+% --------------------------
+% Body matter
+% --------------------------
+\pagenumbering{arabic}        % arabic page numbering
+\setcounter{page}{1}       % set page counter
+\pagestyle{maincontentstyle}  % fancy header and footer
+
+\part[Introduction]{Introduction}
+\import{p00-ch00-intro/}{intro}
+\clearpage
+
+\part[Programming Model]{Programming Model}
+\import{p01-ch01-2012/}{paper}
+\import{p01-ch02-2013/}{paper}
+\clearpage
+
+\part[Implementation]{Implementation}
+\import{p02-ch01-2014/}{paper}
+\import{p02-ch02-design-pattern/}{manual}
+\clearpage
+
+\part[Application]{Application}
+\import{p03-ch01-2015-monitoring/}{paper-esocc}
+\clearpage
+
+\cleardoublepage
+
+% --------------------------
+% Back matter
+% --------------------------
+{%
+\setstretch{1.1}
+\renewcommand{\bibfont}{\normalfont\small}
+\setlength{\biblabelsep}{5pt}
+\setlength{\bibitemsep}{0.5\baselineskip plus 0.5\baselineskip}
+\printbibliography
+% \printbibliography[heading=subbibliography,title={Webseiten},type=online,prefixnumbers={@}]
+}
+\cleardoublepage
+
+\listoffigures
+\cleardoublepage
+
+\listoftables
+\cleardoublepage
+
+\input{colophon}
+\cleardoublepage
+
+\input{declaration}
+\clearpage
+\newpage
+\mbox{}
+
+% \part[Appendices]{Appendices}
+% \bibliographystyle{abbrv}
+% \bibliography{refs/mrefs.bib}
+% \bibliography{p01-ch01-2012/references.bib,p01-ch02-2013/references.bib,p02-ch01-2014/refs.bib,p03-ch01-2015-monitoring/refs.bib,refs.bib}
+
+% \printindex
+
+% \clearpage
+
+% \listoffigures
+
+% \clearpage
+
+% \listoftables
+
+% \clearpage
+
+\pagestyle{empty}
+
+\end{document}

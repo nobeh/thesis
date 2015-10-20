@@ -1,0 +1,316 @@
+% -*- root: paper-podc.tex -*-
+
+\section{Modelling Service Characteristics}
+\label{sec:timed:fsm}
+
+In this section, we use timed automata and task automata to model the behavior of monitoring platform $P$, the deployment environment $E$, and the monitoring components for service availability $\alpha(s,\tau)$ and budget compliance $\beta(s,\tau)$.
+% 
+Modelling the elements of the monitoring platform is necessary to be able to study certain property of the system.
+The most important goal of a monitoring platform is to enable the autonomous operation of a set of services according to their SLA.
+Thus, it is essential to be able to answer questions like how the effectivness of a monitoring platform can be guaranteed.
+In addition, it is important be able to verify the monitoring platfrom through model checking and schedulability analysis.
+Using timed automata and task automata facilitates model checking and verification through formal method tools such as UPPAAL~\cite{uppaal2004}.
+   
+We first define what a task automata is as presented in \cite{fersman2007task,jaghoori2012composing,jaghoori2010time} that is an extension of timed automata~\cite{alur:1994:timedautomata}.
+In addition, we design the automata for the monitoring platform using the real-time extension of task automata presented in \cite{jaghoori2010time} p. 92 in which the author presents the mapping of Real-Time ABS~\cite{johnsen2012modeling} to the equivalent task automata.
+
+\begin{defn}[Task Automata] 
+\label{def:fsm:task}
+Given a set of task types $\mathcal{P}$, a task automaton is a timed automaton extended with:
+\begin{itemize}
+  \item a partial function $M: L \rightarrow \mathcal{P}$ assigning task types to locations; and
+  \item a clock $t_{done}$ which is reset whenever a task finishes. 
+\end{itemize}
+In this model, a task type is a piece of executable program/code represented by a tuple $(b,w,d)$, where $b$ and $w$ respectively are the best-case and worst-case execution times and $d$ is the deadline.
+In a task automata, there are two types of transitions: \emph{delay} and \emph{discrete}.
+A delay transition models the execution of a running task by idling for other tasks.
+A discrete transition corresponds to the arrival of a new task.
+When a new task is triggered, it is put into the queue for execution based on a scheduling policy~\cite{Nobakht:sched,nobakht2013future}.
+The scheduling policy is also modeled as a task automata \textsf{Sch}.
+Examples of a scheduling policy can be \textsf{FIFO} or \textsf{EDF} (earliest deadline first).
+\qedsymbol
+\end{defn}
+
+We design separate automata for each service $s$ characteristic: service availability $\alpha(s,\tau)$ by an automata $M_{\alpha_s}$ and service budget compliance $\beta(s,\tau)$, by an automata $M_{\beta_s}$.
+Each automata is responsible for one goal (optimizing the service characteristic).
+$M_{\alpha_s}$ aims to improve $\alpha(s,\tau)$ (under-capacity problem) whereas $M_{\beta_s}$ aims to improve $\beta(s,\tau)$ (over-budget problem).
+Therefore, they each use a different monitoring platform $P$ API.
+$M_{\alpha_s}$ uses \jtt{allocate} to launch a new resource in the environment and improve the service $s$.
+In contrast, $M_{\beta_s}$ uses \jtt{deallocate} to terminate a resource to decrease the cost of the service.
+
+We use task automata to design $M_{\alpha_s}$.
+Periodically, $M_{\alpha_s}$ checks whether the service availability
+is within the thresholds, taking tolerance into account
+(Definition~\ref{def:service:availability}).
+If this is the case, the history of the service is updated.
+If the condition fails, $M_{\alpha_s}$ generates a task for monitoring platform $P$ to allocate a new resource to service $s$ with a deadline of $\tau$.
+We define the period to be $\tau$.
+We use the semantics of a task automata in \cite{jaghoori2010time} p. 92 in the transitions of the task automata.
+Figure~\ref{fig:fsm:task:alpha} and \ref{fig:fsm:task:beta} present $M_{\alpha_s}$ and $M_{\beta_s}$.
+Both $M_{\alpha_s}$ and $M_{\beta_s}$ share state with the monitoring platform $P$.
+The state keeps the current number of resources for a service $s$ that is denoted by $\sigma(s)$.
+All timed automata and task automata in the monitoring platform have shared acccess to $\sigma(s)$.
+In the automata, we use a conditional statement to check the service characteristics $\alpha(s,\tau)$ or $\beta(s,\tau)$.
+If the condition passes, the history of the service $h(s)$ is updated based on the state of the service $\sigma(s)$.
+If the condition fails, $M_{\alpha_s}$ requests $P$ to \jtt{allocate} a new resource to $s$ and $M_{\beta_s}$ requests $P$ to \jtt{deallocate} a resource.
+\begin{figure}[h]
+\vspace{-10pt}
+\captionsetup[subfigure]{font=footnotesize}
+\centering
+\subcaptionbox{\small{$M_{\alpha_s}$ for $\alpha(s,\tau)$}\label{fig:fsm:task:alpha}}[0.45\textwidth]{
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=7cm,thick,scale=0.6,every node/.style={scale=0.6},level distance=20mm]
+\node[state,initial]
+  (a)   {};
+\node[state]
+  (b) [right of=a]  {};
+\path[]
+(a)
+  edge
+  node {$\bfjtt{duration}(\tau,\tau)$}
+  (b)
+(b)
+  edge [bend right,above] 
+  node [align=center] 
+    {$\bfjtt{if}\big((1-\varepsilon_\alpha) > \alpha(s,\tau)\big) $ \\
+     $ \jtt{allocate}(s,1,\tau)$}
+  (a)
+(b)
+  edge [bend left]
+  node [align=center] 
+    {$\bfjtt{if}\big((1-\varepsilon_\alpha) \leq \alpha(s,\tau)\big) $ \\
+     $\bfjtt{skip}$}
+  (a)
+;
+\end{tikzpicture}
+}%
+\subcaptionbox{\small{$M_{\beta_s}$ for $\beta(s,\tau)$}\label{fig:fsm:task:beta}}[0.45\textwidth]{
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=7cm,thick,scale=0.6,every node/.style={scale=0.6},level distance=20mm]
+\node[state,initial]
+  (a)   {};
+\node[state]
+  (b) [right of=a]  {};
+\path[]
+(a)
+  edge 
+  node {$\bfjtt{duration}(\tau,\tau)$}
+  (b)
+(b)
+  edge [bend right, above] 
+  node [align=center] 
+       {$\bfjtt{if}\big((1-\varepsilon_\beta) > \beta(s,\tau)\big) $ \\
+        $ \jtt{deallocate}(s)$}
+  (a)
+(b)
+  edge [bend left]
+  node [align=center] 
+       {$\bfjtt{if}\big((1-\varepsilon_\beta) \leq \beta(s,\tau)\big) $ \\
+        $\bfjtt{skip}$}
+  (a)
+;
+\end{tikzpicture}
+}
+\vspace{-10pt}
+\end{figure}
+
+Both $M_{\alpha_s}$ and $M_{\beta_s}$ are specific to one particular service $s$.
+A generalized automaton for all services is obtained as their parallel composition:$M_\alpha \; = \; \parallel_s M_{\alpha_s}$ and $M_\beta \; = \; \parallel_s M_{\beta_s}$.
+% that is the parallel composition of all service-specific automata.
+The tasks generated by $M_\alpha$ and $M_\beta$ (triggered by the calls to
+\jtt{allocate} and \jtt{deallocate}) are executed by the task automata for platform $M_P$.
+We introduce the task automata for monitoring platform $P$ next.
+
+We model monitoring platform $P$ by a task automata $M_P$.
+In $M_P$, the task types are $\mathcal{P} = \{\jtt{A}(\jtt{allocate}), \jtt{D}(\jtt{deallocate})\}$.
+A task in $M_P$ is denoted by $(b,w,d) = (t_i,\tau,\tau)$; i.e.
+the best-case execution time of a task is the resource initialization time, 
+the worst-case is the length of the monitoring window, and
+the deadline is the length of the monitoring window.
+We do not fix the scheduling policy \textsf{Sch}.
+The error state $q_{err}$ in $M_P$ is defined when either a deadline is missed or when the platform fails to provision a resource.
+Thus the monitoring platform $P$ contains the following ingredients:
+\[
+M_P = \langle M_{\jtt{A}} \parallel M_{\jtt{D}}, \textsf{Sch}, \tau \rangle
+\]
+We define $M_{\jtt{A}_s}$ as the timed automata to execute the tasks of type \jtt{allocate} in $M_P$.
+We use the model  semantics presented in \cite{jaghoori2010time} p. 92 to design $M_{\jtt{A}_s}$. The resulting automata is presented in Figure~\ref{fig:fsm:alloc_s}.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,thick,scale=0.7,every node/.style={scale=0.7}]
+\node[state,initial]    
+  (a)   {};
+\node[state]
+  (b) [right of=a]   {};
+\node[state,accepting]
+  (c) [right of=b]  {};
+\path[]
+(a) 
+    edge    
+    node {$\bfjtt{duration}(t_i,\tau)$}          
+    (b)
+(b) 
+    edge    
+    node {$\sigma(s) \gets \sigma(s) + 1$} 
+    (c)
+;
+\end{tikzpicture}
+\caption{{\small{$M_{\jtt{A}_s}$: Timed Automaton to execute task type \jtt{allocate} in $M_P$}}
+\label{fig:fsm:alloc_s}}
+\end{figure}
+
+Then, we define $M_{\jtt{A}}$ in $M_P$ as:
+$M_{\jtt{A}} = \; \parallel_s M_{\jtt{A}_s}$; i.e.
+the composition of all timed automata to execute a task \jtt{allocate} for some service $s$.
+Similarly, we design $M_{\jtt{D}_s}$ to execute task type \jtt{deallocate} in Figure~\ref{fig:fsm:dealloc_s}:
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,thick,scale=0.7,every node/.style={scale=0.7}]
+\node[state,initial]    
+  (a)   {};
+\node[state]
+  (b) [right of=a]   {};
+\node[state,accepting]
+  (c) [right of=b]  {};
+\path[]
+(a) 
+    edge    
+    node {$\bfjtt{duration}(t_i,\tau)$}          
+    (b)
+(b) 
+    edge    
+    node {$\sigma(s) \gets \sigma(s) - 1$} 
+    (c)
+;
+\end{tikzpicture}
+\caption{{\small{$M_{\jtt{D}_s}$: Timed Automaton to execute task type \jtt{deallocate} in $M_P$}}
+\label{fig:fsm:dealloc_s}}
+\end{figure}
+
+Therefore, we also have $M_{\jtt{D}}$ in $M_P$ as: $M_{\jtt{D}} = \; \parallel_s M_{\jtt{D}_s}$.
+
+For a particular service $s$, its automaton $M_{\alpha_s}$ regularly measures the service
+characteristics and calculates $\alpha(s,\tau)$. When $s$ is under-capacity, $M_{\alpha_s}$ requests to \jtt{allocate} a new resource for $s$ through monitoring platform $P$.
+This generates a new task in $M_P$ that is executed by $M_{\jtt{A}_s}$.
+When the task completes, the state of the service $\sigma(s)$ is updated; strictly increased.
+Thus, in isolation, the combination of $M_{\alpha_s}$ and $M_{\jtt{A}_s}$ increase the value of service availability $\alpha(s,\tau)$ for service $s$ over time.
+Similarly, in isolation, the combination of $M_{\beta_s}$ and $M_{\jtt{D}_s}$ increase the value of service budget compliance $\beta(s,\tau)$ for service $s$ over time. 
+Because in the latter, \jtt{deallocate} is used to decrease the cost of the service and as such increases $\beta(s,\tau)$. 
+
+In reality, resources might fail in the environment.
+The failure of a resource is not and cannot be controlled by the monitoring platform $P$.
+However, the failure of a resource affects the state of a service and its characteristics.
+Thus, we model the environment, including failures, as an additional timed automata, $M_E$.
+In $M_E$, in every monitoring window, there is a probability that some resources fail.
+For example, we present a particular instance of $M_E$ in Figure~\ref{fsm:env}.
+In the this environment, in every monitoring, there is an undeterministic constant ($c$) number of resources that fail.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,thick,scale=0.7,every node/.style={scale=0.7}]
+\node[state,initial]
+  (a) {};
+\node[state]
+  (b) [right of=a] {};
+\node[state]
+  (c) [right of=b] {};
+\path[]
+(a)
+  edge
+  node {$\bfjtt{duration}(0,\tau)$}
+  (b)
+(b)
+  edge
+  node {$\sigma(s)\gets\sigma(s)-c$}
+  (c)
+;
+\end{tikzpicture}
+\caption{An example behavior for $M_E$}
+\label{fsm:env}
+\end{figure}
+
+We define system automata~\cite{jaghoori2010time} (p. 33, Definition 3.2.7) for each service characteristic;
+$\mathcal{S}_\alpha$ for $\alpha(s,\tau)$ and $\mathcal{S}_\beta$ for $\beta(s,\tau)$:
+\[
+\mathcal{S}_\alpha = M_\alpha \parallel M_E \parallel M_P
+\]
+and 
+\[
+\mathcal{S}_\beta = M_\beta \parallel M_E \parallel M_P
+\]
+
+{\Large How can $\mathcal{S}_\alpha$ for service $s$ evolve $\alpha(s,\tau)$ to ensure the SLA is met? How about $\mathcal{S}_\beta$?}
+% 
+
+\begin{thm}
+\label{thm:alpha}
+$\mathcal{S}_\alpha$ can guarantee the SLA of a service $s$ for $\alpha(s,\tau)$ if and only if \textsf{Sch = EDF}.
+\end{thm}
+\begin{proof}
+We begin the proof by the following assumptions that are already discussed:
+\begin{itemize}
+  \item Assumption~\ref{def:platform:cap} holds.
+  \item Monitoring window $\tau$ is set such that $\tau > t_i$.
+  \item The number of failed resources in $M_E$ is bounded by a constant.
+\end{itemize}
+In \cite{fersman2007task} Theorem 3, authors prove that if \textsf{Sch = EDF}, then the task automata is \emph{schedulable} and its schedulability analysis is \emph{decidable}. 
+Therefore, from the schedulability analysis, we conclude that with this setting, there is no task on queues that miss the deadline.
+In other words, $M_{\textsf{A}_s}$ \emph{never} misses a deadline to execture an instance of task type \jtt{allocate}.
+Every task is presented by $(b=t_i, w=\tau,d=\tau)$ and $\tau > t_i$.
+Therefore, in a monitoring window in which a task \jtt{allocate} completes, a new resource is assigned for service $s$;
+i.e. in the next monitoring window, $\kappa_\sigma(s,\tau)$ increases.
+Thus, $\alpha(s,\tau)$ increases.
+The minimum acceptable value for $\alpha(s,\tau)$ is $1-\varepsilon_\alpha$ by Defintion~\ref{def:service:availability}.
+The value $1-\varepsilon_\alpha$ is bounded.
+$M_{\alpha_s}$ continues to generate tasks \jtt{allocate} for $M_{\textsf{A}_s}$ until it passes the condition.
+The number of tasks generated by $M_{\alpha_s}$ is thus bounded.
+Thus, $\mathcal{S}_\alpha$ is able to guarantee $\alpha(s,\tau)$ after a bounded number of monitoring windows.
+\end{proof}
+
+\begin{thm}
+\label{thm:beta}
+$\mathcal{S}_\beta$ can guarantee the SLA of a service $s$ for $\beta(s,\tau)$ if and only if \textsf{Sch = EDF}.
+\end{thm}
+
+\begin{proof}
+Proof is by analogy same as that of Theorem~\ref{thm:alpha}.
+\end{proof}
+
+In practice, the guarantee of $\mathcal{S}_\alpha$ and $\mathcal{S}_\beta$
+in isolation to eventually evolve the system to satisfies the SLA is not enough.
+In reality, a service provider tries ensure both simultaneously to reduce their cost of service delivery while ensuring the delivered service is of the expectations agreed upon with the customer.
+However, these goals conflict.
+When $\alpha(s,\tau)$ increases because of adding a new resource,
+it means that service $s$ costs more, hence $\beta(s,\tau)$ decreases.
+%Under the same $B(s,\tau)$, this means that $\beta(s,\tau)$ decreases.
+The same applies in the other direction: increasing $\beta(s,\tau)$
+negatively affects $\alpha(s,\tau)$.
+
+To capture the combined behavior of service availability and budget compliance,
+we compose them. 
+We define \emph{service sustainability} $\gamma(s,\tau)$ as the composition of $\alpha(s,\tau)$ and $\beta(s,\tau)$.
+We present the composition by system automata $\mathcal{S}_\gamma$ as:
+\[
+\mathcal{S}_\gamma = \mathcal{S}_\alpha \; \parallel \; \mathcal{S}_\beta
+\]
+So, can $\mathcal{S}_\gamma$ also repeat a similar guarantee as in Theorems~\ref{thm:alpha} and \ref{thm:beta}?
+\begin{thm}
+\label{thm:gamma}
+$\mathcal{S}_\gamma$ is schedulable but its schedulability is not decidable.
+\end{thm}
+\begin{thm}[Service Sustainability Convergence]
+\label{thm:service:sust}
+Given any of:
+\begin{itemize}
+  \item $E(s,\tau)$ (Definition \ref{def:service:availability}) is fixed and cannot change, or,
+  \item $B(s,\tau)$ (Definition \ref{def:budget:compliance}) is fixed and cannot change,  
+\end{itemize}
+then, $\mathcal{S}_\gamma$ is \emph{not} schedulable. 
+In addition, the schedulability of $\mathcal{S}_\gamma$ is \emph{not} decidable.
+\end{thm}
+
+\begin{proof}[Service Sustainability Convergence]
+To do.
+\end{proof}
+
+In the next section, we present the result of implementation and evaluation of the monitoring model.

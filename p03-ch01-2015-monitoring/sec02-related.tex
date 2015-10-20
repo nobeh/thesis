@@ -1,0 +1,77 @@
+% -*- root: paper-esocc.tex -*-
+
+% Section: Related Work
+
+\section{Related Work}
+\label{sec:relatedwork}
+
+Vast research work present different aspects of runtime monitoring.
+We focus on those that present a line of research for distributed deployment of services.
+
+%MONINA~\cite{inzinger:monitoring,inzinger2013specification} is a DSL language based on which a generic monitoring architecture is designed.
+%The architecture and the language use a rule engine based on facts.
+%To use MONINA, it is required to model system parts as ``component'' offered by the DSL language.
+%We build our model using timed automata~\cite{alur:1994:timedautomata} with a mapping to ABS~\cite{johnsen2012abs}, a concurrent object-oriented modelling language which is essential for schedulability analysis~\cite{fersman2007task} of real-time and distributed systems.
+%MONINA offers a solution based on facts and ``derived'' facts used by a rule engine to emit corrective events.
+%The DSL language in MONINA introduces \emph{cost} and \emph{capacity}.
+%In contrast, we introduce a generic service metric function to allow for generic definition of a metric from the service's standpoint. 
+%In our model, we also study similar metrics such as cost.
+%To deploy MONINA on the cloud, the authors recommend using the notion of \emph{adaptation in cycles}.
+%It is similar to \emph{monitoring window} that we define further in the paper.
+%However, we formally prove how the selection of the monitoring window is key to the evolution of the service.
+MONINA~\cite{inzinger:monitoring} is a DSL with a monitoring architecture
+which supports certain mathematical optimization techniques.
+A prototype implementation is available.
+%To use MONINA requires developing a MONINA component.
+Accurately capturing the
+behavior of an in-production legacy system coded in a
+conventional language seems challenging: it requires
+developing MONINA components, which
+generate events at a specified fixed rate,  there are no control structures (if-else, loops), the data types that can be used in events are pre-defined, and there are no OO-features. 
+We use ABS~\cite{johnsen2012abs}, an executable modeling language
+that supports all of these features and offers a wide range of tool-supported analyses~\cite{BubelMH14,WongBBGGHMS15}.  The mapping from ABS to timed automata~\cite{alur:1994:timedautomata} allows to
+exploit the state-of-the-art tools for timed automata, in
+particular for reasoning about real-time properties (and, as we show, SLAs using
+schedulability analysis~\cite{fersman2007task}).
+MONINA offers \emph{two pre-defined} parameters that can be used in monitoring to adapt
+the system: cost and capacity.  Our service metric function generalizes this to
+\emph{arbitrary user-defined} parameters, including cost and capacity.
+
+% Furthermore, the architecture applies a set of adaptation rules.
+% The architecture uses an event-driven approach and message passing mechanisms.
+% Our approach leverages the well-established formalism of timed automata~\cite{alur:1994:timedautomata} which allows for static analysis of real-time properties of a service.
+% We do not impose a new language; however, we use the established formalism of timed automata~\cite{alur:1994:timedautomata}.
+% We propose a generic model to be able to characterize arbitrary service properties that may come from different sources.
+% The model in the paper allows for a language-agnostic implementation. 
+%However, MONINA provides an architecture implementation based on Rule Engine technologies and its domain-specific language design.
+
+Hogben and Pannetrat examine in \cite{hogben2013defavail} the challenges of defining and measuring availability to support real-world service comparison and dispute resolution through SLAs.
+They show how two examples of real-world SLAs would lead one service provider to report 0\% availability while another would report 100\% for the same system state history but using a different period of time.
+The transparency that the authors attempt to reach is addressed in our work by the concept of monitoring window and expectation tolerance in Section \ref{sec:modelling}.
+Additionally, the authors take a continuous time approach contrasted with ours that uses discrete time advancements.
+Similarly, they model the property of availability using a two-state model.
+
+%There are related work in the domain of service level agreements (SLA).
+The following research works provide a language or a framework that allows to formalize service level agreements (SLA).
+However, they do not study how such SLAs can be used to monitor the service and evolve it as necessary.
+WSLA~\cite{keller2003wsla} introduces a framework to define and break down customer agreements into a technical description of SLAs and terms to be monitored.
+In ~\cite{mahbub2011translationsla}, a method is proposed to translate the specification of SLA into a technical domain directed in SLA@SOI EU project.
+In the same project, \cite{comuzzi2009defavail} defines terms such as availability, accessibility and throughput as notions of SLA, however, the formal semantics and properties of the notions are not investigated.
+In \cite{chen2007sladecompose}, authors describe how they introduce a function how to decompose SLA terms into measurable factors and how to profile them.
+Timed automata is used in~\cite{raimondi2008fsmsla} to detect violations of SLA and formalize them.
+
+Johnsen~\cite{johnsen2012modeling} introduce ``deployment components'' using Real-Time ABS~\cite{bjork2013:rtabs}.
+A deployment component enables an application to acquire and release resources on-demand based on a QoS specification of the application.
+A deployment component is a high level abstraction of a resource that promotes an application to a resource-aware level of programming.
+Our work is distinguished by the fact that we separate the monitors from the application (service) themselves.
+We argue that we aim to design the monitoring model to be as \emph{non-intrusive} as possible to the service runtime. 
+Thus, we do not deploy the monitors inside the service runtime.
+
+In Quanticol EU project\footnote{Quanticol EU project with no. 600708: \url{http://quanticol.eu/}}, authors in \cite{coles2011cost} and \cite{gilmore2011non} use statistical approaches to observe and guarantee service level agreements for public transportation.
+We also present that service characteristics can be composed together. 
+This means that evolving a system based on SLAs turns into a multi-object optimization problem.
+In addition, in COMPASS EU project\footnote{COMPASS EU project with no. 287829: \url{http://www.compass-research.eu/}}, CML~\cite{woodcock2014contracts} defines a formal language to model systems of systems and the contracts between them.
+CML studies certain properties of the model and their applications.
+CML is used in the context of a Robotics technology to model and ensure how emergency sensors should react and behave according to the SLAs defined for them.
+Our approach is similar to provide a generic model for service characteristics definition, however, we utilize timed and task automata.
+

@@ -1,0 +1,81 @@
+% -*- root: paper-podc.tex -*-
+
+\section{Introduction}
+\label{sec:introduction}
+
+Cloud computing provides the elastic technologies for virtualization. 
+Through virtualization, software may be offered as services (Software as a Service,
+SaaS). 
+One of the aims of SaaS is to allow service providers to offer reliable software services while scaling up and down allocated resources based on their availability, budget, service throughputs and the Service Level Agreements (SLA).
+Thus, it becomes essential that virtualization technologies facilitate elasticity in a way that it enables business owners to \emph{rapidly} evolve their systems to meet their customer requirements and expectations.
+
+The fundamental technical challenge to a SaaS offering is maintaining the quality
+of service (QoS) promised by its SLA. In SaaS, providers must
+ensure a consistent QoS in a dynamic virtualized environment with variable
+usage patterns. Specifically, while virtualized environments such as the cloud
+provide elasticity in resource allocation, they often do not offer an SLA that can
+guarantee constant resource availability. As a result, SaaS providers are
+required to react to resource availability at runtime. Furthermore, by offering a
+$24/7$ software service, SaaS providers must be able to react to certain service
+usage patterns, such as an increase in throughput to ensure the SLA is
+maintained.
+
+Runtime monitoring~\cite{Logean_monitoring,BratanisDS10} is a dynamic analysis approach
+based on
+%observing the runtime of a software system and
+extracting relevant information about the execution.
+Runtime monitoring may be employed to collect statistics about the
+service usage, and to detect and react to service behavior. This latter ability
+is fundamental in the SaaS approach to the provision of virtualized services
+%This ability
+and is the focus of this paper.
+
+In this paper, we formalize characteristics service availability and service budget compliance in a distributed deployment environment.
+We define the elements of a distributed deployment platform that facilitate evolution of a system based on its characteristics.
+We design a timed automaton for each service characteristics, present how the semantics of the timed automaton evolves the system towards its service level agreements.
+We also present the semantics of the distributed environment using a separate timed automaton.
+We prove theorems on the above timed automata and how their semantics guarantee achievement of the service level agreements for service availability and service budget compliance.
+In the semantics of the timed automata, we utilize asynchronous communication along with deadlines for messages.
+Furthermore, we compose service availability and service budget compliance to present service sustainability.
+We show that service sustainability presents a multi-objective optimization problem and to be able to ensure this property, elements of the monitoring platform needs to changes during the runtime of the system.
+% We show how they can be used in the application in business levels and how to design and generate corresponding monitors.
+
+The monitoring model that is presented in this research is able to \emph{observe} a system based on the defined characteristics and \emph{react} to them to ensure the evolution of the system towards its SLA.
+% In this paper we develop an actor-based monitoring model to study the dynamic
+% provisioning of resources to services for maintaining service availability given a
+% certain level of budget compliance. Our monitoring model formalizes the notion of service
+% sustainability, that is, whether a reliable service can be maintained that
+% meets the SLA.
+Specifically, our actor-based model is defined in terms of the Abstract
+Behavioural Specification (ABS) language~\cite{johnsen2012abs} and Real-Time ABS~\cite{johnsen2012modeling}, %that is
+an extension of ABS that allows modelling resources and measuring resource usage.
+%providing scheduling of time concerns for ABS. 
+ABS is an object oriented modelling
+language with a formal executable semantics that is designed for modelling
+highly adaptable distributed concurrent systems. 
+%We provide an operational semantics to our model, and 
+% We formalize the notion of service availability, budget compliance, and service sustainability.
+%We apply the formalization results to present
+% 
+We choose actor model~\cite{agha86book} to base the monitoring model on.
+The monitoring model is required to be reactive to changes; 
+i.e. synchronization risks must be avoided as much as possible.
+Asynchronous communication allows the monitoring model to be concurrent and reactive.
+The monitoring model is expected to expose certain properties based on a time schedule;
+i.e. it should be able to use application-level scheduling mechanisms~\cite{nobakht2013future} to meet its requirements.
+The monitoring model should be non-intrusive and distributed. 
+Gathering service statistics and information at runtime should not affect the runtime behavior of the services themselves.
+In addition, the monitoring model should operate in a distributed environment of services.
+Distributed remote monitors operate
+%against their configured
+services to
+%guard them
+ensure their SLAs.
+
+The rest of the paper is structured as follows: 
+In Section \ref{sec:relatedwork} we discuss related work in relation with runtime monitoring and service level agreements.
+We provide a real-life example from SDL Fredhopper in Section \ref{sec:fredhopper_example} that introduces an industrial case on which we applied our approach. 
+We present the elements of a distributed environment in Section \ref{sec:modelling} and then formalize necessary assumptions and definitions.
+In Section~\ref{sec:timed:fsm}, we present the timed automata for service characteristics and theorems.
+In Section~\ref{sec:implementation}, we briefly provide the implementation and how we evaluated this model.
+Section~\ref{sec:conclusion} presents the future work and concludes the paper.

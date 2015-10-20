@@ -1,0 +1,47 @@
+% -*- root: paper-podc.tex -*-
+
+\section{SDL Fredhopper Cloud Services} % (fold)
+\label{sec:fredhopper_example}
+
+In this section, we introduce a running example in the context of SDL Fredhopper. 
+We use the example in different parts of the paper and also in the experiments.
+
+SDL Fredhopper develops the \frhcsp to offer search and targeting facilities on a large product database to e-Commerce companies as services (SaaS) over the cloud computing infrastructure (IaaS).  
+\frhcsp provides several SaaS offerings on the cloud. 
+These services are exposed at endpoints. 
+In practice these endpoints typically are implemented to accept connections over HTTP.
+For example, one of the services offered by these endpoints is the Fredhopper Query API, which allows users to query over their product catalog via full text search\footnote{\url{http://en.wikipedia.org/wiki/Full_text_search}} and faceted navigation\footnote{\url{http://en.wikipedia.org/wiki/Faceted_navigation}}.
+
+A customer of SDL Fredhopper using Query API owns a \emph{single} HTTP endpoint to use for search and other operations.
+However, internally, a number of resources (virtual machines) are used to deliver Query API for the customer.
+The %set of
+resources used for a customer are managed by a load balancer.
+% to provide a single HTTP endpoint.
+In this model of deployment, each resource is launched to serve \emph{one} instance of Query API; i.e. resources are \emph{not} shared among customers.
+
+When a customer signs a contract with SDL Fredhopper, there is a clause in the contract that describes the minimal QoS levels of the
+%customer regarding the
+Query API.
+For example, we have a notion of query per second (\qps) that defines the number of completed queries per second for a customer. 
+An agreement is a bound on the expected \qps and forms
+%which becomes
+the basis of many decisions (technical or legal) thereafter. 
+The agreement is used by the operations team to set up an environment for the customer which includes the necessary resources described above.
+The agreement is additionally used by the support team to manage communications with the customer during the lifetime of the service for the customer.
+% 
+
+Maintaining the services for more than 250 customers on more than 1000 servers is not an easy operation task
+\footnote{Figures are indication of complexity and scale. Detailed confidential information may be shared upon official request.}.
+Thus, to ensure the agreements in a customer's contract:
+\begin{itemize}
+\item The operation team maintains a monitoring platform to get notifications on the current metrics.
+\item The operation team performs \emph{manual} intervention to ensure that sufficient resources are available for a customer (launching or terminating).
+\item The monitoring platform depends on \emph{human} reaction.
+\item The cost that is spent for a customer on the basis of safety can be \emph{optimized}.
+\end{itemize}
+
+In this paper, we use the notion of \qps as an example in the concepts that are presented in this research. 
+We use the example here to demonstrate how the model that is proposed in this research can address the issues above and alleviate the \emph{manual} work with \emph{automation}. 
+The manual life cycle depends on the domain-specific and contextual knowledge of the operations team for every customer service that is maintained in the deployment environment.
+This is labor-intensive as the operations team stands by $24\times7$.
+In such a manual approach, the business is forced to over-spend to ensure service level agreements for customers. 

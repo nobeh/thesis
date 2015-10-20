@@ -1,0 +1,30 @@
+% -*- root: paper-podc.tex -*-
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+
+In this papereeee, we introduced a distributed monitoring model in order to evolve a service towards its SLA. 
+We formalized characteristics of a distributed service: service availability $\alpha(s,\tau,t_c)$ and service budget compliance $\beta(s,\tau)$.
+We designed task and timed automata for each characteristic to react to the changes of the service in the environment to re-establish its SLA.
+% We presented theorems how SLA for service availability and budget compliance can be met.
+We composed the two characteristics as service sustainability.
+% We showed how the schedulability analsysis of service sustainability builds a model.
+The monitoring model can be used to analyze, model check, and optimize the input parameters to the system (such as $\tau$ and $t_G$), leveraging well-established model checking and schedulability analysis techniques.
+We evaluated the monitoring model on the SDL Fredhopper cloud services.
+We discussed how the results of the evaluation confirm the theorems presented in Section~\ref{sec:timed:fsm} from a practical standpoint.
+
+% Using the formal model of the service characteristics, we design a monitoring model using actors. 
+% Each monitor in the system is responsible for one service.
+% Monitors use asynchronous communication through Real-Time ABS to interact with the platform API.
+% The monitors observe the system and react to the changes or expectations of the properties. 
+% They make changes to the system (\jtt{allocate} or \jtt{deallocate}) through Platform API to ensure the system satisfies its SLA.
+% We presented an evaluation of the implementation of the  monitoring platform.
+% We showed how choosing certain parameters in the system influences the evolution of the services at runtime.
+
+There is a wealth of future work for this research.
+The authors continue to generalize the notion of the distributed service characteristics and how the composition of an arbitrary number of such properties can be formalized and reasoned about.
+% The research is an ongoing effort in ENVISAGE EU project.
+In the context of ENVISAGE project, different case studies define their service characteristics in this monitoring model and framework and observe how the service evolves.
+Additionally, the work will be extended to generate parts of the monitoring platform based on an input of different SLA frameworks such as SLA$\star$~\cite{kearney2010sla}.
+An automated monitoring infrastructure is to be built using the work in this paper to alleviate the challenges discussed in Section~\ref{sec:fredhopper_example} for SDL Fredhopper cloud services.

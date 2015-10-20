@@ -1,0 +1,244 @@
+% -*- root: ../thesis.tex -*-
+
+\chapter[Introduction]{Introduction}
+\label{ch:intro}
+
+\section{From actor \emph{modelling} to actor \emph{programming}}
+\label{sec:intro:abs}
+
+Object-oriented programming~\cite{booch1982object,meyer1988object} has been of one the dominant paradigms for software engineering in the past three decades.
+One object interacts with another object using the notion of a method.
+Method invocations are \emph{blocking}; i.e. the caller object waits until it receives the result of the method call from the callee object.
+Surprisingly, such model of interaction was \emph{never} the intention of the creator of the paradigm.
+Originally, object interactions were meant to be \emph{messaging} among objects and objects behaved as autonomous entities possibly on remote locations on a network; Alan Kay clarified later~\cite{alank1,alank2}. 
+On the contrary, almost all the object-oriented languages at hand have followed the blocking and synchronous model of messaging based on a common misunderstanding. 
+The original definition of object-oriented is close to another model of computation: actor model.  
+
+One of the fundamental elements of actor model~\cite{actors:agha,agha97} is \emph{asynchronous} message passing.
+In this approach, interactions between objects are modelled as \emph{non-blocking} messages.
+One object, the sender, communicates a message to the other object, the receiver.
+At the receiver side, a message eventually leads to a method invocation (in an object-oriented paradigm) or a functional call (in a functional paradigm).
+In actor model, the locality of the objects is transparent from the messages.
+A system is composed of objects with communicating messages.
+
+Considerable amount of research have been carried out to mix object-oriented programming languages with actor model. 
+Language extensions, libraries, and even new programming languages are the naturual outcomes of such research.
+The more mainstream the language, the more research and development are available in the intersection of object orientation and actor model.
+For example, \cite{actor_frameworks_jvm:agha} presents a comparative analysis of such research on Java and JVM languages.
+
+With the rise of computation power, a new aspect added to create a triangle: object-oriented, actor model, and \emph{concurrency}.
+Concurrency makes it harder to verify programs in terms of correctness of runtime behavior. 
+Scheduling of object messages in threads of executions is one of main challenges.
+In addition, in the presence of scheduling and thread interleaving, it is important that objects are able to protect their state from concurrent modifications for correctness properties.
+In this research, we take advantage of a modelling language that aims to mix the three aspects in addition to the capabilities of formal semantics and verification.
+
+ABS~\cite{johnsen2012abs,hahnlehjlssw11} is a modelling language for concurrent objects and distributed systems.
+ABS provides the semantics of actor model~\cite{actors:agha} as a modelling language.
+ABS language provides a set of core features including algebraic data types (ADT), functional layer, and concurrency layer.
+ABS concurrency layer lays its basis on co-operative scheduling of active objects~\cite{creol:broch:owe}.
+ABS semantics is completely expressed in structural operational semantics~\cite{plotkin:sos}.
+This allows ABS models to take advantage of various verification methods and static analysis techniques.
+% 
+Co-operative scheduling in ABS has been additionally extended for real-time scheduling considering priorities and time constraints~\cite{bjork2013:rtabs,johnsen2012modeling}.
+Thus, in general, ABS concurrency layer is a perfect fit if it can be integrated with industry-level real-world programming languages.
+% With distributed computing as one of the recent de-facto requirements in every business use case, an enormous effort has gone to improve the current mainstream programming languages to fit for the new requirements of distributed and concurrent sett1ings.
+
+Considering the mainstream programming languages
+\footnote{\url{http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html}}, Java~\cite{gosling2000java} is one of the most commonly-used.
+Additionally, since Java 1.5 and the rise of concurrency API in Java~\cite{jsr166}, a remarkable effort by the community focus on how concurrency and distribution can be improved in Java as in provided by ABS semantics and actor model.
+However, not all the development as Java libraries and frameworks form their basis on formal semantics. 
+Therefore, this gives rise to issues and challenges in terms of correctness, semantic preservation, and reasoning.
+
+We target to deliver ABS concurrency layer in form of a Java library API.
+However, Java language specification (JLS) clearly concludes that Java language is not comptabile and ready to be extended as a functional language with the support of algebraic data types.
+This has been the focus of research and development to extend Java to a functional language~\cite{odersky1997pizza,henkel2003discovering,nystrom2003polyglot,bracha1998making}.
+Scala language~\cite{odersky2004scala} is a result of the research that is a dynamic, functional, and object-oriented language on JVM.
+Although such extensions over Java towards a functional language exist, they lack formal semantics in the context of concurrency and actor model.
+
+We primarily focus on ABS concurrency layer as a Java library API.
+We argue that the advantage of a correct semantic translation from ABS concurrency layer to its Java equivalent constructs overcomes the additional support of functional layer but with \emph{partial} formal semantics.
+Our approach enables programmers to model their Java systems in terms of ABS concurrency semantics and then create a correct mapping and implementation from ABS to Java using an API.
+In addition, we aim to facilitate ways to actually program in ABS models as if the programmer is able to take advantage of standard Java libraries.
+
+In the next section, we sketch a high-level overview of the architecture design goals and how this research plans its objectives.
+
+\section{Architecture}
+\label{sec:intro:arch:crit}
+
+\paragraph{Polyglot Programming}
+With the rise of distributed computing challenges, software engineering practice has turned to methods that combine multiple programming languages and models to complete a task. 
+In this approach, different languages with different focus and abstractions contribute to the same problem statement in different layers. 
+Polyglot programming essentially enables software practice to apply the \emph{right} language in the appropriate layer of the problem statement. 
+In this research, we follow the question in which we try to deliver ABS semantics and features in a polyglot approach. 
+The programmer develops models with ABS that \emph{partically} take advantage of the target language features (e.g. from Java).
+This approach is also referred to as \emph{Foreign Function Interface} in the context of ABS modelling.
+Listing~\ref{lst:abs:java} shows an ABS code that uses \jtt{java.util.ArrayList} as a data strucuture.
+With Polyglot programming in ABS, the programmer does \emph{not} need to define the abstractions necessary for the list construct. 
+
+\begin{lstlisting}[float=h,language=Java,caption=Using Java in ABS,label=lst:abs:java]
+List<String> params = new ArrayList<>();
+myObj ! doSomething(params);   
+\end{lstlisting}
+
+\paragraph{Scalability} 
+The distribution level that asynchronous message passing mechinism deliver
+challenges performance efficiency.
+In such a context, the number of messsages delivered among actors in the 
+environment is not predictable at runtime.
+The goal is to ensure the actor system scales in performance with least 
+influence from the number of asynchronous messages delivered in the system.
+We direct benchmarks on the system to present the performance of the system
+using different number of messages delivered in the system.
+
+\paragraph{Modularity} 
+The scope of the research spans to a number of layers revolving around ABS
+ language:
+\begin{itemize}
+\item \emph{Compiling ABS to a target programming language}
+One first objective it compile an ABS model to a target programmig language.
+The compilation can be at \emph{source-to-source} or \emph{source-to-bytecode}
+level.
+Target languages potentially include mainstream programming languages such as
+Java, Erlang, Haskell, and Scala.
+Thus, the ABS programmer should be able to use an ABS compiler to compile
+their ABS models to the target languages.
+\item \emph{Using ABS semantics as an API in a programming language}
+ABS language is precisely expressed with structural operational semantics~\cite{johnsen2012abs} in addition to its syntax definition.
+Therefore, the semantics of ABS can be delivered in a programming language
+as Application Programming Interface (API) as long as the programming language provides sufficient constructs to respect ABS language semantics.
+In addition, such ABS programming API should be \emph{verifiable}.
+If such ABS mapping to a programming API is provided, a programmer is able to
+take advantage of ABS semantics without directory programming in ABS.
+Such capability from ABS enables industry users of mainstraim languages to
+model their systems in ABS semantics using their programming languages and
+platforms.
+\item \emph{Modelling in ABS}
+ABS language provides solid structure and semantics to model concurrent
+and distributed systems.
+The user (that can be a programmer, an analysist, or a researcher) rightfully
+demands to have access to a tool-set and IDE that allows working with ABS 
+models in a user-friendly way.
+The ABS IDE and tool-set developers should be able to easily reuse and compose
+over existing modules and components.
+\end{itemize}
+
+Based on the scopes and layers of usage of this research, we aim to provide 
+a highly modular architecture in design and implementation.
+The goal is verifiable based on produced artifacts of this research in terms
+of their \emph{usability}, \emph{re-usability}, and \emph{composability} in
+different contexts.
+
+\paragraph{Extensibility}
+Delivering ABS language features as an API brings about a new requirement to be able to configure and extende the API. 
+It is a common practice in software engineering that components are developed with a mixture of \emph{configuration}, \emph{extension} and \emph{composition}.
+Therefore, the ABS programmer should be able to extend such API to custom requirements. 
+The extensibility is provided either through configuration of the API or API extension.
+
+Figure~\ref{fig:arch} presents the general architecture of the implementation.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.3]{../figs/Arch.eps}
+\caption[General Architecture]{General Architecture of ABS API and Java Language Backend}
+\label{fig:arch}
+\end{figure}
+
+\section{Literature Overview}
+\label{sec:intro:rel}
+
+\subsection{Programming Languages Overview}
+\label{sec:intro:proglangs}
+
+In this section, we briefly provide an overview of the programming languages that have targetted the similar problem statements.
+It is important to note the timeline and the rapid evolution of programming languages trying to provide an actor-based model of asynchronous message passing.
+In addition, we identify different types of research and work related to actor model and concurrency programming:
+\begin{description}
+\item[First-Class Citizen]
+is the type of programming languages that deliver actor model programming support as a first-class citizen of the language.
+In such languages, actor model is by-design part of the syntax and semantics of the language.
+\item[Implicit By Design]
+refers to the type that there is no explicit notion of actor models in the language syntax or semantics.
+However, the programming language provides fundamental constructs for concurrenty and asynchronous message passing.
+Thus, it becomes a trivial task in such type of programming languages to create an abstraction to support the actor model by coding.
+\item[External Library]
+refers to the type of programming languages for which actor model support is possible through using an external library developed for the language.
+\end{description}
+
+
+Table~\ref{tbl:actor:pl} presents a summary.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\textsfb{Language} & \textsfb{Abstraction} & \textsfb{Type} 
+\\ \toprule
+Erlang\cite{erlang:armstrong,erlang:actor} & Process & Implicit By Design 
+\\ \midrule
+Elixir\cite{elixir,elixir:actor} & Agent & Implicit By Design 
+\\ \midrule
+Haskell\cite{con_haskell:wiki} & forkIO \& MVars & Implicit By Design 
+\\ \midrule
+Go\cite{go:actor} & Goroutine & Implicit By Design 
+\\ \midrule
+Rust\cite{rust:2014,rust:actor} & Send \& Sync & Implicit By Design 
+\\ \midrule
+Scala\cite{haller09tcs} & Akka Actors
+\footnote{Scala 2.11.0 adopts Akka as default actor model implementation: \url{http://docs.scala-lang.org/overviews/core/actors-migration-guide.html}}
+& External Library 
+\\ \bottomrule
+\end{tabular}
+\caption{Actor Model Support in Programming Languages}
+\label{tbl:actor:pl}
+\end{table}
+
+\subsection{Frameworks and Libraries}
+\label{sec:intro:libs}
+
+In the previous section, we presented an overview of the programming languages and their categories that aim to provide actor model~\cite{agha86book}.
+Since many programming languages faced different challenges to provide the necessary syntax and semantics for this at the level of the language, many libraries and frameworks have been born with a motivation to fill this gap.
+We observe that the more the language itself is close to the actor model semantics, the less external libraries and frameworks target this gap. 
+In the following, we briefly provide a few frameworks
+\footnote{A more comprehensive list can be obtained at \cite{KarmaniSA09} and  \url{https://en.wikipedia.org/wiki/Actor_model\#Programming_with_Actors}}
+and libraries for Java as one of the main focus areas of this research is to study this gap for a mainstream language such as Java.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lll}
+\textsfb{Library} & \textsfb{Technique} & \textsfb{JVM Language} 
+\\ \toprule
+Killim\cite{srinivasan2008kilim,kilim} & Byte-Code Modification & Java 
+\\ \midrule
+Quasar\cite{quasar} & Byte-Code Modification, Java~8 & Clojure, Java 
+\\ \midrule
+Akka\cite{akka,scala:actors:ordersky} & Scala Byte-Code on JVM & Scala, Java 
+\\ \bottomrule
+\end{tabular}
+\caption{Actor programming libraries in Java}
+\label{tbl:actor:libs}
+\end{table}
+
+One of the main techniques used in libraries to deliver actor programming in Java is byte-code engineering~\cite{dahm1999byte,bruneton2002asm,asm}.
+Byte-code engineering modifies the generated byte-code for compiled classes in Java either during compilation or at runtime.
+Although, this technique is commonly used and argued to provide better performance optimization~\cite{vallee1999soot}, it introduces deep challenges regarding the verification of the running byte-code~\cite{leroy2001java,leroy2003java}.
+Thus, one of the main objectives in this research to provide a \emph{statically} verifiable technique to provide actor programming in Java.
+
+\section{Contributions}
+\label{sec:intro:contribs}
+
+Based on what we discuss in objectives and related work, the contributions of this thesis can be summarized as the following table:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{p{7cm}p{3cm}}
+\textsfb{Topic} & \textsfb{Chapter/Section}
+\\ \toprule
+{Formalization of the mapping from ABS to Java including the operational semantics and ABS co-operative scheduling in Java} & Chapter~\ref{ch:p01:ch01} and \ref{ch:p01:ch02}
+\\ \midrule
+Design and implementation of ABS concurrency layer in Java & Chapter~\ref{ch:p02:ch01} and \ref{ch:p02:ch02}
+\\ \midrule 
+Design and implementation of a massive-scale monitoring system based on ABS API in Java & Chapter~\ref{ch:p03:ch01}
+\\ \bottomrule 
+\end{tabular}
+\caption{Thesis Contributions Summary}
+\label{tbl:thesis}
+\end{table}
