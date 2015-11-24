@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage[top=0.01in,bottom=0.01in,left=0.01in,right=0.01in,paperwidth=4.5in,paperheight=0.85in]{geometry}
+
+\usepackage{alltt}
+\usepackage{amsmath}
+\usepackage{courier}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{pifont}
+\usepackage{url}
+\usepackage[table]{xcolor}
+
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+\newcommand{\thickhline}{\noalign{\hrule height 1.0pt}}
+
+\begin{document} 
+\pagestyle{empty}
+\definecolor{lgray}{rgb}{0.85,0.85,0.85}
+\rowcolors{2}{lgray}{white}
+\begin{center} 
+\begin{tabular}{c c c c}
+ & Instrumentation & Annotation & Technique \\
+\thickhline 
+JML & \ding{51} & \ding{53} & Unit, Integration \\ 
+JavaMOP & \ding{51} & \ding{53} & Unit, Integration \\ 
+PQL & \ding{51} & \ding{53} & Unit, Integration \\ 
+JMSeq & \ding{53} & \ding{51} & Unit, Integration \\ 
+\end{tabular}
+\end{center}
+\end{document}

@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage[top=0.1in,bottom=0.1in,left=0.1in,right=0.1in,paperwidth=4in,paperheight=1.9in]{geometry}
+
+\usepackage{alltt}
+\usepackage{amsmath}
+%\usepackage{courier}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{url}
+
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+
+
+\begin{document} 
+\pagestyle{empty}
+\begin{center}
+\begin{alltt}
+\normalfont\small\(\langle\)\textsl{Specification}\(\rangle\) \(::=\) \(\langle\)\textsl{Call}\(\rangle\) \(|\) \(\langle\)\textsl{Call}\(\rangle\) \(\langle\)\textsl{Specification}\(\rangle\) \(|\)
+                \(\langle\)\textsl{Specification}\({\rangle}\)\superscript{m} \(|\) \(\langle\)\textsl{Specification}\(\rangle$\) \(|\) \(\langle\)\textsl{Specification}\(\rangle#\) \(|\)
+                \((\langle\)\textsl{Specification}\(\rangle)\)
+\(\langle\)\textsl{Call}\(\rangle\) \(::=\) \(\{\)\textbf{\texttt{call}}\((\langle\)\textsl{Signature}\(\rangle)\langle\)\textsl{InnerCall}\(\rangle\}\$ |\) 
+              \(\{\)\textbf{\texttt{call}}\((\langle\)\textsl{Signature}\(\rangle)\langle\)\textsl{InnerCall}\(\rangle\}\#\) \( | \)
+              \(\{\)\textbf{\texttt{call}}\((\langle\)\textsl{Signature}\(\rangle)\langle\)\textsl{InnerCall}\(\rangle\}\)\superscript{m} \( | \)
+              \(\{\)\textbf{\texttt{call}}\((\langle\)\textsl{Signature}\(\rangle)\langle\)\textsl{InnerCall}\(\rangle\}\) \( | \)
+              \(\{\)\textbf{\texttt{call}}\((*)\}\) \( | \)
+              \(<\langle\)\textsl{Call}\(\rangle ? \langle\)\textsl{Call}\(\rangle>\)
+\(\langle\)\textsl{InnerCall}\(\rangle\) \(::=\) \([\langle\)\textsl{Call}\(\rangle]\langle\)\textsl{InnerCall}\(\rangle | \epsilon\) 
+\(\langle\)\textsl{Signature}\(\rangle\) \(::=\) \(\langle\)\textit{\texttt{AspectJ Call Expression Signature}}\(\rangle\)
+\end{alltt}
+\end{center}
+\end{document}
