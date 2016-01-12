@@ -9,7 +9,7 @@ CMD_BIB="bibtex"
 function clean {
    if [[ -f ".gitignore" ]]; then
       for f in $(cat .gitignore); do
-         [[ -f $f ]] && rm $f
+         [[ -f $f && $f != ".todo.md" ]] && rm $f
       done 
    fi
 }

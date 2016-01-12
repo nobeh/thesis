@@ -303,8 +303,8 @@ In the following, we explain how the active object behaves in different scenario
 %\begin{center}
 \includegraphics[scale=0.36]{figs/seq-diag-1}
 ~\\[-3.5cm]ADD:\\[2.5cm]
-  \caption{Adding the new MethodInvocations are performed on the Client side.}
-  \label{fig:add}
+\caption[New MethodInvocation]{Adding the new MethodInvocations are performed on the Client side.}
+\label{fig:add}
 %\end{center}
 \end{figure}
 
@@ -365,7 +365,7 @@ and customized based on the requirements by the user.
 %\vspace{-1.3cm}
   \includegraphics[scale=0.3]{figs/seq-diag-2}
 % \vspace{-.7cm}
-  \caption{An active object selects a method invocation based on its local scheduling policy. After a method finishes execution, the whole scenario is repeated.}
+\caption[Policy-based selection of a MethodInvocation]{An active object selects a method invocation based on its local scheduling policy. After a method finishes execution, the whole scenario is repeated.}
 \end{center}
 \label{fig:take}
 \end{figure}
@@ -434,7 +434,7 @@ When a suspended method invocation is resumed, the execution manager skips the c
 % \vspace{-1.3cm}
  \includegraphics[scale=0.35]{figs/seq-diag-3}
 % \vspace{-.7cm}
-\caption{A method invocation is executed in an interruptible process. The execution manager thread is blocked while the interruptible process is running.}
+\caption[Execution of a MethodInvocation]{A method invocation is executed in an interruptible process. The execution manager thread is blocked while the interruptible process is running.}
 \end{center}
 \label{fig:execute}
 \end{figure}
