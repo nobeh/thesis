@@ -254,16 +254,18 @@ Access to the sender of the message in Akka is provided by \jtt{sender()}.
 In the main method as described in Listing \ref{lst:main:akka} we show how the initialize and start the ping/pong match.
 Note that a reference to the ``pong'' actor is passed to the ``ping'' actor.
 
-\begin{wrapfigure}{r}{0.48\textwidth}
-\vspace{-20pt}
+\begin{figure}[h]
+% \begin{wrapfigure}{r}{0.48\textwidth}
+% \vspace{-20pt}
 \begin{lstlisting}[caption=main in Akka,label=lst:main:akka]
 ActorSystem s = ActorSystem.create();
 ActorRef pong = s.actorOf(Props.create(Pong.class));
 ActorRef ping = s.actorOf(Props.create(Ping.class, pong));
 ping.tell(""); // To get a Future
 \end{lstlisting}
-\vspace{-20pt}
-\end{wrapfigure}
+% \vspace{-20pt}
+% \end{wrapfigure}
+\end{figure}
 
 Further, both the \jtt{onReceive} methods are invoked by Akka \jtt{ActorSystem} itself. 
 In general, Akka actors are of type  \jtt{ActorRef} which is an abstraction provided by Akka to allow actors send asynchronous messages to one another.
@@ -300,18 +302,21 @@ actor progresses by taking a message out of its queue and processing
 it by executing its corresponding method.  A method is a piece of
 sequential code that may send messages.
 % 
+
 \lstset{language=Java}
-\begin{wrapfigure}{r}{0.48\textwidth}
-\vspace{-20pt}
+\begin{figure}[h]
+% \begin{wrapfigure}{r}{0.48\textwidth}
+% \vspace{-20pt}
 \begin{lstlisting}[caption=main in ABS,label=lst:main:ABS]
 ABSIPong pong;
 pong = new ABSPong;
 ping = new ABSPing(pong);
 ping ! ping("");
 \end{lstlisting}
-\vspace{-20pt}
-\end{wrapfigure}
-% 
+% \vspace{-20pt}
+% \end{wrapfigure}
+\end{figure}
+
 Asynchronous method calls use futures as dynamically generated references  to return values.
 The execution of a method can be (temporarily) suspended by release statements which give rise to a form
 of  cooperative scheduling of method invocations inside concurrent (active) objects.

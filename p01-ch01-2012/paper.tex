@@ -361,13 +361,13 @@ and customized based on the requirements by the user.
 
 \begin{figure}[t]
 ~\\TAKE:\\
-%\begin{center}
+\begin{center}
 %\vspace{-1.3cm}
   \includegraphics[scale=0.3]{figs/seq-diag-2}
-\vspace{-.7cm}
+% \vspace{-.7cm}
   \caption{An active object selects a method invocation based on its local scheduling policy. After a method finishes execution, the whole scenario is repeated.}
-  \label{fig:take}
-%\end{center}
+\end{center}
+\label{fig:take}
 \end{figure}
 
 \ftt{SchedulingManager} is an interface the implementations of which
@@ -430,13 +430,13 @@ When a suspended method invocation is resumed, the execution manager skips the c
 
 \begin{figure}[t]
 ~\\EXECUTE:\\
-% \begin{center}
+\begin{center}
 % \vspace{-1.3cm}
  \includegraphics[scale=0.35]{figs/seq-diag-3}
-\vspace{-.7cm}
+% \vspace{-.7cm}
 \caption{A method invocation is executed in an interruptible process. The execution manager thread is blocked while the interruptible process is running.}
-  \label{fig:execute}
-% \end{center}
+\end{center}
+\label{fig:execute}
 \end{figure}
 
 

@@ -198,7 +198,7 @@ the \gett\space operation is \emph{aborted} and the exception is \emph{propagate
 Exceptions can be caught by \jtt{try-catch} blocks. 
 
 \lstset{language=Creol,escapeinside={(*}{*)}} 
-\vspace{-20pt}
+% \vspace{-20pt}
 \begin{lstlisting}[float=h, label=lst:try:catch, caption=Using try-catch for processing future values]
 try {
 	x = f.get(e)
@@ -207,7 +207,8 @@ try {
 	S_2
 }
 \end{lstlisting}
-\vspace{-20pt}
+% \vspace{-20pt}
+
 For example, in Listing \ref{lst:try:catch}, if the \gett \space operation raises an exception  control,  is transferred to line (5);
 otherwise, the execution continues in line (3). 
 In the \jtt{catch} block, the programmer has also access to the occurred exception that can be 
@@ -252,16 +253,18 @@ i.e., the \gett \space operation will timeout after the specified units of time.
 % \emph{Discussion?} Compare the approaches: event-based with no get() and exceptions as messages vs. messages with exceptions
 \subsection{Case Study: Fredhopper Distributed Data Processing} \label{sec:frh}
 
-\begin{wrapfigure}{r}{0.4\textwidth}
-\vspace{-40pt}
+\begin{figure}[h]
+% \begin{wrapfigure}{r}{0.4\textwidth}
+% \vspace{-40pt}
 \begin{center}
 \includegraphics[scale=0.4]{figs/DM}
 \end{center}
-\vspace{-20pt}
+% \vspace{-20pt}
 \caption{Fredhopper's Controller life cycle for remote data processing}
 \label{fig:frh-dm}
-\vspace{-10pt}
-\end{wrapfigure}
+% \vspace{-10pt}
+% \end{wrapfigure}
+\end{figure}
 
 Fredhopper is an SDL company since 2008 and a leading search, merchandising and personalization solution provider, whose
 products are uniquely tailored to the needs of online business. Fredhopper operates behind the scenes of more than 100 of the largest online
@@ -652,10 +655,11 @@ We apply the approach discussed in this paper to use deadlines for asynchronous 
 Listing \ref{lst:frh:polling} and \ref{lst:frh:deadlines} present the difference in the previous Controller and the approach in Crisp.
 The left code snippet shows the Controller that uses polling to retrieve data processing results.
 The right code snippet shows the one that uses messages with deadlines.
+
 \lstset{language=Creol,escapeinside={(*}{*)}} 
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\vspace{-25pt}
+% \vspace{-25pt}
 \begin{lstlisting}[label=lst:frh:polling, caption=With polling]
 class DataProcessor begin
 	op process(d: Data) ==
@@ -673,7 +677,7 @@ end
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\vspace{-25pt}
+% \vspace{-25pt}
 \begin{lstlisting}[label=lst:frh:deadlines, caption=With deadlines]
 class DataProcessor begin
 	op process(d: Data) == 
@@ -690,7 +694,7 @@ class DataProcessor begin
 end 
 \end{lstlisting}
 \end{minipage}
-\vspace{-10pt}
+% \vspace{-10pt}
 \end{center}
 
 % We simplify details in the listing by higher level abstractions using straightforward naming.
@@ -735,10 +739,11 @@ However, this behavior may be extended and replaced by a custom implementation f
 In this case study, the priority of processes may differ if they the job request comes from specific customer; i.e.
 apart from deadlines, some customers have priority over others because they require a more real-time action on their job requests while others run a more relaxed business model.
 To model and implement this custom behavior, a custom scheduler is developed for the data processing node.
+
 \lstset{language=Creol,escapeinside={(*}{*)}} 
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\vspace{-30pt}
+% \vspace{-30pt}
 \begin{lstlisting}[label=lst:frh:dm, caption=Data Processor class]
 class DataProcessor begin
 	var scheduler := new DataScheduler()
@@ -749,7 +754,7 @@ end
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\vspace{-30pt}
+% \vspace{-30pt}
 \begin{lstlisting}[label=lst:frh:sched, caption=Custom scheduler]
 class DataScheduler extends DefaultSchedulingManager {
 	boolean isPrior(Process p1, Process p2) {
@@ -761,8 +766,9 @@ class DataScheduler extends DefaultSchedulingManager {
 }
 \end{lstlisting}
 \end{minipage}
-\vspace{-15pt}
+% \vspace{-15pt}
 \end{center}
+
 In the above listings, Listing \ref{lst:frh:sched} defines a custom scheduler that determines the priority of two processes with custom logic for specific customer.
 To use the custom scheduler, the only requirement is that the class \jtt{DataProcessor} defines a specific class variable called \jtt{scheduler} in Listing \ref{lst:frh:dm}.
 The \textsl{custom scheduler} is picked up by Crisp core architecture and is used to schedule the queued processes.
@@ -771,16 +777,20 @@ Thus, all processes from customer \jtt{A} have priority over processes from othe
 
 We use Controller's logs for the period of February and March 2013 to examine the evaluation of Crisp approach.
 We define \emph{customer satisfaction} as a property that represents the effectiveness of futures with deadline.
-\begin{wraptable}{l}{0.25\textwidth}
-\vspace{-15pt}
+
+\begin{table}[h]
+% \begin{wraptable}{l}{0.25\textwidth}
+% \vspace{-15pt}
 \begin{tabular}{c c}\thickhline
 $s_1$ & $s_2$ \\ \thickhline
 $88.71\%$ & $94.57\%$ \\ \hline
 \end{tabular}
 \caption{Evaluation Results}
 \label{tbl:eval}
-\vspace{-15pt}
-\end{wraptable}
+% \vspace{-15pt}
+% \end{wraptable}
+\end{table}
+
 For a customer $c$, the satisfaction can be denoted by $s = \frac{r^F_c}{r_c}$; in which $r^F_c$ is the number of finished data processing jobs and $r_c$ is the total number of requested data processing jobs from customer $c$. 
 We extracted statistics for completed and never-ended data processing jobs from Controller logs ($s_1$).
 We replayed the logs with Crisp approach and measured the same property ($s_2$).

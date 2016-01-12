@@ -50,7 +50,7 @@ If the condition fails, $M_{\alpha_s}$ requests $P$ to \jtt{allocate} a new reso
 In addition, $M_{\alpha_s}$ triggers a new task $\jtt{verify}_\alpha$ with deadline $t_G$.
 Intuitively, this means the service characteristic $\alpha(s,\tau,t_c)$ is verified to be within the expected thresholds after at most $t_G$ time.
 \begin{figure}[h]
-\vspace{-15pt}
+% \vspace{-15pt}
 \captionsetup[subfigure]{font=footnotesize}
 \centering
 \subcaptionbox{\scriptsize{$M_{\alpha_s}$ task automata for $\alpha(s,\tau,t_c)$}\label{fig:fsm:task:alpha}}[0.45\textwidth]{
@@ -98,9 +98,9 @@ Intuitively, this means the service characteristic $\alpha(s,\tau,t_c)$ is verif
 ;
 \end{tikzpicture}
 }
-\vspace{-10pt}
+% \vspace{-10pt}
 % \caption{{\scriptsize Task Automata for $\alpha(s,\tau,t_c)$ and $\beta(s,\tau)$}}
-\vspace{-10pt}
+% \vspace{-10pt}
 \end{figure}
 
 We use a separate task automaton for each service characteristic to verify the SLA of the service after $t_G$ time.
@@ -109,7 +109,7 @@ $M^{\alpha}_{\jtt{V}}$ uses \bfjtt{await} to ensure the condition of the SLA.
 In addition, the task is controlled by the scheduler using a deadline that is specified as $t_G$ in the generated task $\jtt{verify}_\alpha(s,t_G)$ in $M_{\alpha_s}$. 
 If $t_G$ passes before the guard statement in \bfjtt{await} statement holds, it leads to a \emph{missed deadline}.
 \begin{figure}[h]
-\vspace{-20pt}
+% \vspace{-20pt}
 \captionsetup[subfigure]{font=scriptsize}
 \centering
 \subcaptionbox{\scriptsize{$M^{\alpha}_{\jtt{V}}$ to execute $\jtt{verify}_\alpha$}\label{fig:fsm:task:verify:alpha}}[0.45\textwidth]{
@@ -142,9 +142,9 @@ If $t_G$ passes before the guard statement in \bfjtt{await} statement holds, it 
 ;
 \end{tikzpicture}%
 }
-\vspace{-10pt}
+% \vspace{-10pt}
 % \caption{{\scriptsize Task automata to execute $\jtt{verify}_\alpha$ and $\jtt{verify}_\beta$}}
-\vspace{-10pt}
+% \vspace{-10pt}
 \end{figure}
 
 Both $M_{\alpha_s}$ and $M_{\beta_s}$ are specific to one particular service $s$.
@@ -171,7 +171,7 @@ We define $M_{\jtt{A}_s}$ as the timed automata to execute the tasks of type \jt
 We use the model  semantics presented in \cite{jaghoori2010time} p. 92 to design $M_{\jtt{A}_s}$. The resulting automata is presented in Figure~\ref{fig:fsm:alloc_s}.
 
 \begin{figure}[h]
-\vspace{-20pt}
+% \vspace{-20pt}
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,thick,scale=0.7,every node/.style={scale=0.7}]
 \node[state,initial]    
@@ -191,9 +191,9 @@ We use the model  semantics presented in \cite{jaghoori2010time} p. 92 to design
     (c)
 ;
 \end{tikzpicture}
-\vspace{-15pt}
+% \vspace{-15pt}
 \caption{{\scriptsize{$M_{\jtt{A}_s}$: Timed Automaton to execute task type \jtt{allocate} in $M_P$}}
-\vspace{-20pt}
+% \vspace{-20pt}
 \label{fig:fsm:alloc_s}}
 \end{figure}
 
@@ -205,7 +205,7 @@ Similarly, we design $M_{\jtt{D}_s}$ to execute task type \jtt{deallocate} in Fi
 Therefore, we also have $M_{\jtt{D}}$ in $M_P$ as: $M_{\jtt{D}} = \; \parallel_s M_{\jtt{D}_s}$.
 % 
 \begin{figure}[h!]
-\vspace{-10pt}
+% \vspace{-10pt}
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,thick,scale=0.7,every node/.style={scale=0.7}]
 \node[state,initial]    
@@ -225,9 +225,9 @@ Therefore, we also have $M_{\jtt{D}}$ in $M_P$ as: $M_{\jtt{D}} = \; \parallel_s
     (c)
 ;
 \end{tikzpicture}
-\vspace{-15pt}
+% \vspace{-15pt}
 \caption{{\scriptsize{$M_{\jtt{D}_s}$: Timed Automaton to execute task type \jtt{deallocate} in $M_P$}}
-\vspace{-20pt}
+% \vspace{-20pt}
 \label{fig:fsm:dealloc_s}}
 \end{figure}
 % 
@@ -249,7 +249,7 @@ For example, we present a particular instance of $M_E$ in Figure~\ref{fsm:env}.
 In this environment, in every monitoring, an unspecified constant ($c$) number of resources fail.
 
 \begin{figure}[h]
-\vspace{-20pt}
+% \vspace{-20pt}
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,thick,scale=0.7,every node/.style={scale=0.7}]
 \node[state,initial]
@@ -269,10 +269,10 @@ In this environment, in every monitoring, an unspecified constant ($c$) number o
   (c)
 ;
 \end{tikzpicture}
-\vspace{-13pt}
+% \vspace{-13pt}
 \caption{\scriptsize{An example behavior for $M_E$}}
 \label{fsm:env}
-\vspace{-20pt}
+% \vspace{-20pt}
 \end{figure}
 
 We define system automata~\cite{jaghoori2010time} (p. 33, Definition 3.2.7) for each service characteristic;
