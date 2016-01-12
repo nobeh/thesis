@@ -21,19 +21,35 @@ At the receiver side, a message eventually leads to a method invocation (in the 
 Actor model features location transparency; i.e. the physical location of objects is not visible to other objects.
 A system is composed of objects that communicate through messages.
 
-A considerable amount of research has been carried out to mix object-oriented programming languages with the actor model. 
-+\TODO{Find good references.}
+A considerable amount of research has been carried out to mix object-oriented programming languages with the actor model~\cite{philippsen2000survey}. 
 Language extensions, libraries, and even new programming languages are the natural outcomes of such research.
 The more mainstream the language, the more research and development are available in the intersection of object orientation and actor model.
 For example, \cite{actor_frameworks_jvm:agha} presents a comparative analysis of such research for Java and JVM languages.
 
 The rapid increase of computational power added a new aspect added to create a triangle: object-oriented, actor model, and \emph{concurrency}.
-Concurrency makes it harder to verify programs in terms of correctness of runtime behavior. 
-+\TODO{Why concurrency makes it harder?}
+Concurrency makes it harder to verify programs in terms of correctness of runtime behavior~\cite{Herlihy:1990:linear,johnsen:history,agha:predictive:safety}. 
 Scheduling of object messages in threads of executions is one of main challenges.
 In addition, in the presence of scheduling and thread interleaving, it is important that objects are able to protect their state from concurrent modifications for correctness properties.
 In this thesis, we take advantage of a modelling language that aims to mix the three aspects in addition to the capabilities of formal semantics and verification.
-+\TODO{Explain the gain of utilization from concurrency perspective.}
+
+The core contributions of this thesis target at the intersection of object 
+orientation, actor model, and concurrency.
+We choose Java as the main programming language and as one of the mainstream 
+object-oriented languages. 
+We formalize a subset of Java and its concurrency API~\cite{jsr166} to 
+facilitate formal verification and reasoning about it.
+We create an abstract mapping from a concurrent-object modelling language, 
+ABS~\cite{johnsen2012abs}, to programming semantics of Java concurrency. 
+We provide the formal semantics of the mapping and runtime properties of 
+the concurrency layer including deadlines and scheduling policies.
+We provide an implementation of ABS concurrency layer as a Java API library 
+and framework utilizing the latest langauge additions 
+in Java 8~\cite{jsr335:lambda:translation}.
+We design a large-scale monitoring system as a real-world application; 
+the monitoring system is built with actors and ABS concurrency 
+with formal semantics of ABS composed with 
+schedulability analysis~\cite{fersman2007task}.
+We elaborate on the elements of this research in the following.
 
 ABS~\cite{johnsen2012abs,hahnlehjlssw11} is a modelling language for concurrent objects and distributed systems.
 ABS is based on the semantics of the actor model~\cite{actors:agha}.
