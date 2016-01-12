@@ -105,8 +105,10 @@ In our framework,
 \emph{monitoring platform}  $P$ is responsible for (de-)allocation of resources for computation or storage.
 We abstract from a specific implementation of the monitoring platform $P$ through an API in Listing~\ref{lst:platform}. 
 % 
+
 \lstset{language=java,aboveskip=-20pt,belowskip=-20pt}
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{figure}[h]
+% \begin{wrapfigure}{r}{0.5\textwidth}
 % \vspace{-15pt}
 \begin{center}
 \begin{lstlisting}[mathescape,caption=Platform API,label=lst:platform]
@@ -120,9 +122,11 @@ interface Platform {
 \end{lstlisting}
 \end{center}   
 % \vspace{-15pt}
-\end{wrapfigure}
+% \end{wrapfigure}
+\end{figure}
 \lstset{mathescape=false}
 % 
+
 There is only \emph{one} instance of $P$ available.
 In this paper, $P$ internally uses an external infrastructure provisioning API to provide resources (e.g. AWS EC2).
 The term ``platform'' is interchangeably used for monitoring in this paper.

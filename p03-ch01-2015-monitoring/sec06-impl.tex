@@ -29,7 +29,8 @@ The following summarizes the behavior:
 \end{itemize}
 
 % 
-\begin{wrapfigure}{r}{0.6\textwidth}
+\begin{figure}[h]
+% \begin{wrapfigure}{r}{0.6\textwidth}
 % \vspace{-40pt}
 \begin{center}
 \includegraphics[scale=0.6]{figs/alpha.eps}  
@@ -38,8 +39,10 @@ The following summarizes the behavior:
 \caption{{\scriptsize Evolving $\alpha(s,\tau,t_c)$ with different $\tau$}}
 \label{fig:alpha}
 % \vspace{-20pt}
-\end{wrapfigure}
+% \end{wrapfigure}
+\end{figure}
 %
+
 Every monitoring measurement is performed in a monitoring window $\tau$.
 Monitoring measurements are aggregated and calculated in every window and form the basis of reactions necessary to evolve the service to meet their SLA.
 Thus, selection of an appropriate monitoring window length $\tau$ is crucial, as we also discussed how schedulability analysis can be used to optimize it.
