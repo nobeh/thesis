@@ -26,11 +26,10 @@ Language extensions, libraries, and even new programming languages are the natur
 The more mainstream the language, the more research and development are available in the intersection of object orientation and actor model.
 For example, \cite{actor_frameworks_jvm:agha} presents a comparative analysis of such research for Java and JVM languages.
 
-The rapid increase of computational power added a new aspect added to create a triangle: object-oriented, actor model, and \emph{concurrency}.
+The rapid increase of computational power added a new aspect to create a triangle: object-oriented, actor model, and \emph{concurrency}.
 Concurrency makes it harder to verify programs in terms of correctness of runtime behavior~\cite{Herlihy:1990:linear,johnsen:history,agha:predictive:safety}. 
 Scheduling of object messages in threads of executions is one of main challenges.
 In addition, in the presence of scheduling and thread interleaving, it is important that objects are able to protect their state from concurrent modifications for correctness properties.
-In this thesis, we take advantage of a modelling language that aims to mix the three aspects in addition to the capabilities of formal semantics and verification.
 
 The core contributions of this thesis target at the intersection of object 
 orientation, actor model, and concurrency.
@@ -66,7 +65,6 @@ However, ABS has so far remained mainly as a modelling language.
 
 One core challenge is to combine ABS semantics (e.g. concurrency layer) in a
 programming language.
-\TODO{Elaborate the core contributions of this thesis}
 Considering the mainstream programming languages
 \footnote{\url{http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html}}, Java~\cite{gosling2000java} is one of the most commonly-used.
 Since Java 1.5 and the rise of the concurrency API in Java~\cite{jsr166}, substantial effort is spend by the community on how concurrency and distribution can be improved in Java, along the lines of the actor model, as provided by ABS.
@@ -265,17 +263,8 @@ Although, this technique is commonly used and argued to provide better performan
 \section{Organization and Contributions}
 \label{sec:intro:contribs}
 
-\TODO{Connect back to the problem statement paraph}
-
-In this thesis, we focus on the concurrency layer of ABS.
-We formalize a subset of Java language in regards with ABS\TODO{Check for the way around}.
-We provide the operational semantics of the concurrency layer for scheduling of actors with an extension for deadlines and priorities. 
-We deliver ABS concurrency as a Java API.
-We utilize Java~8 and Java Concurrency API to preserve the semantics of ABS concurrency layer.
-We sketch a general architecture on how ABS language can be modularly translated into different programming languages.
-We present how this ABS API library can be used to translate ABS models into Java.
-
-Table~\ref{tbl:thesis} summarizes the structure of the research and contributions in the chapters of this text:
+Based on the problem statement and approach taken in this research, 
+Table~\ref{tbl:thesis} summarizes the structure of this text:
 
 \begin{table}[h]
 \centering
@@ -293,4 +282,27 @@ Design and implementation of a massive-scale monitoring system based on ABS API 
 \end{tabular}
 \caption{Thesis Contributions Summary}
 \label{tbl:thesis}
+\end{table}
+
+In addition, Table~\ref{tbl:papers} summarizes the conference and journal 
+publications as a result of this research:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{p{7cm}p{5cm}p{1cm}}
+\textsfb{Topic} & \textsfb{Proceedings / Journal} & \textsfb{Year}   
+\\ \toprule
+Programming and Deployment of Active Objects with Application-Level Scheduling & ACM SAC 2012, Pages 1883--1888 & 2012 
+\\ \midrule
+The Future of a Missed Deadline & COORD 2013, Pages 181--195 & 2013 
+\\ \midrule
+Monitoring Method Call Sequences using Annotations & Journal of Science of Computer Programming, 2014, Volume 94, Part 3, Pages 362--378 & 2014 
+\\ \midrule
+Programming with actors in Java~8 & ISoLA 2014, Pages 37--53 & 2014 
+\\ \midrule
+Formal verification of service level agreements through distributed monitoring & ESOCC 2015, Pages 125--140 & 2015
+\\ \bottomrule
+\end{tabular}
+\caption{Actors At Work -- Conference and Journal Publications}
+\label{tbl:papers}
 \end{table}
