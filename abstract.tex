@@ -1,14 +1,32 @@
-% !TEX root = ../thesis-example.tex
+% !TEX root = thesis.tex
 %
 \pdfbookmark[0]{Abstract}{Abstract}
 \chapter*{Abstract}
 \label{sec:abstract}
 \vspace*{-10mm}
 
-\blindtext
+This thesis contributes to the intersection of object orientation, actor 
+model, and concurrency.
+We choose Java as the main programming language and as one of the mainstream 
+object-oriented languages. 
+We formalize a subset of Java and its concurrency API to 
+facilitate formal verification and reasoning about it.
+We create an abstract mapping from a concurrent-object modelling language, 
+ABS, to programming semantics of Java concurrency. 
+We provide the formal semantics of the mapping and runtime properties of 
+the concurrency layer including deadlines and scheduling policies.
+We provide an implementation of ABS concurrency layer as a Java API library 
+and framework utilizing the latest langauge additions 
+in Java~8.
+We design and implement a runtime monitoring framework, JMSeq, to verify the
+sequenced execution of methods through code annotatinon in JVM. 
+In addition, we design a large-scale monitoring system as a real-world 
+application; the monitoring system is built with actors and ABS concurrency 
+with formal semantics of ABS composed with schedulability 
+analysis.
 
 \vspace*{20mm}
 
-{\usekomafont{chapter}Abstract (different language)}\label{sec:abstract-diff} \\
+{\usekomafont{chapter}Samenvatting}\label{sec:abstract-diff} \\
 
-\blindtext
+\TODO{Translate to Dutch. Kindly by Stijn.}

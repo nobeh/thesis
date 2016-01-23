@@ -44,10 +44,12 @@ the concurrency layer including deadlines and scheduling policies.
 We provide an implementation of ABS concurrency layer as a Java API library 
 and framework utilizing the latest langauge additions 
 in Java 8~\cite{jsr335:lambda:translation}.
-We design a large-scale monitoring system as a real-world application; 
-the monitoring system is built with actors and ABS concurrency 
-with formal semantics of ABS composed with 
-schedulability analysis~\cite{fersman2007task}.
+We design and implement a runtime monitoring framework, JMSeq, to verify the
+sequenced execution of methods through code annotatinon in JVM. 
+In addition, we design a large-scale monitoring system as a real-world 
+application; the monitoring system is built with actors and ABS concurrency 
+with formal semantics of ABS composed with schedulability 
+analysis~\cite{fersman2007task}.
 We elaborate on the elements of this research in the following.
 
 ABS~\cite{johnsen2012abs,hahnlehjlssw11} is a modelling language for concurrent objects and distributed systems.
