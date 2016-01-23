@@ -1,11 +1,6 @@
-% fix some latex issues see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
+% Fix some latex issues 
+% see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
 \RequirePackage{fix-cm} 
-
-% \documentclass[%
-% 11pt,%
-% twosided,%
-% showtrims%
-% ]{memoir}
 
 \documentclass[%
    paper=A4,               % paper size --> A4 is default in Germany
@@ -53,6 +48,7 @@
 % define depth of toc
 \setcounter{tocdepth}{2}      
 % display table of contents
+\pdfbookmark[0]{Contents}{Contents}
 \tableofcontents           
 \cleardoublepage
 
