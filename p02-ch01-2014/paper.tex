@@ -43,7 +43,7 @@ This has led to valuable research results and numerous libraries and frameworks 
 However, it is widely recognized that the thread-based model of concurrency in Java that is a well-known approach is not appropriate for realizing distributed systems because of its inherent synchronous communication model.
 On the other hand, the event-driven actor model of concurrency introduced by Hewitt \cite{Hewitt69} is 
 a powerful concept for modeling distributed and concurrent
-systems \cite{Agha90,Agha97}. 
+systems \cite{Agha90,agha97}. 
 Different extensions of actors are proposed in several domains and are claimed to be the most suitable model of computation for many  applications \cite{Hewitt07-commitment}. 
 Examples of these domains include designing embedded systems \cite{LeeACtorEmbedded03,LeeLN09}, 
 wireless sensor networks \cite{CheongSensor05}, multi-core programming \cite{KarmaniSA09} 
@@ -739,7 +739,7 @@ Not only the routing layer can provide distribution, the queue layer of the arch
 A remote routing layer can provide access to actors transparently through standard naming or addresses.
 % The implementation of remote actors is left as an the extension or plugin that is injected into the system.
 % For instance, an extension may choose to provide remote actor access through HTTP layer; however, another may opt for a network layer implementation.
-We exploit the main properties of actor model~\cite{Agha97,Agha90} to distribute actors based on our implementation.
+We exploit the main properties of actor model~\cite{agha97,Agha90} to distribute actors based on our implementation.
 From a distributed perspective, the following are the main requirements for  distributing actors:
 \begin{description}
 \item[Reference Location Transparency] 
@@ -880,7 +880,7 @@ The underlying modeling language has an executable semantics
 and supports a variety of formal analysis techniques, including
 deadlock and schedulability analysis \cite{GiachinoGLLW13,JaghooriBCS09}.
 Further it supports a formal 
-behavioral specification of interfaces \cite{HahnleHJLSSW11}, to be used as contracts.
+behavioral specification of interfaces \cite{hahnlehjlssw11}, to be used as contracts.
 
 
 
