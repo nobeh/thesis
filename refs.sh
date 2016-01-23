@@ -5,4 +5,4 @@
 # The '.aux' file is needed.
 #
 
-bibtool -v -x thesis.aux -s -d -i refs/refs-p0*.bib -o refs/mrefs.bib
+bibtool -v -x thesis.aux -s -d -i refs/refs-*.bib -o refs/refs.bib

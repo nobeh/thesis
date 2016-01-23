@@ -32,6 +32,5 @@ function build {
 
 # Main
 clean
-build "thesis.tex" "refs/mrefs"
-clean
+build "thesis.tex" "refs/refs"
 exit 0
