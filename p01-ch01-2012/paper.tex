@@ -351,7 +351,7 @@ the server is totally up to the server's process store implementation details.
 
 On the server side of the story,  an active object 
 repeatedly fetches an instance of method invocation from its process
-store for execution (cf. Fig \ref{fig:take}).
+store for execution (cf. Fig \ref{fig:take:next}).
 The process store uses its instance of
 \ftt{SchedulingManager} to choose one of the method invocations. 
 \Crisp has some predefined scheduling policies that can be used as scheduling managers;
@@ -365,9 +365,9 @@ and customized based on the requirements by the user.
 %\vspace{-1.3cm}
   \includegraphics[scale=0.3]{figs/seq-diag-2}
 % \vspace{-.7cm}
-\caption[Policy-based selection of a MethodInvocation]{An active object selects a method invocation based on its local scheduling policy. After a method finishes execution, the whole scenario is repeated.}
 \end{center}
-\label{fig:take}
+\caption[Policy-based selection of a MethodInvocation]{An active object selects a method invocation based on its local scheduling policy. After a method finishes execution, the whole scenario is repeated.}
+\label{fig:take:next}
 \end{figure}
 
 \ftt{SchedulingManager} is an interface the implementations of which
@@ -434,8 +434,8 @@ When a suspended method invocation is resumed, the execution manager skips the c
 % \vspace{-1.3cm}
  \includegraphics[scale=0.35]{figs/seq-diag-3}
 % \vspace{-.7cm}
-\caption[Execution of a MethodInvocation]{A method invocation is executed in an interruptible process. The execution manager thread is blocked while the interruptible process is running.}
 \end{center}
+\caption[Execution of a MethodInvocation]{A method invocation is executed in an interruptible process. The execution manager thread is blocked while the interruptible process is running.}
 \label{fig:execute}
 \end{figure}
 
