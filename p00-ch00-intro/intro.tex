@@ -86,11 +86,10 @@ We argue that the advantage of a correct semantic translation from ABS concurren
 Our approach enables programmers to model their Java systems in terms of ABS concurrency semantics and then create a correct mapping and implementation from ABS to Java using an API.
 In addition, we aim to facilitate ways to actually program ABS models taking advantage of the standard Java libraries.
 
-\section{Architecture}
+\section{Objectives and Architecture}
 \label{sec:intro:arch:crit}
 
 In this section, we present a high-level overview of design goals that we pursue in this research. 
-%Equivalently, the effectiveness and success of this research is measured upon the achievement of the discussed goals and objectives. 
 
 \paragraph{Polyglot Programming}
 With the rise of distributed computing challenges, software engineering practice has turned to methods that combine multiple programming languages and models to complete a task. 
@@ -111,29 +110,30 @@ myObj ! doSomething(params);                // ABS
 Asynchronous message passing in ABS is a fit for distributed systems.
 In such systems, the number of messsages delivered among actors in the 
 environment is not predictable at runtime.
-Therefore, distribution challenges performance efficiency or scalability.
 The goal is to ensure the actor system scales in performance with least 
 influence from the number of asynchronous messages delivered in the system.
-\TODO{Discuss with Frank and drop this.}
+
+\begin{figure}[t]
+\centering
+\includegraphics[scale=0.3]{../figs/Arch.eps}
+\caption[General Architecture]{General Architecture of ABS API and Java Language Backend}
+\label{fig:arch}
+\end{figure}
 
 \paragraph{Modularity} 
-One of the main goals of this research is to create a modular and reusable
-software artifact. 
-This can be achieved only by producing an API for ABS semantics that is
-indepedent from any specific ABS backend.
-\TODO{Elaborate on why an API library is modular for ABS}
-The scope of the research spans to a number of layers revolving around ABS
- language:
+We approach ABS modelling and development with a component-based or modular 
+software engineering practices.
+The scope of the research spans to a number of layers around ABS language:
+
 \begin{itemize}
 \item \emph{Compiling ABS to a target programming language}
 One first objective is to compile an ABS model to a target programming language.
-% The compilation can be at \emph{source-to-source} or \emph{source-to-bytecode} level.
-In addition, to be able to integrate generated code from ABS into other legacy systems, it is crucial that generated code is readable and of acceptable quality.\TODO{Use software engineering terms here}
 Target languages potentially include mainstream programming languages such as
 Java, Erlang, Haskell, and Scala.
 Thus, the ABS programmer should be able to use an ABS compiler to compile
 their ABS models to the target languages.
-\TODO{Why not the previous ABS Java backend suffered from software engineering}
+We propose a new architecture for ABS tool-set and engineering that enables
+different programming language utilize the same architecture.
 \item \emph{Using ABS concurrency as an API in an existing programming language}
 The ABS language is precisely expressed with structural operational semantics~\cite{johnsen2012abs} in addition to its syntax definition.
 The semantics of ABS can be delivered in a programming language
@@ -154,29 +154,13 @@ The ABS IDE and tool-set developers should be able to easily reuse and compose
 over existing modules and components.
 \end{itemize}
 
-% Based on the scopes and layers of usage of this research, we aim to provide 
-% a highly modular architecture in design and implementation.
-% The goal is verifiable based on produced artifacts of this research in terms
-% of their \emph{usability}, \emph{re-usability}, and \emph{composability} in
-% different contexts.
+This approach yields to a modular architecture presented in 
+Figure~\ref{fig:arch}.
 
-\paragraph{Extensibility}
-It is a common practice in software engineering that components are developed with a mixture of \emph{configuration}, \emph{extension} and \emph{composition}.
-Hence, delivering the ABS language features as an API brings about a new requirement: to configure or extend the API. 
-In particular, the ABS programmer should be able to extend the API to customized requirements. \TODO{Expand?}
-%The extensibility is provided either through configuration of the API or API extension.
-
-\Behrooz{It's worth to include the figure but needs more work to justify its presence and how it relates to this thesis.}
-Figure~\ref{fig:arch} presents the general architecture of the implementation.
-
-\TODO{Relate the criteria in this section on how they lead to a natural modular architecture in the figure.}
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.3]{../figs/Arch.eps}
-\caption[General Architecture]{General Architecture of ABS API and Java Language Backend}
-\label{fig:arch}
-\end{figure}
+% \paragraph{Extensibility}
+% It is a common practice in software engineering that components are developed with a mixture of \emph{configuration}, \emph{extension} and \emph{composition}.
+% Hence, delivering the ABS language features as an API brings about a new requirement: to configure or extend the API. 
+% In particular, the ABS programmer should be able to extend the API to customized requirements. \TODO{Expand?}
 
 \section{Literature Overview}
 \label{sec:intro:rel}
