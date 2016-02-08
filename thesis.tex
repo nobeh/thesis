@@ -36,13 +36,6 @@
 
 % display just page numbers
 \pagestyle{plain}          
-% INCLUDE: the abstracts (english and german)
-\input{abstract}      
-\cleardoublepage
-%
-% INCLUDE: acknowledgement
-\input{acknowledgement} 
-\cleardoublepage
 %
 % define depth of toc
 \setcounter{tocdepth}{2}      
@@ -69,7 +62,7 @@
 
 \part[Implementation]{Implementation}\label{p:impl}
 \import{p02-ch01-2014/}{paper}
-\import{p02-ch02-design-pattern/}{manual}
+%\import{p02-ch02-design-pattern/}{manual}
 \clearpage
 
 \part[Application]{Application}\label{p:app}
@@ -78,10 +71,25 @@
 \clearpage
 
 \cleardoublepage
+\pagestyle{plain}
 
 % --------------------------
 % Back matter
 % --------------------------
+
+% INCLUDE: the abstracts
+\input{abstract}      
+\cleardoublepage
+
+% INCLUDE: CV as pdf
+\pdfbookmark[0]{Curriculum Vitae}{Curriculum Vitae}
+\includepdf{cv.pdf}
+
+%
+% INCLUDE: acknowledgement
+\input{acknowledgement} 
+\cleardoublepage
+
 {%
 \setstretch{1.1}
 \renewcommand{\bibfont}{\normalfont\small}
