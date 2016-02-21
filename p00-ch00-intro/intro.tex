@@ -9,10 +9,10 @@
 Object-oriented programming~\cite{booch1982object,meyer1988object} has been of one the dominant paradigms for software engineering in the past three decades.
 One object interacts with another object using the notion of a method.
 Method invocations are \emph{blocking}; i.e. the caller object waits until it receives the result of the method call from the callee object.
-Surprisingly, this model of interaction was \emph{never} the intention of the creator of the paradigm.
+This model of interaction was not the intention of the pioneers of the paradigm.
 Originally, object interactions were meant to be \emph{messages} among objects and objects behaved as autonomous entities possibly on remote locations on a network; Alan Kay clarified later~\cite{alank1,alank2}. 
 On the contrary, almost all the object-oriented languages at hand have followed the blocking and synchronous model of messaging. 
-The original definition of object-oriented programming is close to another model of computation: actor model.  
+The original definition of object-oriented programming in languages such as SIMULA 67~\cite{Dahl:1968:simula} inspired another model of computation: actor model.  
 
 One of the fundamental elements of actor model~\cite{actors:agha,agha97} is \emph{asynchronous} message passing.
 In this approach, interactions between objects are modelled as \emph{non-blocking} messages.
