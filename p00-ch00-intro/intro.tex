@@ -50,26 +50,27 @@ In a caller-callee setting, an object might call methods from other objects.
 With objects running in different threads, the execution of methods are interleaved in different threads. 
 Future values are used to hold the eventual return value of a method in the caller site.
 The unit of interleaving in coroutines is coarse whereas multi-threading is based on more fine-grained scheduling of method invocations.
-In addition, interactions in both are blocking and synchronous.
-Actor model relies on asynchronous communication as one of its core elements.
+In addition, interactions in both coroutines and multi-threading are blocking and synchronous.
+In contrast, actor model relies on asynchronous communication as one of its core elements.
 
-In actor model, every communication is asynchronous. 
-A queue of messages (inbox) is utilized among actors in the system.
+In actor model, every communication is asynchronous.
 The unit of communication is a \emph{message}.
+A queue of messages (inbox) is utilized among actors in the system.
 The notion of a message is not bound by a specific definition or object interface.
 When an actor receives a message, it may use pattern matching techniques to determine the content of the message.
 When the actor completes the processing of a message, it may decide to reply to the message by sending another message.
 On the other hand, actor model works based on run-to-completion style of execution.
-When a message is being processed, an actor cannot be preempted or intentially yield to allow other actors in the system make progress.
+When a message is being processed, an actor cannot be preempted or intentially yield to allow other actors in the system to make progress.
 
-Considering the triangle, it is interesting and challenging to follow the question that how to bring coroutine execution (co-operative scheduling) to an object-oriented setting with asynchronous communication with binding to object interfaces for the messages.  
+Considering coroutines, multi-threading, and actor model, it is interesting and challenging to follow the question of how to bring coroutine execution (co-operative scheduling) to an object-oriented setting with asynchronous communication with binding to object interfaces for the messages.  
 
 ABS~\cite{johnsen2012abs,hahnlehjlssw11} is a modelling language for concurrent objects and distributed systems.
 ABS uses asynchronous communication among objects.
-A message in ABS in eventually bound to a method invocation;
-this defines the interface of the messages sent.
+A message in ABS is bound to a method invocation;
+this defines the interface of the sent messages.
 In addition, ABS supports future values in its asynchronous communication.
-ABS introduces the notion of \bfjtt{release} that is based on co-operative scheduling of objects; i.e. similar to that of \emph{yield} in coroutines~\cite{creol:broch:owe}.
+ABS introduces \bfjtt{release} semantics that is based on co-operative scheduling of objects; 
+i.e. similar to that of \emph{yield} in coroutines~\cite{creol:broch:owe}.
 ABS semantics is completely expressed in structural operational semantics~\cite{plotkin:sos}.
 This allows ABS models to take advantage of various verification methods and static analysis techniques.
 % 
