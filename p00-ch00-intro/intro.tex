@@ -34,22 +34,25 @@ Concurrency brings about two aspects in combination of object orientation: \emph
 
 In a concurrent setting, coroutines~\cite{conway1963design,taocp:knuth} enable interactions with collaborative preemption.
 A coroutine allows multiple entry points for suspending and resuming execution at certain locations.
-A coroutine instance holds state and the state might vary among different instances.
+An instance of a coroutine spawns a new process with its own state.
 A coroutine may \emph{yield} to another coroutine;
 there's no \emph{return} statement in a coroutine but transfer of control from one to another without returning.
-This relation is symmetric and not similar to that of caller-callee type.
+The yield relation is symmetric and not similar to that of caller-callee type.
+A coroutine has explicit ability to transfer control to another coroutine.
 This fundamental property makes compositional concurrency of coroutines straightforward.
 Coroutines are not originally established in object-oriented principles.
+Object orientation is based on caller-callee interaction which is asymmetric.
+Caller invokes a method in the callee and waits until the \emph{return} occurs in the method of the callee.
 Object orientation focuses on an object-view with caller-callee interaction  whereas coroutines focus on process-view with transfer of control.
 
-In a concurrent setting with objects, multi-threading has been a dominant approach to bring the two together.
-A thread holds a single stack of elements.
+In a concurrent setting with objects, multi-threading has been a dominant approach to provide an object-oriented concurrency model.
+A thread holds a single stack of synchronous method calls.
 Execution in a thread is sequential.
 The stack has a starting location (i.e. start of invocation) and a finish location (i.e. the return point).
 In a caller-callee setting, an object might call methods from other objects.
-With objects running in different threads, the execution of methods are interleaved in different threads. 
+With objects running in different threads, the execution of methods are interleaved in uncontrollable threads. 
 Future values are used to hold the eventual return value of a method in the caller site.
-The unit of interleaving in coroutines is coarse whereas multi-threading is based on more fine-grained scheduling of method invocations.
+The unit of interleaving in coroutines is coarse whereas multi-threading is based on implicit scheduling of method invocations.
 In addition, interactions in both coroutines and multi-threading are blocking and synchronous.
 In contrast, actor model relies on asynchronous communication as one of its core elements.
 
@@ -62,7 +65,14 @@ When the actor completes the processing of a message, it may decide to reply to 
 On the other hand, actor model works based on run-to-completion style of execution.
 When a message is being processed, an actor cannot be preempted or intentially yield to allow other actors in the system to make progress.
 
-Considering coroutines, multi-threading, and actor model, it is interesting and challenging to follow the question of how to bring coroutine execution (co-operative scheduling) to an object-oriented setting with asynchronous communication with binding to object interfaces for the messages.  
+A question naturally rises: how to bring coroutine execution (co-operative scheduling) to an object-oriented setting with asynchronous communication with binding to object interfaces for the messages?
+There are a few modelling languages that focus on the question.
+
+Rebeca~\cite{sirjani2002simulation,sirjani2004formal,sirjani2007rebeca} is a modelling language for reactive and concurrent systems. 
+In Rebeca, a number of reactive objects (\emph{rebecs}) interact at runtime.
+Rebecs interactions is based on asynchronous message passing that leads to a method invocation.
+In Rebeca, each rebec has a unique thread of control and an unbounded queue of messages.
+Rebeca uses run-to-completion execution and does not support future values.
 
 ABS~\cite{johnsen2012abs,hahnlehjlssw11} is a modelling language for concurrent objects and distributed systems.
 ABS uses asynchronous communication among objects.
@@ -93,9 +103,12 @@ Supporting coroutines in Java can be mostly classified in two major categories.
 One category relies a \emph{modified} JVM platform (e.g. Da Vinci JVM) in the implementation of thread stack and state such as \cite{Stadler:2009:LCJ:1596655.1596679}, \cite{Stadler:2010:ECJ:1852761.1852765} and \cite{Liu:2006:II:1111320.1111063}.
 Other category involves libraries such as Commons Javaflow\footnote{\url{http://commons.apache.org/sandbox/commons-javaflow/}} or Coroutines\footnote{\url{https://github.com/offbynull/coroutines}} that utilize byte-code modification~\cite{dahm1999byte} at runtime in JVM.
 In this research, we did not intend to use any of the two above approaches.
+Custom or modified JVM platform implementations are not mainstream and not officially supported by Java team.
+Research and development on a modified JVM requires explicit and periodic maintenance and upgrade effort.
+Moreover, since byte-code modification changes the byte-code of a running program or inserts new byte-code into JVM at runtime, it makes reasoning and correctness analysis/verification more complicated~\cite{leroy2001java,leroy2003java}.
 We rely on the mainstream JVM platform released by Java team at Oracle; in addition, we do not use byte-code engineering.
 
-Since a thread owns a single stack, a \emph{naive} approach is to map every invocation (entry point) in a coroutine to a new thread in Java. 
+Since a thread owns a single stack, a straightforward approach is to map every invocation (entry point) in a coroutine to a new thread in Java~\cite{SchaferP10,schafer2010programming}. 
 This mapping unsurprisingly leads to a poor performance;
 the number of threads is not scalable at runtime based on resource limitations in JVM when the number of object increase (cf. Chapter~\ref{ch:p01:ch01}).
 Therefore, it is reasonable to use a pool of threads (JSR-166~\cite{jsr166}) to direct the execution of all method invocations (messages). 
@@ -134,13 +147,15 @@ Polyglot programming essentially enables software practice to apply the \emph{ri
 In this research, we aim to deliver ABS semantics and features in a polyglot approach. 
 The programmer develops models with ABS that \emph{partially} take advantage of the target language features (e.g. from Java).
 This approach is also referred to as \emph{Foreign Function Interface} in the context of ABS modelling.
-Listing~\ref{lst:abs:java} shows ABS code that uses \jtt{java.util.ArrayList} as a data strucuture.
-With Polyglot programming in ABS, the programmer does \emph{not} need to define the abstractions necessary for the list construct. 
 
 \begin{lstlisting}[float=h,language=Java,caption=Using Java in ABS,label=lst:abs:java]
-List<String> params = new ArrayList<>();    // Java
-myObj ! doSomething(params);                // ABS
+java.util.List<String> params = new java.util.ArrayList<>();    // Java
+myObj ! doSomething(params);                                    // ABS
 \end{lstlisting}
+
+Listing~\ref{lst:abs:java} shows a snippet of ABS code that uses \jtt{java.util.ArrayList} as a data strucuture.
+Ideally in ABS, the programmer is able to directly use the libraries and API from Java.
+This removes the necessity to redundantly repeat definition of common data structures and API at ABS.
 
 \paragraph{Scalability} 
 Asynchronous message passing in ABS is a fit for distributed systems.
@@ -148,13 +163,6 @@ In such systems, the number of messsages delivered among actors in the
 environment is not predictable at runtime.
 The goal is to ensure the actor system scales in performance with least 
 influence from the number of asynchronous messages delivered in the system.
-
-\begin{figure}[t]
-\centering
-\includegraphics[scale=0.3]{../figs/Arch.eps}
-\caption[General Architecture]{General Architecture of ABS API and Java Language Backend}
-\label{fig:arch}
-\end{figure}
 
 \paragraph{Modularity} 
 We approach ABS modelling and development with a component-based or modular 
@@ -193,10 +201,12 @@ over existing modules and components.
 This approach yields to a modular architecture presented in 
 Figure~\ref{fig:arch}.
 
-% \paragraph{Extensibility}
-% It is a common practice in software engineering that components are developed with a mixture of \emph{configuration}, \emph{extension} and \emph{composition}.
-% Hence, delivering the ABS language features as an API brings about a new requirement: to configure or extend the API. 
-% In particular, the ABS programmer should be able to extend the API to customized requirements. \TODO{Expand?}
+\begin{figure}[t]
+\centering
+\includegraphics[scale=0.3]{../figs/Arch.eps}
+\caption[General Architecture]{General Architecture of ABS API and Java Language Backend}
+\label{fig:arch}
+\end{figure}
 
 \section{Literature Overview}
 \label{sec:intro:rel}
