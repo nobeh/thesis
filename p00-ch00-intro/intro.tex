@@ -7,18 +7,18 @@
 % \section{From actor \emph{modelling} to actor \emph{programming}}
 
 Object-oriented programming~\cite{booch1982object,meyer1988object} has been of one the dominant paradigms for software engineering.
-Object orientation provides principles for abstraction and ecapsulation.
+Object orientation provides principles for abstraction and encapsulation.
 SIMULA 67~\cite{Dahl:1968:simula} introduced notions of classes, subclasses, and virtual procedures.
 In the main block of a program, objects are created, then their procedures are called.
 One object interacts with another object using the notion of a method.
 Method invocations are \emph{blocking}; i.e. the caller object waits until it receives the result of the method call from the callee object.
-This model of interaction was not the intention of the pioneers of the paradigm.
-Object interactions were meant to be \emph{messages} among objects and objects behaved as autonomous entities possibly on remote locations on a network; Alan Kay clarified later~\cite{alank1,alank2}. 
+This model of interaction was not the intention of the pioneers of the paradigm:
+object interactions were meant to be \emph{messages} among objects and objects behaved as autonomous entities possibly on remote locations on a network; Alan Kay clarified later~\cite{alank1,alank2}. 
 On the contrary, almost all the object-oriented languages at hand have followed the blocking and synchronous model of messaging. 
-Object-oriented programming has inspired another paradigm: actor model.
+Object-oriented programming has inspired another paradigm: the actor model.
 
-One of the fundamental elements of actor model~\cite{actors:agha,agha97} is \emph{asynchronous} message passing.
-In this approach, interactions between objects are modelled as non-blocking messages.
+One of the fundamental elements of the actor model~\cite{actors:agha,agha97} is \emph{asynchronous} message passing.
+In that approach, interactions between objects are modelled as non-blocking messages.
 One object, the sender, communicates a message to the other object, the receiver.
 In contrast with abstraction in object orientation, a message can be any object and is not bound by any interface.
 At the receiver side, a message is matched with possible patterns and when a match is found, the message is processed by the receiver. 
@@ -33,19 +33,21 @@ The rapid growth of hardware added a new aspect to create a triangle: object ori
 Concurrency motivates utilizing computational power to make programs run faster.
 One goal has been to combine concurrency with object-oriented programming.
 However, concurrency makes it harder to verify programs in terms of correctness of runtime behavior~\cite{Herlihy:1990:linear,johnsen:history,agha:predictive:safety}. 
-Concurrency brings about two aspects in combination of object orientation: \emph{communication} and \emph{execution}.
+Concurrency brings about two aspects in relation to object orientation:
+\emph{communication} and \emph{execution}.
 
-In a concurrent setting, coroutines~\cite{conway1963design,taocp:knuth} enable interactions with collaborative preemption.
+In a concurrent setting, coroutines~\cite{conway1963design,taocp:knuth} enable interactions with collaborative pre-emption.
 A coroutine allows multiple entry points for suspending and resuming execution at certain locations.
 An instance of a coroutine spawns a new process with its own state.
-A coroutine may \emph{yield} to another coroutine;
-there's no \emph{return} statement in a coroutine but transfer of control from one to another without returning.
-A coroutine has explicit ability to transfer control to another coroutine.
-The yield relation is symmetric and not similar to that of caller-callee type.
+A coroutine has no \emph{return} statement, but it may explicitly \emph{yield}
+to another coroutine (transfer control of the execution).
+%A coroutine has explicit ability to transfer control to another coroutine.
+The yield relation is symmetric and not similar to that between caller and callee.
 This fundamental property makes compositional concurrency of coroutines straightforward.
-Coroutines are not originally established in object-oriented principles.
-Object orientation is based on caller-callee interaction which is asymmetric.
-Caller invokes a method in the callee and \emph{blocks} until the \emph{return} occurs in the method of the callee.
+Coroutines are not originally established in the object-oriented paradigm.
+Object orientation is based on caller-callee interaction, which is asymmetric.
+The caller invokes a method in the callee and \emph{blocks} until the
+corresponding \emph{return} occurs in the method of the callee.
 Object orientation focuses on an object-view with caller-callee interaction  whereas coroutines focus on a process-view with transfer of control.
 
 In a concurrent setting with objects, multi-threading has been a common approach to provide an object-oriented concurrency model.
@@ -53,22 +55,24 @@ A thread holds a single stack of synchronous method calls.
 Execution in a thread is sequential.
 The stack has a starting location (i.e. start of invocation) and a finish location (i.e. the return point).
 In a caller-callee setting, an object calls methods from other objects.
-With objects running in different threads, the execution of methods are interleaved in uncontrollable threads. 
-Future values are used to hold the eventual return value of a method in the caller site.
+If multiple threads execute simultaneously in an object, their instructions are
+interleaved in an uncontrolled manner.
+Future values are used to hold the eventual return value of a method at the call site.
 The unit of interleaving in coroutines is coarse whereas multi-threading is based on implicit scheduling of method invocations.
-In addition, interactions in both coroutines and multi-threading are blocking and synchronous.
-In contrast, actor model relies on asynchronous communication as one of its core elements.
+Furthermore, interactions in both coroutines and multi-threading are blocking and synchronous.
+In contrast, the actor model relies on asynchronous communication (which is non-blocking)
+as one of its core elements.
 
-In actor model, every communication is asynchronous.
+In the actor model, all communication is asynchronous.
 The unit of communication is a \emph{message}.
-A queue of messages (inbox) is utilized among actors in the system.
-The notion of a message is not bound by a specific definition or object interface.
-When an actor receives a message, it may use pattern matching techniques to determine the content of the message.
+A queue of messages (the inbox) is utilized among actors in the system.
+The notion of a message is not bound to a specific definition or object interface.
+When an actor receives a message, it may use pattern matching techniques to extract the content of the message.
 When the actor completes the processing of a message, it may decide to reply to the message by sending another message.
-On the other hand, actor model works based on run-to-completion style of execution.
-When a message is being processed, an actor cannot be preempted or intentionally yield to allow other actors in the system to make progress.
+On the other hand, the actor model works based on run-to-completion style of execution.
+While a message is processed, an actor cannot be pre-empted or intentionally yield to allow other actors in the system to make progress.
 
-A question naturally rises: how to bring coroutine execution (co-operative scheduling) to an object-oriented setting with asynchronous communication through messages bound to object interfaces?
+A question naturally rises: how to bring coroutine-style execution (co-operative scheduling) to an object-oriented setting with asynchronous communication through messages bound to object interfaces?
 This question is the main problem statement of this thesis; cf. Table~\ref{tbl:problem}.
 
 \begin{table}[h]
@@ -90,11 +94,11 @@ In addition, this thesis focuses to bring in co-operative scheduling into the co
 \label{tbl:problem}
 \end{table}
 
-There are modelling languages that focus on the problem statement.
+There already exist modelling languages that focus on the problem statement.
 Rebeca~\cite{sirjani2002simulation,sirjani2004formal,sirjani2007rebeca} is a modelling language for reactive and concurrent systems. 
 In Rebeca, a number of reactive objects (\emph{rebecs}) interact at runtime.
 Rebecs interactions is based on asynchronous message passing that leads to a method invocation.
-In Rebeca, each rebec has a unique thread of control and an unbounded queue of messages.
+In Rebeca, each rebec has its own unique thread of control and an unbounded queue of messages.
 Rebeca uses run-to-completion execution and does not support future values.
 
 ABS~\cite{johnsen2012abs,hahnlehjlssw11} is a modelling language for concurrent objects and distributed systems.
@@ -104,8 +108,8 @@ this defines the interface of the sent messages.
 In addition, ABS supports future values in its asynchronous communication.
 ABS introduces \bfjtt{release} semantics that is based on co-operative scheduling of objects; 
 i.e. similar to that of \emph{yield} in coroutines~\cite{creol:broch:owe}.
-ABS semantics is completely expressed in structural operational semantics~\cite{plotkin:sos}.
-This allows ABS models to take advantage of various verification methods and static analysis techniques.
+The ABS semantics is completely formalized by a structural operational semantics~\cite{plotkin:sos}.
+This allows ABS models to take advantage of a wide range of static and dynamic analysis techniques.
 % 
 Co-operative scheduling in ABS has been additionally extended for real-time scheduling with priorities and time constraints~\cite{bjork2013:rtabs,johnsen2012modeling}.
 All the above characteristics make the ABS language an attractive choice if it
@@ -114,49 +118,49 @@ ABS has mainly developed as a modelling language.
 
 Considering the mainstream programming languages
 \footnote{\url{http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html}}, Java~\cite{gosling2000java} is one of the most commonly-used.
-Since Java 1.5 and the rise of the concurrency API in Java JSR-166~\cite{jsr166}, substantial effort focus on how concurrency can be improved in Java.
-However, not all the development on Java libraries and frameworks are based on a rigorous formal semantics. 
+Since Java 1.5 and the rise of the concurrency API in Java JSR-166~\cite{jsr166}, substantial effort focuses on how concurrency can be improved in Java.
+However, not all development of Java libraries and frameworks proceeds based on a rigorous formal semantics. 
 Therefore, this gives rise to issues and challenges in terms of correctness, semantic preservation, and reasoning.
-In addition, the Java language specification (JLS)~\cite{gosling2000java} clearly reveals that Java language is not compatible and ready to be extended as a functional language that supports algebraic data types.
-This has been the focus of research and development to extend Java to a functional language~\cite{odersky1997pizza,henkel2003discovering,nystrom2003polyglot,bracha1998making}.
-Scala~\cite{odersky2004scala} is a result of such relevant research. It is a dynamic, functional, and object-oriented language on JVM.
+In addition, the Java language specification (JLS)~\cite{gosling2000java} clearly reveals that the Java language is not compatible and ready to be extended as a functional language that supports algebraic data types.
+This has driven research and development that focuses on extending Java with support for functional programming~\cite{odersky1997pizza,henkel2003discovering,nystrom2003polyglot,bracha1998making}.
+Scala~\cite{odersky2004scala} is a result of such research. It is a dynamic, functional, and object-oriented language on JVM.
 
 One core challenge is how to create a mapping of coroutines to multi-threading in Java.
 Supporting coroutines in Java can be mostly classified in two major categories.
 One category relies on a \emph{modified} JVM platform (e.g. Da Vinci JVM) in the implementation of thread stack and state such as \cite{Stadler:2009:LCJ:1596655.1596679}, \cite{Stadler:2010:ECJ:1852761.1852765} and \cite{Liu:2006:II:1111320.1111063}.
 The other category involves libraries such as Commons Javaflow\footnote{\url{http://commons.apache.org/sandbox/commons-javaflow/}} or Coroutines\footnote{\url{https://github.com/offbynull/coroutines}} that utilize byte-code modification~\cite{dahm1999byte} at runtime in JVM.
 In this research, we did not intend to use any of the two above approaches.
-Custom or modified JVM platform implementations are not mainstream and not officially supported by Java team.
-Research and development on a modified JVM requires explicit and periodic maintenance and upgrade effort.
-Moreover, since byte-code modification changes the byte-code of a running program or inserts new byte-code into JVM at runtime, it makes reasoning and correctness analysis/verification more complicated~\cite{leroy2001java,leroy2003java}.
+Custom or modified JVM platform implementations are not mainstream and not officially supported by the Java team.
+Research and development of a modified JVM requires explicit and periodic maintenance and upgrade effort.
+Moreover, as byte-code modification changes the byte-code of a running program or inserts new byte-code into JVM at runtime, this complicates reasoning and correctness analysis/verification~\cite{leroy2001java,leroy2003java}.
 We rely on the mainstream JVM platform released by Java team at Oracle; in addition, we do not use byte-code engineering.
 
-Since a thread owns a single stack, a straightforward approach is to map every invocation (entry point) in a coroutine to a new thread in Java~\cite{SchaferP10,schafer2010programming}. 
-This mapping unsurprisingly leads to a poor performance;
+Another, straightforward way to support coroutines in Java multi-threading is that since a thread owns a single stack, we can translate every invocation (entry point) in a coroutine to a new thread in Java~\cite{SchaferP10,schafer2010programming}. 
+This naive approach unsurprisingly leads to a poor performance;
 the number of threads is not scalable at runtime based on resource limitations in JVM when the number of objects increase (cf. Chapter~\ref{ch:p01:ch01}).
 Therefore, it is reasonable to use a pool of threads (JSR-166~\cite{jsr166}) to direct the execution of all method invocations (messages). 
 However, to deploy a message onto a thread for execution, the message is required to be abstracted in a generic way.
 We utilize Java~8 features (JSR 335~\cite{jsr335} and JSR 292~\cite{jsr292:invokedyn}) to abstract a message as a data structure expressed in a lambda expression (cf. Chapter~\ref{ch:p02:ch01}).
 
-The core contributions of this thesis target at the intersection of object 
+The core contributions of this thesis target the intersection of object 
 orientation, actor model, and concurrency.
 We choose Java as the main programming language and as one of the mainstream 
 object-oriented languages. 
 We formalize a subset of Java and its concurrency API~\cite{jsr166} to 
 facilitate formal verification and reasoning about it.
 We create an abstract mapping from a concurrent-object modelling language, 
-ABS~\cite{johnsen2012abs}, to programming semantics of Java concurrency (cf. Chapter~\ref{ch:p01:ch02}). 
+ABS~\cite{johnsen2012abs}, to the programming semantics of concurrent Java (cf. Chapter~\ref{ch:p01:ch02}). 
 We provide the formal semantics of the mapping and runtime properties of 
 the concurrency layer including deadlines and scheduling policies (cf. Chapter~\ref{ch:p01:ch01}).
 We provide an implementation of ABS concurrency layer as a Java API library 
-and framework utilizing the latest langauge additions 
+and framework utilizing the latest language additions 
 in Java 8~\cite{jsr335:lambda:translation} (cf. Chapter~\ref{ch:p02:ch01}).
 We design and implement a runtime monitoring framework, JMSeq, to verify the
-sequenced execution of methods through code annotatinon in JVM (cf. Chapter~\ref{ch:p03:ch02}). 
+the correct ordering of execution of methods through code annotations in JVM (cf. Chapter~\ref{ch:p03:ch02}). 
 In addition, we design a large-scale monitoring system as a real-world 
 application; the monitoring system is built with ABS concurrent objects 
-and formal semantics composed with schedulability 
-analysis~\cite{fersman2007task} (cf. Chapter~\ref{ch:p03:ch01}).
+and formal semantics that leverages schedulability 
+analysis to verify correctness of the monitors~\cite{fersman2007task} (cf. Chapter~\ref{ch:p03:ch01}).
 
 \section{Objectives and Architecture}
 \label{sec:intro:arch:crit}
@@ -190,38 +194,39 @@ influence from the number of asynchronous messages delivered in the system.
 \paragraph{Modularity} 
 We approach ABS modelling and development with a component-based or modular 
 software engineering practices.
-The scope of the research spans to a number of layers around ABS language:
+The scope of the research spans a number of layers around ABS language:
 
 \begin{itemize}
 \item \emph{Compiling ABS to a target programming language}
 One first objective is to compile an ABS model to a target programming language.
 Target languages potentially include mainstream programming languages such as
 Java, Erlang, Haskell, and Scala.
-Thus, the ABS programmer should be able to use an ABS compiler to compile
-their ABS models to the target languages.
-We propose a new architecture for ABS tool-set and engineering that enables
-different programming language utilize the same architecture.
+%Thus, the ABS programmer should be able to use an ABS compiler to compile
+%their ABS models to the target languages.
+We propose a new architecture for the ABS tool-set and engineering that enables
+different programming languages to utilize the same architecture.
 \item \emph{Using ABS concurrency as an API in an existing programming language}
-The ABS language is precisely expressed with structural operational semantics~\cite{johnsen2012abs} in addition to its syntax definition.
+The ABS language syntax and semantics are formalized precisely and rigorously by a structural operational semantics~\cite{johnsen2012abs}.
 The semantics of ABS can be delivered in a programming language
-as Application Programming Interface (API) as long as the programming language provides sufficient constructs to respect ABS language semantics.
-In addition, such ABS programming API should be \emph{verifiable}.
-If an ABS mapping to a programming API is provided, a programmer is able to
+as Application Programming Interface (API) as long as the programming language provides sufficient constructs to respect the ABS language semantics.
+In addition, such an ABS programming API should be \emph{verifiable}.
+If a mapping from ABS to a programming API is provided, a programmer is able to
 take advantage of ABS semantics without directly programming in ABS.
-Such capability from ABS enables industry users of mainstream languages to
-model their systems in ABS semantics using their programming languages and
-platforms.
+%Such capability from ABS
+This enables industry users of mainstream languages to
+model their systems in ABS semantics using the programming languages and
+platforms they are already familiar with.
 \item \emph{Modelling in ABS}
 ABS language provides rigorous semantics to model concurrent
 and distributed systems.
-For practical reasons, the user (that can be a programmer, an analysist, or a researcher) 
-desires to have access to a tool-set and IDE that allows working with ABS 
+For practical reasons, it is important that the user (that can be a programmer, an analyst, or a researcher) 
+has access to a tool-set and IDE that allows working with ABS 
 models in a user-friendly way.
 The ABS IDE and tool-set developers should be able to easily reuse and compose
 over existing modules and components.
 \end{itemize}
 
-This approach yields to a modular architecture presented in 
+The above objectives and design principles are realized by the modular architecture presented in 
 Figure~\ref{fig:arch}.
 
 \begin{figure}[t]
@@ -234,13 +239,13 @@ Figure~\ref{fig:arch}.
 \section{Literature Overview}
 \label{sec:intro:rel}
 
-We discuss a brief overview of related work in the context of programming languages, actor model, and concurrency.
-We divide the overview in two levels; one is at the level of the programming languages and the other is for the external (third-party) libraries developed for programming languages.
+We briefly discuss related work in the context of programming languages, actor model, and concurrency.
+In the overview, we distinguish two levels; one is at the level of the programming languages and the other is for the external (third-party) libraries developed for programming languages.
 
 \subsection{Programming Languages}
 \label{sec:intro:proglangs}
 
-In this section, we briefly provide an overview of the programming languages that have targetted similar problem statements.
+In this section, we briefly provide an overview of the programming languages that have targeted similar problem statements.
 Various programming languages, in the past decade, have emerged to provide an actor-based model of asynchronous message passing~\cite{philippsen2000survey}.
 We observe different classes of actor model and concurrent model of 
 programming.
@@ -256,11 +261,10 @@ When actor model is part of the design of a language, formal verification
 and correctness of actor semantics at runtime yields naturally from the 
 language semantics at runtime.
 \item[Implicit By Design]
-refers to the type that there is no explicit notion of actor models in the language syntax or semantics.
-However, the programming language provides fundamental constructs for concurrency and asynchronous message passing.
+Refers to languages that have no explicit notion of actor models in their syntax or semantics, but do provide fundamental constructs for concurrency and asynchronous message passing.
 Thus, it becomes an easy task in this kind of programming language to create an abstraction to support the actor model by coding.
 \item[External Library]
-refers to the type of programming languages for which actor model support is provided by an external library developed for the language.
+Refers to the type of programming languages for which actor model support is provided by an external library.
 \end{description}
 
 
@@ -299,9 +303,8 @@ many libraries and frameworks aim to fill this gap
 Table~\ref{tbl:actor:libs} presents a summary.
 We observe that the more the language itself is close to the actor model 
 semantics, the less external libraries and frameworks target this gap. 
-In the following, we briefly enumerate frameworks
-\footnote{A more comprehensive list can be obtained at \cite{KarmaniSA09} and  \url{https://en.wikipedia.org/wiki/Actor_model\#Programming_with_Actors}}
-and libraries for Java.
+In the following, we briefly enumerate frameworks and libraries for Java
+\footnote{A more comprehensive list can be obtained at \cite{KarmaniSA09} and  \url{https://en.wikipedia.org/wiki/Actor_model\#Programming_with_Actors}}.
 
 \begin{table}[t]
 \centering
@@ -324,7 +327,7 @@ Java is byte-code engineering~\cite{dahm1999byte,bruneton2002asm,asm}.
 Byte-code engineering modifies the generated byte-code for compiled classes in 
 Java either during compilation or at runtime.
 Although, this technique is commonly used and argued to provide better 
-performance optimization~\cite{vallee1999soot}, it introduces other challenges 
+performance optimization~\cite{vallee1999soot}, it introduces challenges 
 regarding the verification of the running 
 byte-code~\cite{leroy2001java,leroy2003java}.
 
