@@ -16,6 +16,7 @@ thesis-blg.*
 *.pyg
 *.synctex.gz
 *.toc
+*.bak
 
 # Custom
 _minted*
