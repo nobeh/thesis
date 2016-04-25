@@ -5,24 +5,24 @@
 \label{sec:abstract}
 \vspace*{-10mm}
 
-This thesis contributes to the intersection of object orientation, actor 
-model, and concurrency.
+This thesis contributes to the intersection of object orientation, actor model, and concurrency.
 We choose Java as the main programming language and as one of the mainstream 
 object-oriented languages. 
 We formalize a subset of Java and its concurrency API to 
 facilitate formal verification and reasoning about it.
-We create an abstract mapping from a concurrent-object modelling language, 
-ABS, to programming semantics of Java concurrency. 
+We create an abstract mapping from a concurrent-object modeling language, 
+ABS, to the programming semantics of concurrent Java. 
 We provide the formal semantics of the mapping and runtime properties of 
 the concurrency layer including deadlines and scheduling policies.
 We provide an implementation of ABS concurrency layer as a Java API library 
-and framework utilizing the latest langauge additions 
+and framework utilizing the latest language additions 
 in Java~8.
 We design and implement a runtime monitoring framework, JMSeq, to verify the
-sequenced execution of methods through code annotatinon in JVM. 
+the correct ordering of execution of methods through code annotations in JVM. 
 In addition, we design a large-scale monitoring system as a real-world 
 application; the monitoring system is built with ABS concurrent objects 
-and formal semantics composed with schedulability analysis.
+and formal semantics that leverages schedulability 
+analysis to verify correctness of the monitors.
 
 \vspace*{20mm}
 
