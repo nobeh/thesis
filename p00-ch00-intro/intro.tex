@@ -47,7 +47,7 @@ The yield relation is symmetric.
 Creating an instance of a coroutine spawns a new process with its own state.
 A coroutine allows multiple entry points for suspending and resuming execution at explicitly specified locations.
 The explicit interleaving points supports a compositional understanding of the code~\cite{DBLP:journals/cacm/Hoare74}.
-coroutines are not originally established in the object-oriented paradigm.
+Coroutines are not originally established in the object-oriented paradigm.
 Object orientation is based on caller-callee interaction, which is asymmetric:
 the caller invokes a method in the callee and \emph{blocks} until the
 corresponding \emph{return} occurs in the method of the callee.
@@ -133,13 +133,13 @@ Co-operative scheduling in ABS has been additionally extended for real-time sche
 All the above characteristics make the ABS language an attractive choice if it
 can be used as a programming language at industrial and business scale.
 ABS has mainly developed as a modeling language;
-for example, ABS does not support common I/O API for files or network,
+for example, ABS does not support a common I/O API for files or networking,
 and it does not provide a standard library of data structures.
 
 JSR 166~\cite{jsr166} introduced a new concurrency model~\cite{DBLP:conf/java/Lea00} in Java 1.5.
-The concurrency model lays the grounds to support actor model with asynchronous method calls.
+The concurrency model lays the grounds to support for the actor model with asynchronous method calls.
 This gave rise to various research to support actor model on Java~\cite{actor_frameworks_jvm:agha} and further extend Java as a functional programming language~\cite{odersky1997pizza,henkel2003discovering,nystrom2003polyglot,bracha1998making}.
-From an industrial perspective, the development of Java language from version 6 to version 8 experienced a slow pace that influenced the growth of businesses and justified alternatives.
+From an industrial perspective, the development of the Java language from version 6 to version 8 experienced a slow pace that influenced the growth of businesses and justified alternatives.
 Scala~\cite{odersky2004scala}, a dynamic, functional, and object-oriented language on JVM, rose to the challenge to fill the gap during the period between Java~7 and Java~8.
 Java~8~\cite{jls8} released fundamental features such as lambda expressions that are essential for concurrency and functional programming.
 
@@ -186,14 +186,14 @@ This removes the necessity to redundantly repeat definition of common data struc
 Furthermore, this allows to take advantage of the already rich and mature library API of Java.
 
 \paragraph{Scalability} 
-In distributed systems, the number of massages delivered among objects in the 
+In distributed systems, the number of messages delivered among objects in the 
 environment is not predictable at runtime.
 The goal is to ensure the actor system scales in performance with least 
 influence from the number of asynchronous messages delivered in the system.
 Due to support of co-operative scheduling for asynchronous messages, ABS is a fit for distributed systems.
 
 \paragraph{Separation of Concerns} 
-We approach ABS modeling and development with a component-based or modular 
+We approach ABS modeling and development with a component-based and modular 
 software engineering practices.
 The scope of the research spans a number of layers around ABS language:
 
@@ -336,7 +336,7 @@ We create an abstract mapping from a concurrent-object modeling language,
 ABS~\cite{johnsen2012abs}, to the programming semantics of concurrent Java (cf. Chapter~\ref{ch:p01:ch02}). 
 We provide the formal semantics of the mapping and runtime properties of 
 the concurrency layer including deadlines and scheduling policies (cf. Chapter~\ref{ch:p01:ch01}).
-We provide an implementation of ABS concurrency layer as a Java API library 
+We provide an implementation of the ABS concurrency layer as a Java API library 
 and framework utilizing the latest language additions 
 in Java 8~\cite{jsr335:lambda:translation} (cf. Chapter~\ref{ch:p02:ch01}).
 We design and implement a runtime monitoring framework, JMSeq, to verify the
