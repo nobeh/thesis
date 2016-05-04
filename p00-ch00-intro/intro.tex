@@ -121,7 +121,7 @@ Rebeca uses run-to-completion execution and does not support future values.
 
 ABS~\cite{johnsen2012abs,hahnlehjlssw11} is a modeling language for concurrent objects and distributed systems.
 ABS uses asynchronous communication among objects.
-A message in ABS is bound to a method invocation;
+A message in ABS is generated from a method enclosed by an interface.
 this defines the interface of the sent messages.
 In addition, ABS supports future values in its asynchronous communication.
 ABS introduces \bfjtt{release} semantics that is based on co-operative scheduling of objects; 
@@ -141,7 +141,7 @@ The concurrency model lays the grounds to support for the actor model with async
 This gave rise to various research to support actor model on Java~\cite{actor_frameworks_jvm:agha} and further extend Java as a functional programming language~\cite{odersky1997pizza,henkel2003discovering,nystrom2003polyglot,bracha1998making}.
 From an industrial perspective, the development of the Java language from version 6 to version 8 experienced a slow pace that influenced the growth of businesses and justified alternatives.
 Scala~\cite{odersky2004scala}, a dynamic, functional, and object-oriented language on JVM, rose to the challenge to fill the gap during the period between Java~7 and Java~8.
-Java~8~\cite{jls8} released fundamental features such as lambda expressions that are essential for concurrency and functional programming.
+Java~8~\cite{jls8} alleviated this gap by releasing fundamental features such as lambda expressions that are essential for concurrency and functional programming.
 
 One core challenge is how to create a mapping of coroutines to multi-threading in Java.
 Supporting coroutines in Java can be mostly classified in two major categories.
@@ -362,7 +362,7 @@ Monitoring method call sequences using annotations & Application (Part~\ref{p:ap
 Design and implementation of a massive-scale monitoring system based on ABS API in Java & Application (Part~\ref{p:app}) & Chapter~\ref{ch:p03:ch01}
 \\ \bottomrule 
 \end{tabular}
-\caption{Thesis Organization}
+\caption{\thesisTitle -- Thesis Organization}
 \label{tbl:thesis}
 \end{table}
 
@@ -376,18 +376,24 @@ publications as a result of this research:
 \begin{tabular}{p{2cm}p{7cm}p{1cm}}
 \textsfb{Topic} & \textsfb{Proceedings / Journal} & \textsfb{Year}   
 \\ \toprule
-Chapter~\ref{ch:p01:ch01} & ACM SAC 2012, Pages 1883--1888 & 2012 
+Chapter~\ref{ch:p01:ch01} & ACM SAC 2012, pp. 1883--1888 & 2012 
 \\ \midrule
-Chapter~\ref{ch:p01:ch02} & COORD 2013, Pages 181--195 & 2013 
+Chapter~\ref{ch:p01:ch02} & COORD 2013, pp. 181--195 & 2013 
 \\ \midrule
-Chapter~\ref{ch:p02:ch01} & ISoLA 2014, Pages 37--53 & 2014 
+Chapter~\ref{ch:p02:ch01} & ISoLA 2014, pp. 37--53 & 2014 
 \\ \midrule
-Chapter~\ref{ch:p03:ch02} & Journal of Science of Computer Programming, 2014, Volume 94, Part 3, Pages 362--378 & 2014 
+Chapter~\ref{ch:p03:ch02} & 
+FACS 2010, pp. 53--70 \emph{and} 
+\newline
+Journal of Science of Computer Programming, vol. 94, part 3, pp. 362--378 & 
+2010 \emph{and}
+\newline
+2014 
 \\ \midrule
-Chapter~\ref{ch:p03:ch01} & ESOCC 2015, Pages 125--140 & 2015
+Chapter~\ref{ch:p03:ch01} & ESOCC 2015, pp. 125--140 & 2015
 \\ \bottomrule
 \end{tabular}
-\caption{Actors At Work -- Conference and Journal Publications}
+\caption{\thesisTitle -- Conference and Journal Publications}
 \label{tbl:papers}
 \end{table}
 
