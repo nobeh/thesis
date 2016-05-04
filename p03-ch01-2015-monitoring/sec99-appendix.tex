@@ -1,6 +1,6 @@
 
 \appendix
-\label{appendix}
+\label{ch04:appendix}
 
 \newpage
 
@@ -9,7 +9,7 @@
 \Behrooz{What follows may be obsolete. The content will be used/removed gradually. Do not remove.}
 
 \subsection{Operational Semantics} % (fold)
-\label{sub:operational_semantics}
+\label{ch04:sub:operational_semantics}
 We use operational semantics to present the semantics of the runtime monitoring. 
 The global configuration is
 $$
@@ -55,9 +55,9 @@ If the operation succeeds, $\sigma_{P'} = \sigma_{P} \pm R(s) \cup \{r\}$ where 
 % section modelling (end)
 
 \subsection{A Timed Automata for Budget Compliance}
-\label{sec:prop:budget}
+\label{ch04:sec:prop:budget}
 
-Similar to Section \ref{sec:service:avail:fsm}, we use a timed automata (see Definition \ref{def:timed:automata}) to model the behavior of service budget compliance $\beta(s,\tau)$ (see Definition \ref{def:budget:compliance}) represented in Figure \ref{fig:fsm:budgetcomp}.
+Similar to Section \ref{ch04:sec:service:avail:fsm}, we use a timed automata (see Definition \ref{ch04:def:timed:automata}) to model the behavior of service budget compliance $\beta(s,\tau)$ (see Definition \ref{ch04:def:budget:compliance}) represented in Figure \ref{ch04:fig:fsm:budgetcomp}.
 % 
 \begin{figure}[h]
 \centering
@@ -72,7 +72,7 @@ Similar to Section \ref{sec:service:avail:fsm}, we use a timed automata (see Def
 ;
 \end{tikzpicture}
 \caption{A timed automata for Budget Compliance $\beta(s,\tau)$}
-\label{fig:fsm:budgetcomp}
+\label{ch04:fig:fsm:budgetcomp}
 \end{figure}
 % 
 
@@ -95,9 +95,9 @@ that terminates one resource allocated to $s$ from platform $p$.
 This action is immediate and never fails.
 
 \section{Distributed Service Sustainability} % (fold)
-\label{sec:distributed_service_sustainability}
+\label{ch04:sec:distributed_service_sustainability}
 \begin{defn}[Service Sustainability $\gamma(s,\tau)$]
-\label{def:service:sustain}
+\label{ch04:def:service:sustain}
 We define the service sustainability as:
 \[
 \gamma(s,\tau) = \alpha(s,\tau,t_c) \times \beta(s,\tau)
@@ -113,17 +113,17 @@ because consuming resources for service $s$ for $\alpha$ mean more cost for $s$ 
 % section distributed_service_sustainability (end)
 
 \begin{theorem}[Budget Compliance Convergence]
-\label{thm:budget:comp:conv}
-The automata $M_\beta$ on budget compliance $\beta(s,\tau)$ makes a transition to state $q_B$ in a finite amount of time under Assumptions \ref{def:single:resource:type} and \ref{def:resource:cost:constant} given that $\tau \geq \hat{t}$ and agreement $a$ for service $s$ is fixed and not changing through time.
+\label{ch04:thm:budget:comp:conv}
+The automata $M_\beta$ on budget compliance $\beta(s,\tau)$ makes a transition to state $q_B$ in a finite amount of time under Assumptions \ref{ch04:def:single:resource:type} and \ref{ch04:def:resource:cost:constant} given that $\tau \geq \hat{t}$ and agreement $a$ for service $s$ is fixed and not changing through time.
 \end{theorem}
 
 \begin{proof}[Budget Compliance Convergence]
-Proof can be completed using same technique in Theorem \ref{thm:service:avail:conv}.
+Proof can be completed using same technique in Theorem \ref{ch04:thm:service:avail:conv}.
 \newline$\Box$
 \end{proof}
 
 \subsection{A Timed Automata for Service Sustainability}
-\label{sec:sustain}
+\label{ch04:sec:sustain}
 
 The timed automata $M_\gamma$ for $\gamma(s,\tau)$ is constructed by $M_\alpha \times M_\beta$.
 $M_\gamma$ has two states, $Q = \{ q_S, q_{\overline{S}}\}$.
@@ -131,7 +131,7 @@ $M_\gamma$ enters its final state $q_S$ when $M_\alpha$ is in $q_A$ and $M_\beta
 $M_\gamma$ enters its non-final state $q_{\overline{S}}$ when either $M_\alpha$ is not in $q_A$ or $M_\beta$ is not in $q_B$.
 
 \begin{theorem}[Sustainable Service Convergence]
-\label{thm:sustain:conv}
+\label{ch04:thm:sustain:conv}
 The sustainability of service $s$ converges to:
 $$
 \lim_{T \to \infty} \; \gamma(s, \tau) = (E(s,\tau) - \varepsilon) \times (E_B(s,\tau) - \varepsilon_{\euro})
@@ -147,9 +147,9 @@ We study different cases each of which has a \emph{fixed} element and we conclud
 
 Let $M_\alpha$ be in $q_A$ and $M_\beta$ in $q_B$ at a given time $T$.
 At time $T$, if $g_{\overline{A}}$ holds, $M_\alpha$ makes a transition to $q_{\overline{A}}$ and starts to allocate a new resource $r$ for $s$.
-At a later time $T' \geq T + \tau$, $M_\alpha$ makes a transition to $q_A$ based Theorem \ref{thm:service:avail:conv}.
+At a later time $T' \geq T + \tau$, $M_\alpha$ makes a transition to $q_A$ based Theorem \ref{ch04:thm:service:avail:conv}.
 However, if $g_{\overline{B}}$ holds at time $T'$, $M_\beta$ makes a transition to $q_{\overline{B}}$ because the newly allocated resource $r$ makes budget compliance $\beta(s,\tau)$ violate.
-Based on Theorem \ref{thm:budget:comp:conv}, $M_\beta$ makes a transition to $q_B$ after deallocating at least one resource from $s$ at a later time $T'' \geq T' + \tau$.
+Based on Theorem \ref{ch04:thm:budget:comp:conv}, $M_\beta$ makes a transition to $q_B$ after deallocating at least one resource from $s$ at a later time $T'' \geq T' + \tau$.
 At time $T''$, the system recurs the behavior at time $T$ and thus $\gamma(s,\tau)$ for every subsequent $\tau$ cannot converge to $(1-\varepsilon)\times(1-\varepsilon_{\euro})$.
 Similarly, it can be reasoned how changes in $M_\beta$ lead to changes in $M_\alpha$ and eventually destabilize $M_\gamma$.
 
@@ -168,7 +168,7 @@ $\Box$
 \end{proof}
 
 \section{Application of Actor-based Monitoring Model}
-\label{sec:app}
+\label{ch04:sec:app}
 
 If we expand $\gamma(s,\tau)$, we have:
 \begin{align*}
@@ -189,11 +189,11 @@ In the following, we discuss how changes of the above parameters affect service 
 
 \subsection{Tolerance Flexibility $\varepsilon$ and $\varepsilon_{\euro}$}
 
-Theorem \ref{thm:sustain:conv} proved that $\gamma(s,\tau)$ converges to $(E(s,\tau)-\varepsilon)\times(E_B(s,\tau)-\varepsilon_{\euro})$ given certain conditions.
+Theorem \ref{ch04:thm:sustain:conv} proved that $\gamma(s,\tau)$ converges to $(E(s,\tau)-\varepsilon)\times(E_B(s,\tau)-\varepsilon_{\euro})$ given certain conditions.
 The values of $E(s,\tau)$ and $E_B(s,\tau)$ are bound to $1$.
 To simplify, we define $f(\varepsilon,\varepsilon_{\euro}) = (1 - \varepsilon)\times(1-\varepsilon_{\euro})$.
 On its own, this function is interesting.
-Figure \ref{fig:tolerance:func} presents the landscape of this function with $\varepsilon$ and $\varepsilon_{\euro}$ as its variables.
+Figure \ref{ch04:fig:tolerance:func} presents the landscape of this function with $\varepsilon$ and $\varepsilon_{\euro}$ as its variables.
 % 
 
 The following summarizes the characteristics of the function and how it affects $\gamma(s,\tau)$:
@@ -207,7 +207,7 @@ Unless it is not a hard business requirement, the tolerance parameters must allo
 \item Similarly, choosing $\varepsilon = 1$ or $\varepsilon_{\euro} = 1$ means that respectively $\alpha(s,\tau,t_c)$ and $\beta(s,\tau)$ is \emph{not} a business driver.
 In this setting, the service sustainability $\gamma(s,\tau)$ depends on a single property (either $\alpha(s,\tau,t_c)$ or $\beta(s,\tau)$) which makes its maintenance easier.
 Additionally, choosing such model allows to design a business in which exclusively either service availability or budget compliance is crucial but not both.
-\item Apart from the corner values, the value of the function is \emph{confined} by the arcs that are projected on the ceiling of the box in Figure \ref{fig:tolerance:func}.
+\item Apart from the corner values, the value of the function is \emph{confined} by the arcs that are projected on the ceiling of the box in Figure \ref{ch04:fig:tolerance:func}.
 This means that the function values changes co-dependently based on the changes of $\varepsilon$ and $\varepsilon_{\euro}$; i.e. optimization of $\gamma(s,\tau)$ is freely achievable by changing each variable.
 \item It should be also noted that the values for $\varepsilon$ and $\varepsilon_{\euro}$ should \emph{not} be so relaxed; 
 i.e. values higher than $0.1$ would create a large range of error which may not be desired.
@@ -222,8 +222,8 @@ In the past decade, there is a considerable research on how to specify and model
 A number of languages, frameworks and models have been developed to be able to model and specify SLAs for the deployment of services.
 Among others, we refer to SLA$\star$~\cite{kearney2010sla}, WSLA~\cite{keller2003wsla}, and SLAng~\cite{lamanna2003slang}.
 The focus of this research is not enter this domain and yet build on top it a model to be able to reason about ``distributed service properties'' such as service availability or budget compliance. 
-In the following, we present a set of pseudo algorithms for the model in Section \ref{sec:modelling} that present how the monitoring can be generated based on the agreements that are specified. 
-In Algorithm \ref{alg:gen:monitor}, the monitoring actor method \jtt{check} is presented that collects the measurements and publishes them to the platform.
+In the following, we present a set of pseudo algorithms for the model in Section \ref{ch04:sec:modelling} that present how the monitoring can be generated based on the agreements that are specified. 
+In Algorithm \ref{ch04:alg:gen:monitor}, the monitoring actor method \jtt{check} is presented that collects the measurements and publishes them to the platform.
 
 
 
@@ -256,7 +256,7 @@ The top surface (including the arcs) is the 2-D projected values for $\Gamma$.
 \caption{
 The landscape for $\Gamma$.
 } 
-\label{fig:sustain:factor}
+\label{ch04:fig:sustain:factor}
 \end{figure}
 % 
 
@@ -293,19 +293,19 @@ Thus, we build a set of timed automata
 
 $\mathcal{M}$ can be partitioned in two \emph{disjoint} subsets, $\mathcal{M}^+$ and $\mathcal{M}^-$, such that $\mathcal{M}^+$ only containts those that use platform $P$ API to \jtt{allocate} a new resource to service $s$ whereas $\mathcal{M}^-$ only contains those that use platform $P$ API to \jtt{deallocate} a resource from service $s$:
 \begin{itemize}
-  \item $\forall \mathcal{M}_k \in \mathcal{M}^+$ Thoerem \ref{thm:service:avail:conv} holds for $\mathcal{M}_k$.
-  \item $\forall \mathcal{M}_k \in \mathcal{M}^-$ Theorem \ref{thm:service:budget:conv} holds for $\mathcal{M}_k$.
-  \item $\forall \mathcal{M}_k \in \mathcal{M}^+ \; , \mathcal{M}_l \in \mathcal{M}^- \;, \mathcal{M}_m = \mathcal{M}_k \times \mathcal{M}_l$ Theorem \ref{thm:service:sust} holds for $\mathcal{M}_m$. 
+  \item $\forall \mathcal{M}_k \in \mathcal{M}^+$ Thoerem \ref{ch04:thm:service:avail:conv} holds for $\mathcal{M}_k$.
+  \item $\forall \mathcal{M}_k \in \mathcal{M}^-$ Theorem \ref{ch04:thm:service:budget:conv} holds for $\mathcal{M}_k$.
+  \item $\forall \mathcal{M}_k \in \mathcal{M}^+ \; , \mathcal{M}_l \in \mathcal{M}^- \;, \mathcal{M}_m = \mathcal{M}_k \times \mathcal{M}_l$ Theorem \ref{ch04:thm:service:sust} holds for $\mathcal{M}_m$. 
 \end{itemize}
 
 \subsection{A Timed Automata for Platform} 
-\label{sec:automata:platform}
+\label{ch04:sec:automata:platform}
 
 To model the behavior of the platform $P$ with a timed automata, we use the notion of ``deadline'' from Real-Time ABS~\cite{JaghooriBCS09,bjork2013:rtabs}.
 A message is expected to complete (either successfully or with failure) within a specific amount of time, the deadline.
 We choose monitoring window $\tau$ as the deadline for any message that is internally processed by platform $P$.
 In practice, a deadline for a message is part of the implementation details of any platform API for an IaaS provider.
-Figure \ref{fig:fsm:platform} presents a timed automata for platform $P$.
+Figure \ref{ch04:fig:fsm:platform} presents a timed automata for platform $P$.
 
 In the timed automata that we design for different elements of the system, the following apply.
 Every timed automaton has only one state which is the start and end state.
@@ -315,7 +315,7 @@ A transition may have two forms: \emph{periodic} by the clock or \emph{reactive}
 For example, $M_P$ has a trasition for \jtt{allocate} a new resource which is reactive to an external platform API call.
 And, it has a transition for updating service state $\sigma(s)$ which is periodic and regulated by the clock. 
 Every reactive transition has a fixed deadline equal to $\tau$.
-A reactive transition is presented with a ``dotted'' line in Figure~\ref{fig:fsm} whereas a periodic transition is presented with a ``solid'' line.
+A reactive transition is presented with a ``dotted'' line in Figure~\ref{ch04:fig:fsm} whereas a periodic transition is presented with a ``solid'' line.
 Every transition is presented as $\frac{\textsf{condition}}{\textsf{action}}$.
 The \textsf{condition} is a boolean expression which evaluates to either \jtt{true} or \jtt{false}.
 The \textsf{action} is an atomic operation or an asynchronous message using Real-Time ABS with a fixed deadline equal to $\tau$.
@@ -335,7 +335,7 @@ All such requests use the same deadline $\tau$.
 \centering
 
 % M_P
-\subcaptionbox{{\small{$M_P$: Timed Automaton for Platform $P$}}\label{fig:fsm:platform}}
+\subcaptionbox{{\small{$M_P$: Timed Automaton for Platform $P$}}\label{ch04:fig:fsm:platform}}
 {
 \begin{tikzpicture}[->,>=stealth',auto,node distance=6cm,thick,scale=0.7,every node/.style={scale=0.7}]
 \node[state,accepting]   
@@ -372,7 +372,7 @@ All such requests use the same deadline $\tau$.
 }
 
 % M_alpha
-\subcaptionbox{{\small{$M_\alpha$: Timed Automaton $\alpha(s,\tau,t_c)$}}\label{fig:fsm:serviceavail}}
+\subcaptionbox{{\small{$M_\alpha$: Timed Automaton $\alpha(s,\tau,t_c)$}}\label{ch04:fig:fsm:serviceavail}}
 {
 \begin{tikzpicture}[->,>=stealth',auto,node distance=6cm,thick,scale=0.7,every node/.style={scale=0.7}]
 \node[state,accepting]
@@ -394,7 +394,7 @@ All such requests use the same deadline $\tau$.
 }
 
 % M_beta
-\subcaptionbox{{\small{$M_\beta$: Timed Automaton for $\beta(s,\tau)$}}\label{fig:fsm:budgetcompliance}}
+\subcaptionbox{{\small{$M_\beta$: Timed Automaton for $\beta(s,\tau)$}}\label{ch04:fig:fsm:budgetcompliance}}
 {
 \begin{tikzpicture}[->,>=stealth',auto,node distance=6cm,thick,scale=0.7,every node/.style={scale=0.7}]
 \node[state,accepting]   (s)   {$\dot{c} < \tau$};
@@ -414,7 +414,7 @@ All such requests use the same deadline $\tau$.
 }
 
 % M_gamma
-\subcaptionbox{{\small{$M_\gamma$: Timed Automaton for $\gamma(s,\tau)$}}\label{fig:fsm:sustain}}
+\subcaptionbox{{\small{$M_\gamma$: Timed Automaton for $\gamma(s,\tau)$}}\label{ch04:fig:fsm:sustain}}
 {
 \begin{tikzpicture}[->,>=stealth',auto,node distance=6cm,thick,scale=0.7,every node/.style={scale=0.7}]
 \node[state,accepting]   (s)   {$\dot{c} < \tau$};
@@ -445,13 +445,13 @@ All such requests use the same deadline $\tau$.
 
 
 \caption{Timed automata for elements of the monitoring platform}
-\label{fig:fsm}
+\label{ch04:fig:fsm}
 \end{figure}
 
 \subsection{A Timed Automata for Service Availability}
-\label{sec:service:avail:fsm}
+\label{ch04:sec:service:avail:fsm}
 
-We use timed automata~\cite{alur:1994:timedautomata} $M_\alpha$ to manage service availability (see Definition \ref{def:service:availability}).
+We use timed automata~\cite{alur:1994:timedautomata} $M_\alpha$ to manage service availability (see Definition \ref{ch04:def:service:availability}).
 $M_\alpha$ is designed to specifically address an \emph{under-capacity} service:
 
 The timed automata $M_\alpha$ has two \emph{possible} transitions.
@@ -485,11 +485,11 @@ The automaton $M_\alpha$ guarantees the following important property:
 % 
 
 \begin{defn}[Service Availability Convergence]
-\label{thm:service:avail:conv}
+\label{ch04:thm:service:avail:conv}
 Given that: 
 \begin{itemize}
-  \item platform $P$ provides resources with no limits (Assumption~\ref{def:platform:cap}), and,
-  \item monitoring window $\tau$ is chosen such that it's larger that any resource initialization time ($\tau > \hat{t}$) (Assumption~\ref{def:resource:init:time}), 
+  \item platform $P$ provides resources with no limits (Assumption~\ref{ch04:def:platform:cap}), and,
+  \item monitoring window $\tau$ is chosen such that it's larger that any resource initialization time ($\tau > \hat{t}$) (Assumption~\ref{ch04:def:resource:init:time}), 
   \item the number of failed resources
   %in every monitoring window $\tau$
   is bounded by a constant, 
@@ -503,9 +503,9 @@ By induction on $n_r$.
 \end{proof} % end thm:service:avail:conv
 
 \subsection{A Timed Automata for Service Budget Compliance}
-\label{sec:automata:budget}
+\label{ch04:sec:automata:budget}
 
-Analogously, we define a timed automata $M_\beta$ for service budget compliance (Definition~\ref{def:budget:compliance}). The automaton is shown in Figure~\ref{fig:fsm:budgetcompliance}.  $M_\beta$ is specifically designed to address a service that is \emph{over-budget}.
+Analogously, we define a timed automata $M_\beta$ for service budget compliance (Definition~\ref{ch04:def:budget:compliance}). The automaton is shown in Figure~\ref{ch04:fig:fsm:budgetcompliance}.  $M_\beta$ is specifically designed to address a service that is \emph{over-budget}.
 % 
 
 $M_\beta$ has three possible condition with corresponding actions:
@@ -526,19 +526,19 @@ The above definition of $M_\beta$ guarantees the following important property:
 %exposes an interesting property that is presented in the following theorem.
 
 \begin{defn}[Service Budget Compliance Convergence]
-\label{thm:service:budget:conv}
+\label{ch04:thm:service:budget:conv}
 The timed automata $M_\beta$ for service budget compliance $\beta(s,\tau)$ ensures that service $s$ is budget compliant in a finite amount of time.
 \end{defn}
 
 \begin{proof}%[Service Budget Compliance Convergence]
-Similar to that of Theorem~\ref{thm:service:avail:conv}.
+Similar to that of Theorem~\ref{ch04:thm:service:avail:conv}.
 \end{proof}
 
 \subsection{Service Sustainability}
-\label{sec:service:sustain}
+\label{ch04:sec:service:sustain}
 
 In the previous two sections, we modelled service availability $\alpha(s,\tau,t_c)$ and service budget compliance $\beta(s,\tau)$ using two timed automata.
-In isolation, the automata guarantee two important theorems: Theorem \ref{thm:service:avail:conv} and \ref{thm:service:budget:conv}.
+In isolation, the automata guarantee two important theorems: Theorem \ref{ch04:thm:service:avail:conv} and \ref{ch04:thm:service:budget:conv}.
 %  The automata two theorems on the two behave in the absence of the other limitation.
 %In reality,
 In practice, the main challenge is to be able to ensure both $\alpha(s,\tau,t_c)$ and $\beta(s,\tau)$ at the same time.

@@ -1,7 +1,7 @@
 % -*- root: paper.tex -*-
 
 \section{Applications and Future Work} % (fold)
-\label{sec:application}
+\label{ch04:sec:application}
 
 \subsection{Code Generation for Monitors}
 
@@ -11,15 +11,15 @@ In the past decade, there is considerable research on how to specify and model s
 A number of languages, frameworks and models have been developed to be able to model and specify SLAs for the deployment of services.
 Among others, we refer to SLA$\star$~\cite{kearney2010sla}, WSLA~\cite{keller2003wsla}, and SLAng~\cite{lamanna2003slang}.
 The focus of this research is not to enter this domain and yet build on top of it a model to be able to reason about ``distributed service properties'' such as service availability or budget compliance. 
-In the following, we present a set of pseudo algorithms for the model in Section \ref{sec:modelling} that present how the monitoring can be generated based on the agreements that are specified
+In the following, we present a set of pseudo algorithms for the model in Section \ref{ch04:sec:modelling} that present how the monitoring can be generated based on the agreements that are specified
 \footnote{This is a work in progress in ENVISAGE project WP2}. 
 
-In Algorithm \ref{alg:gen:monitor}, the monitoring actor method \jtt{check} is presented that collects the measurements and publishes them to the platform.
+In Algorithm \ref{ch04:alg:gen:monitor}, the monitoring actor method \jtt{check} is presented that collects the measurements and publishes them to the platform.
 
 % 
 \begin{algorithm}
 \caption{Monitor for service $s$}
-\label{alg:gen:monitor}
+\label{ch04:alg:gen:monitor}
 \begin{algorithmic}
 \Function{check}{}  
   \For{$r \in \sigma(s)$}
@@ -32,12 +32,12 @@ In Algorithm \ref{alg:gen:monitor}, the monitoring actor method \jtt{check} is p
 % 
 
 When platform receives a measurement, it updates its state, computes the service properties and initiates an asynchronous message to process and react to them.
-This is presented in Algorithm \ref{alg:publish}.
+This is presented in Algorithm \ref{ch04:alg:publish}.
 
 % 
 \begin{algorithm}
 \caption{Process measurements}
-\label{alg:publish}
+\label{ch04:alg:publish}
 \begin{algorithmic}
 \Function{publish}{$\mu$}
   \State $\alpha(s,\tau,t_c) \gets$ \Call{compute$_{\alpha}$}{}
@@ -51,13 +51,13 @@ This is presented in Algorithm \ref{alg:publish}.
 
 
 As a consequence of publishing measurements, the platform react to them in case they do not match the expectations.
-The behavior is discussed in Theorem \ref{thm:sustain:conv}.
-Algorithm \ref{alg:process} presents the pseudo code for the behavior that makes changes to $M_\alpha$ and $M_\beta$.
+The behavior is discussed in Theorem \ref{ch04:thm:sustain:conv}.
+Algorithm \ref{ch04:alg:process} presents the pseudo code for the behavior that makes changes to $M_\alpha$ and $M_\beta$.
 
 % 
 \begin{algorithm}
 \caption{$M_\alpha$ and $M_\beta$}
-\label{alg:process}
+\label{ch04:alg:process}
 \begin{algorithmic}
 \Function{process}{$\mu,\alpha(s,\tau,t_c),\beta(s,\tau)$}
   \If{$\alpha(s,\tau,t_c) < 1 - \varepsilon_\alpha$}
@@ -83,15 +83,15 @@ Therefore, it is essential to choose the value of $\tau$ such that monitoring me
 To this end, the following should be considered when selecting a monitoring window $\tau$:
 \begin{itemize}
 \item We defined $\hat{t}$ to be the time a resources needs to initialized in the platform.
-Under Assumption \ref{def:resource:init:time}, all resources require same amount of time to initialize.
-If $\tau < \hat{t}$, Theorem \ref{def:service:availability} invalidates because the measurements are done in a time window that is not enough to be able to take the newly allocated resource into account for a service.
+Under Assumption \ref{ch04:def:resource:init:time}, all resources require same amount of time to initialize.
+If $\tau < \hat{t}$, Theorem \ref{ch04:def:service:availability} invalidates because the measurements are done in a time window that is not enough to be able to take the newly allocated resource into account for a service.
 Thus, it is essential that $\tau \geq \hat{t}$.
 It can be similarly argued that choosing monitoring window as $\tau \gg 2 \times \hat{t}$ also has a counter-productive effect on the service deployments.
 Widening the monitoring window causes to lose fine granularity of monitoring measurements to be able to react to them in proper time.
-\item For simplicity of reasoning, we considered Assumption \ref{def:single:resource:type};
+\item For simplicity of reasoning, we considered Assumption \ref{ch04:def:single:resource:type};
 i.e. all the resources provisioned by the platform are of the same type and as such $\hat{t}$ is the same.
 However, different services may fit into different types or resources and using different types of resource may fit better for budget compliance as they cost differently.
-In such setting, the monitoring window should be at least the maximum $\hat{t}$ of any resource type that is available in the platform: $\tau \geq \mathsf{max}(\hat{t}) \; \forall r \in p$; otherwise, Theorem \ref{thm:service:budget:conv} violates.
+In such setting, the monitoring window should be at least the maximum $\hat{t}$ of any resource type that is available in the platform: $\tau \geq \mathsf{max}(\hat{t}) \; \forall r \in p$; otherwise, Theorem \ref{ch04:thm:service:budget:conv} violates.
 \end{itemize}
 
 % section applications_and_discussion (end)

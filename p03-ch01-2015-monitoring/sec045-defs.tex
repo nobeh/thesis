@@ -1,7 +1,7 @@
 % -*- root: paper-esocc.tex -*-
 
 \section{Distributed Monitoring Model}
-\label{sec:modelling}
+\label{ch04:sec:modelling}
 
 We introduce a distributed monitoring platform and its components and
 discuss some underlying assumptions and definitions.
@@ -13,12 +13,12 @@ Further, we define the notion of service availability and service budget complia
 %\end{center}
 %\vspace{-20pt}
 %\caption{{\footnotesize High-level deployment architecture}}
-%\label{fig:deployment}
+%\label{ch04:fig:deployment}
 %\vspace{-10pt}
 %\end{wrapfigure}
-%Figure \ref{fig:deployment} presents a high-level overview of services deployed in a distributed environment (e.g. ``the cloud'').
+%Figure \ref{ch04:fig:deployment} presents a high-level overview of services deployed in a distributed environment (e.g. ``the cloud'').
 In the deployment environment (e.g., ``the cloud''), every  server from the IaaS provider is  used for a \emph{single} service of a customer, such as
-the Query Service API for a customer of SDL Fredhopper (c.f. Section \ref{sec:fredhopper_example}).
+the Query Service API for a customer of SDL Fredhopper (c.f. Section \ref{ch04:sec:fredhopper_example}).
 Typically, multiple servers are allocated to a single customer.
 The number of servers allocated for a customer is not visible to the customer.
 The customer uses a single endpoint - in the load balancer layer - to access all their services.
@@ -30,7 +30,7 @@ In this section, we formalize the above intuitive notions as \emph{service avail
 
 We then develop a distributed monitoring platform that aims to optimize these service
 characteristics in a deployment environment.
- % given in Figure \ref{fig:deployment}.
+ % given in Figure \ref{ch04:fig:deployment}.
 The monitoring platform works in two cyclic phases: \emph{observation} and \emph{reaction}.
 The observation phase takes measurements on services in the deployment environment.
 Subsequently, the corresponding levels of the service characteristics are calculated.
@@ -53,7 +53,7 @@ Finally, we assume that every resource   is initialized within  at most $t_i$ am
 %SDL Fredhopper cloud.
 
 %\begin{assm}[Unlimited Capacity]
-%\label{def:platform:cap}
+%\label{ch04:def:platform:cap}
 %We assume that the external infrastructure provider is capable to provision an \emph{unlimited} number of resources.
 %\end{assm}
 
@@ -62,7 +62,7 @@ Finally, we assume that every resource   is initialized within  at most $t_i$ am
 %We simplify this limitation by assuming that the platform API (IaaS layer abstraction) is capable to provision as many resources as requested.
 
 %\begin{assm}[Single Resource Type]
-%\label{def:single:resource:type}
+%\label{ch04:def:single:resource:type}
 %To simplify reasoning, we assume that all resources are of the \emph{same type}; i.e. they have the same computing power, memory, and IO capacity.
 %For example, if we are using AWS,
 %we could choose the instance type \jtt{m1.large} for all the services.
@@ -75,14 +75,14 @@ Finally, we assume that every resource   is initialized within  at most $t_i$ am
 %We simplify our analysis by assuming that there is a \emph{single resource type} that is able to provide the necessary capabilities for all services.% in this research scope.
 
 %\begin{assm}[Resource Initialization Time $t_i$]
-%\label{def:resource:init:time}
+%\label{ch04:def:resource:init:time}
 %We assume that every resource $r$ that is initialized is ready for use in at most $t_i$ amount of time.
 %% The time $t_i$ is bounded by a finite constant value.
 %\end{assm}
 
-%Initialization time can vary between different resource types. The above Assumption \ref{def:single:resource:type} simplifies this: we can just choose the initialization time (a fixed constant) of the single resource type that was chosen.
+%Initialization time can vary between different resource types. The above Assumption \ref{ch04:def:single:resource:type} simplifies this: we can just choose the initialization time (a fixed constant) of the single resource type that was chosen.
 %The initialization time is also part of the contract with the IaaS provider.
-%As discussed above in Assumption \ref{def:single:resource:type}, when a resource is launched and initialized, it might take a different amount of time to be in a state that is \emph{operational} and ready to be used.
+%As discussed above in Assumption \ref{ch04:def:single:resource:type}, when a resource is launched and initialized, it might take a different amount of time to be in a state that is \emph{operational} and ready to be used.
 %Thus,
 %We simplify the property of initialization time of a resource to be a fixed constant for the single resource type that is used in the context of this research.
 
@@ -99,11 +99,11 @@ We refer to the current time by $t_c$.
 We denote by $r$ a resource which provides computational power and storage
 and by $s$ a general abstraction of a service in the deployment environment. 
 A service exposes an API that is accessible through a delivery layer, such as HTTP.
-In our example, a service is the Query API (c.f. Section~\ref{sec:fredhopper_example}) that is accessible through a single HTTP endpoint.
+In our example, a service is the Query API (c.f. Section~\ref{ch04:sec:fredhopper_example}) that is accessible through a single HTTP endpoint.
 
 In our framework, 
 \emph{monitoring platform}  $P$ is responsible for (de-)allocation of resources for computation or storage.
-We abstract from a specific implementation of the monitoring platform $P$ through an API in Listing~\ref{lst:platform}. 
+We abstract from a specific implementation of the monitoring platform $P$ through an API in Listing~\ref{ch04:lst:platform}. 
 % 
 
 \lstset{language=java,aboveskip=-20pt,belowskip=-20pt}
@@ -171,7 +171,7 @@ in which $\mu_i(s,r,t)$ is the $i$-th basic measurement of services $s$ on resou
 
 
 \begin{defn}[Service Availability $\alpha(s,\tau,t_c)$]
-\label{def:service:availability}
+\label{ch04:def:service:availability}
 % 
 First, we need a few auxiliary definitions before we can define service availability.
 % 
@@ -216,7 +216,7 @@ If we have $\varepsilon_\alpha(s,\tau)) = 0.03$, this means that service $s$ is 
 \end{exmp}
 
 \begin{defn}[Budget Compliance $\beta(s,\tau)$]
-\label{def:budget:compliance}
+\label{ch04:def:budget:compliance}
 % 
 We first provide a few auxiliary definitions.
 % 

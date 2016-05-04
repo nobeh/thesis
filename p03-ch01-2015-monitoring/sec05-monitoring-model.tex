@@ -1,7 +1,7 @@
 % -*- root: paper-esocc.tex -*-
 
 \section{Service Characteristics Verification}
-\label{sec:timed:fsm}
+\label{ch04:sec:timed:fsm}
 
 In this section, we use timed automata and task automata to model the behavior of a monitoring platform $P$, the deployment environment $E$, and the monitoring components for service availability $\alpha(s,\tau,t_c)$ and budget compliance $\beta(s,\tau)$. 
 \cite{jaghoori2010time} defines a task automata as an extension of timed automata in which each task is a piece of executable program with $(b,w,d)$: best/worst time and deadline of the task. A task automata uses a scheduler for the tasks to schedule each task with a location on a queue.
@@ -37,11 +37,11 @@ In contrast, $M_{\beta_s}$ uses \jtt{deallocate} to terminate a resource to decr
 We use task automata to design $M_{\alpha_s}$.
 Periodically, $M_{\alpha_s}$ checks whether the service availability
 is within the thresholds, taking tolerance into account
-(Definition~\ref{def:service:availability}).
+(Definition~\ref{ch04:def:service:availability}).
 If the condition fails, $M_{\alpha_s}$ generates a task for monitoring platform $P$ to allocate a new resource to service $s$ with a deadline of $\tau$.
 We define the period to be $\tau$.
 We use the semantics of a task automata in \cite{jaghoori2010time} p. 92 in the transitions of the task automata.
-Figure~\ref{fig:fsm:task:alpha} and \ref{fig:fsm:task:beta} present $M_{\alpha_s}$ and $M_{\beta_s}$.
+Figure~\ref{ch04:fig:fsm:task:alpha} and \ref{ch04:fig:fsm:task:beta} present $M_{\alpha_s}$ and $M_{\beta_s}$.
 Both $M_{\alpha_s}$ and $M_{\beta_s}$ share state with the monitoring platform $P$.
 The state keeps the current number of resources for a service $s$ that is denoted by $\sigma(s)$.
 All timed automata and task automata in the monitoring platform have shared access to $\sigma(s)$.
@@ -53,7 +53,7 @@ Intuitively, this means the service characteristic $\alpha(s,\tau,t_c)$ is verif
 % \vspace{-15pt}
 \captionsetup[subfigure]{font=footnotesize}
 \centering
-\subcaptionbox{\scriptsize{$M_{\alpha_s}$ task automata for $\alpha(s,\tau,t_c)$}\label{fig:fsm:task:alpha}}[0.45\textwidth]{
+\subcaptionbox{\scriptsize{$M_{\alpha_s}$ task automata for $\alpha(s,\tau,t_c)$}\label{ch04:fig:fsm:task:alpha}}[0.45\textwidth]{
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=7cm,thick,scale=0.6,every node/.style={scale=0.6},level distance=20mm]
 \node[state,initial]
   (a)   {};
@@ -75,7 +75,7 @@ Intuitively, this means the service characteristic $\alpha(s,\tau,t_c)$ is verif
 ;
 \end{tikzpicture}
 }%
-\subcaptionbox{\scriptsize{$M_{\beta_s}$ task automata for $\beta(s,\tau)$}\label{fig:fsm:task:beta}}[0.45\textwidth]{
+\subcaptionbox{\scriptsize{$M_{\beta_s}$ task automata for $\beta(s,\tau)$}\label{ch04:fig:fsm:task:beta}}[0.45\textwidth]{
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=7cm,thick,scale=0.6,every node/.style={scale=0.6},level distance=20mm]
 \node[state,initial]
   (a)   {};
@@ -104,7 +104,7 @@ Intuitively, this means the service characteristic $\alpha(s,\tau,t_c)$ is verif
 \end{figure}
 
 We use a separate task automaton for each service characteristic to verify the SLA of the service after $t_G$ time.
-Respectively, $M^{\alpha}_{\jtt{V}}$ and $M^{\beta}_{\jtt{V}}$ execute tasks $\jtt{verify}_\alpha$ and $\jtt{verify}_\beta$ (Figures~\ref{fig:fsm:task:verify:alpha} and \ref{fig:fsm:task:verify:beta}).
+Respectively, $M^{\alpha}_{\jtt{V}}$ and $M^{\beta}_{\jtt{V}}$ execute tasks $\jtt{verify}_\alpha$ and $\jtt{verify}_\beta$ (Figures~\ref{ch04:fig:fsm:task:verify:alpha} and \ref{ch04:fig:fsm:task:verify:beta}).
 $M^{\alpha}_{\jtt{V}}$ uses \bfjtt{await} to ensure the condition of the SLA.
 In addition, the task is controlled by the scheduler using a deadline that is specified as $t_G$ in the generated task $\jtt{verify}_\alpha(s,t_G)$ in $M_{\alpha_s}$. 
 If $t_G$ passes before the guard statement in \bfjtt{await} statement holds, it leads to a \emph{missed deadline}.
@@ -112,7 +112,7 @@ If $t_G$ passes before the guard statement in \bfjtt{await} statement holds, it 
 % \vspace{-20pt}
 \captionsetup[subfigure]{font=scriptsize}
 \centering
-\subcaptionbox{\scriptsize{$M^{\alpha}_{\jtt{V}}$ to execute $\jtt{verify}_\alpha$}\label{fig:fsm:task:verify:alpha}}[0.45\textwidth]{
+\subcaptionbox{\scriptsize{$M^{\alpha}_{\jtt{V}}$ to execute $\jtt{verify}_\alpha$}\label{ch04:fig:fsm:task:verify:alpha}}[0.45\textwidth]{
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=6.5cm,thick,scale=0.6,every node/.style={scale=0.6},level distance=20mm]
 \node[state,initial]
   (a)   {};
@@ -127,7 +127,7 @@ If $t_G$ passes before the guard statement in \bfjtt{await} statement holds, it 
 ;
 \end{tikzpicture}
 }%
-\subcaptionbox{\scriptsize{$M^{\beta}_{\jtt{V}}$ to execute $\jtt{verify}_\beta$}\label{fig:fsm:task:verify:beta}}[0.45\textwidth]{
+\subcaptionbox{\scriptsize{$M^{\beta}_{\jtt{V}}$ to execute $\jtt{verify}_\beta$}\label{ch04:fig:fsm:task:verify:beta}}[0.45\textwidth]{
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=6cm,thick,scale=0.6,every node/.style={scale=0.6},level distance=20mm]
 \node[state,initial]
   (a)   {};
@@ -168,7 +168,7 @@ M^{\alpha}_{\jtt{V}} \parallel M^{\beta}_{\jtt{V}}
 , \textsf{Sch}, \tau \rangle
 \]
 We define $M_{\jtt{A}_s}$ as the timed automata to execute the tasks of type \jtt{allocate} in $M_P$.
-We use the model  semantics presented in \cite{jaghoori2010time} p. 92 to design $M_{\jtt{A}_s}$. The resulting automata is presented in Figure~\ref{fig:fsm:alloc_s}.
+We use the model  semantics presented in \cite{jaghoori2010time} p. 92 to design $M_{\jtt{A}_s}$. The resulting automata is presented in Figure~\ref{ch04:fig:fsm:alloc_s}.
 
 \begin{figure}[h]
 % \vspace{-20pt}
@@ -194,14 +194,14 @@ We use the model  semantics presented in \cite{jaghoori2010time} p. 92 to design
 % \vspace{-15pt}
 \caption{$M_{\jtt{A}_s}$: Timed Automaton to execute task type \jtt{allocate} in $M_P$}
 % \vspace{-20pt}
-\label{fig:fsm:alloc_s}
+\label{ch04:fig:fsm:alloc_s}
 \end{figure}
 
 Then, we define $M_{\jtt{A}}$ in $M_P$ as:
 $M_{\jtt{A}} = \; \parallel_s M_{\jtt{A}_s}$; i.e.
 the composition of all timed automata to execute a task \jtt{allocate} for some service $s$.
 % 
-Similarly, we design $M_{\jtt{D}_s}$ to execute task type \jtt{deallocate} in Figure~\ref{fig:fsm:dealloc_s}.
+Similarly, we design $M_{\jtt{D}_s}$ to execute task type \jtt{deallocate} in Figure~\ref{ch04:fig:fsm:dealloc_s}.
 Therefore, we also have $M_{\jtt{D}}$ in $M_P$ as: $M_{\jtt{D}} = \; \parallel_s M_{\jtt{D}_s}$.
 % 
 \begin{figure}[h!]
@@ -228,7 +228,7 @@ Therefore, we also have $M_{\jtt{D}}$ in $M_P$ as: $M_{\jtt{D}} = \; \parallel_s
 % \vspace{-15pt}
 \caption{$M_{\jtt{D}_s}$: Timed Automaton to execute task type \jtt{deallocate} in $M_P$}
 % \vspace{-20pt}
-\label{fig:fsm:dealloc_s}
+\label{ch04:fig:fsm:dealloc_s}
 \end{figure}
 % 
 
@@ -245,7 +245,7 @@ The failure of a resource is not and cannot be controlled by the monitoring plat
 However, the failure of a resource affects the state of a service and its characteristics.
 Thus, we model the environment, including failures, as an additional timed automata, $M_E$.
 In $M_E$, in every monitoring window, there is a probability that some resources fail.
-For example, we present a particular instance of $M_E$ in Figure~\ref{fsm:env}.
+For example, we present a particular instance of $M_E$ in Figure~\ref{ch04:fsm:env}.
 In this environment, in every monitoring, an unspecified constant ($c$) number of resources fail.
 
 \begin{figure}[h]
@@ -271,7 +271,7 @@ In this environment, in every monitoring, an unspecified constant ($c$) number o
 \end{tikzpicture}
 % \vspace{-13pt}
 \caption{An example behavior for $M_E$}
-\label{fsm:env}
+\label{ch04:fsm:env}
 % \vspace{-20pt}
 \end{figure}
 
@@ -287,7 +287,7 @@ With the above automata that we designed for $\alpha(s,\tau,t_c)$ and $\beta(s,\
 % 
 
 \begin{thm}
-\label{thm:alpha}
+\label{ch04:thm:alpha}
 If the SLA for service $s$ on $\alpha(s,\tau,t_c)$ is violated, either:
 \begin{itemize}
 \item $\mathcal{S}_\alpha$ re-establishes the condition $\alpha(s,\tau,t_c) \geq 1 - \varepsilon_\alpha(s,\tau)$ (thereby satisfying the SLA) within $t_G$ time, or, 
@@ -307,7 +307,7 @@ If this is not the case, since $t_G$ has passed, the scheduler generates a misse
 \end{proof}
 
 \begin{thm}
-\label{thm:beta}
+\label{ch04:thm:beta}
 If the SLA for service $s$ on $\beta(s,\tau)$ is violated, either:
 \begin{itemize}
 \item $\mathcal{S}_\beta$ re-establishes the condition $\beta(s,\tau) \geq 1-\varepsilon_\beta(s,\tau)$ (thereby satisfying the SLA) within $t_G$ time, or,
@@ -316,7 +316,7 @@ If the SLA for service $s$ on $\beta(s,\tau)$ is violated, either:
 \end{thm}
 
 \begin{proof}
-Similar to the proof of Theorem~\ref{thm:alpha}.
+Similar to the proof of Theorem~\ref{ch04:thm:alpha}.
 \end{proof}
 
 In practice, the guarantee of $\mathcal{S}_\alpha$ and $\mathcal{S}_\beta$
@@ -341,12 +341,12 @@ Authors in~\cite{fersman2007task} define that a task automata is \emph{schedulab
 The next theorem presents the relationship between schedulability analysis of service sustainability and satisfying its SLA.
 
 \begin{thm}
-\label{thm:gamma}
+\label{ch04:thm:gamma}
 If $\mathcal{S}_\gamma$ is \emph{schedulable} given input parameters $(\tau, t_i, t_G)$, then the SLA for both service characteristics $\alpha(s,\tau,t_c)$ and $\beta(s,\tau)$ is satisfied within $t_G$ time after a violation.
 \end{thm}
 
 \begin{proof}
-When a violation of the SLA occurs in $\mathcal{S}_\gamma$, either $\mathcal{S}_\alpha$ or $\mathcal{S}_\beta$ (or both) start to evolve the service based on Theorems~\ref{thm:alpha} and \ref{thm:beta}.
+When a violation of the SLA occurs in $\mathcal{S}_\gamma$, either $\mathcal{S}_\alpha$ or $\mathcal{S}_\beta$ (or both) start to evolve the service based on Theorems~\ref{ch04:thm:alpha} and \ref{ch04:thm:beta}.
 Therefore, there exists at least one task of $\jtt{verify}_\alpha$ or $\jtt{verify}_\beta$ with a deadline $t_G$.
 % 
 Hence, if $\mathcal{S}_\gamma$ is schedulable, then neither $\jtt{verify}_\alpha$ nor $\jtt{verify}_\beta$ miss their deadline.

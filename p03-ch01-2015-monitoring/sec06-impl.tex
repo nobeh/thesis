@@ -1,7 +1,7 @@
 % -*- root: paper-esocc.tex -*-
 
 \section{Evaluation of the monitoring model} % (fold)
-\label{sec:implementation}
+\label{ch04:sec:implementation}
 
 In this section, we evaluate the implementation of the monitoring model.
 % that we presented in the previous sections.
@@ -20,7 +20,7 @@ We run the environment setup for different monitoring windows $\tau \in \{1,5,10
 We fix the initialization time of a resource to $t_i = 2.5$ seconds.
 We set $t_G = 300$ seconds; i.e. we verify the service after this time and evaluate if the service is guaranteed based on its SLA. 
 
-Figure~\ref{fig:alpha} plots the service availability $\alpha(s,\tau,t_c)$ over time with the different monitoring windows.
+Figure~\ref{ch04:fig:alpha} plots the service availability $\alpha(s,\tau,t_c)$ over time with the different monitoring windows.
 The following summarizes the behavior:
 \begin{itemize}
 \item As the monitoring window $\tau$ increases, the system converges with a slower pace towards the expected $\alpha(s,\tau,t_c)$.
@@ -37,7 +37,7 @@ The following summarizes the behavior:
 \end{center}
 % \vspace{-20pt}
 \caption{Evolving $\alpha(s,\tau,t_c)$ with different $\tau$}
-\label{fig:alpha}
+\label{ch04:fig:alpha}
 % \vspace{-20pt}
 % \end{wrapfigure}
 \end{figure}
@@ -49,11 +49,11 @@ Thus, selection of an appropriate monitoring window length $\tau$ is crucial, as
 The authors in \cite{hogben2013defavail} present that for the same setup and deployment of services, measurements using different monitoring windows yield to very different understanding of service properties such as service availability.
 Therefore, it is essential to choose the value of $\tau$ such that monitoring measurements do not lead to \emph{unrealistic} understanding and inappropriate reactions.
 
-If $\tau < t_i$, Theorem \ref{thm:alpha} does not hold because every task \jtt{allocate} in $M_{\jtt{A}}$ misses its deadline.
+If $\tau < t_i$, Theorem \ref{ch04:thm:alpha} does not hold because every task \jtt{allocate} in $M_{\jtt{A}}$ misses its deadline.
 Thus, it is essential that $\tau \geq t_i$.
 Analogously, choosing monitoring window as $\tau \gg 2 \times t_i$ also has a counter-productive effect on the service deployments.
 % 
-% Assumption \ref{def:single:resource:type} says all the resources are of the same type and as such $t_i$ is the same for all resources.
+% Assumption \ref{ch04:def:single:resource:type} says all the resources are of the same type and as such $t_i$ is the same for all resources.
 In a real setting, different services may use different types of resources.
 In such a setting, the monitoring window should be chosen as the largest $t_i$ of any resource type that is available in the platform: $\tau \geq \mathsf{max}(t_i) \; \forall r \in P$.
 
