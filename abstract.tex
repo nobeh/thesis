@@ -5,6 +5,21 @@
 \label{sec:abstract}
 \vspace*{-10mm}
 
+Object orientation provides principles for abstraction and encapsulation.
+Abstraction is accomplished by high-level concepts of interfaces, classes, and objects (class instances).
+Many object-oriented languages have followed the blocking and synchronous model of messaging. 
+One of the fundamental elements of the actor model is \emph{asynchronous} message passing.
+However, a message is not bound to any interface in the actor model.
+It has been an ongoing research to combine object-oriented programming with the actor model.
+Multicore and distributed computing raised a new challenge: combining object orientation, the actor model, and \emph{concurrency}.
+In a concurrent setting, coroutines enable interactions with collaborative pre-emption.
+Coroutines are not originally established in the object-oriented paradigm.
+In a concurrent setting with objects, multi-threading has been a common approach to provide an object-oriented concurrency model.
+Furthermore, interactions in both coroutines and multi-threading are blocking and synchronous.
+In contrast, the actor model relies on asynchronous communication.
+While a message is processed, an actor cannot be pre-empted or intentionally yield to allow other actors in the system to make progress.
+Integration of actor model and object orientation leads to the use of asynchronous method calls.
+
 This thesis contributes to the intersection of object orientation, actor model, and concurrency.
 We choose Java as the main programming language and as one of the mainstream 
 object-oriented languages. 
