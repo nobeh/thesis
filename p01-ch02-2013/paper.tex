@@ -19,7 +19,7 @@ illustrate the use of its constructs with an industrial case study from distribu
 
 % \keywords{actors, application-level scheduling, real-time, deadlines, futures, Java.}
 
-\section{Introduction} \label{sec:introduction}
+\section{Introduction} \label{ch02:sec:introduction}
 
 In real-time applications, rigid deadlines necessitate stringent scheduling strategies.
 Therefore, the developer must ideally be able to program the scheduling of different tasks inside the application.
@@ -90,20 +90,20 @@ We illustrate the use of the programming language with an industrial case study 
 % executions. The source code of Crisp along with previous work can be found at 
 % \ftt{\url{http://github.com/nobeh/crisp}}.
 
-The paper continues as follows: Section \ref{sec:deadlines} introduces the language constructs
-and provides informal semantics of the language with a case study in Section \ref{sec:frh}. 
-Section \ref{sec:sos} presents the operational semantics of Crisp.
-Section \ref{sec:impl} follows to provide a detailed discussion on the implementation.
+The paper continues as follows: Section \ref{ch02:sec:deadlines} introduces the language constructs
+and provides informal semantics of the language with a case study in Section \ref{ch02:sec:frh}. 
+Section \ref{ch02:sec:sos} presents the operational semantics of Crisp.
+Section \ref{ch02:sec:impl} follows to provide a detailed discussion on the implementation.
 The case study continues in this section with further details and code examples.
-Section \ref{sec:relwork} discusses related work of research and 
-finally Section \ref{sec:conclusion} concludes the paper and proposes future line of research.
+Section \ref{ch02:sec:relwork} discusses related work of research and 
+finally Section \ref{ch02:sec:conclusion} concludes the paper and proposes future line of research.
 
-\section{Programming with deadlines} \label{sec:deadlines}
+\section{Programming with deadlines} \label{ch02:sec:deadlines}
 In this section, we introduce the basic concepts underlying  the notion of ``deadlines'' for asynchronous messages between actors. 
 The main new constructs specify how a message can be sent with a deadline, how the message response can be processed, and what happens when a deadline is missed.
-We discuss the informal semantics of these concepts  and illustrate them using a case study in Section \ref{sec:frh}.
+We discuss the informal semantics of these concepts  and illustrate them using a case study in Section \ref{ch02:sec:frh}.
 
-Listing \ref{fig:grammar} introduces a minimal version of the  real-time
+Listing \ref{ch02:fig:grammar} introduces a minimal version of the  real-time
 actor-based language Crisp.
 Below we discuss the two main new language constructs presented at lines (7) and (8).
 % In Line (6), we introduce an extension on how each concurrent object can send a message to another concurrent object annotated with an extra
@@ -151,7 +151,7 @@ boolean expressions $b$.
 %For simplicity, we drop the notation syntax to specify how $V$ can expand to different values along with arithmetic operations.
 %\emph{Note} that small letters (e.g. $e$) are of type of their capital constructs (e.g. $E$).
 }
-\label{fig:grammar}
+\label{ch02:fig:grammar}
 \end{figure}
 
 \parbf{How to send a message with a deadline?} 
@@ -182,7 +182,7 @@ When the currently active process is terminated the process at the head of the q
 (and as such  dequeued).
 The active process  cannot be \emph{preempted} and is forced
 to  \emph{run to completion}.
-In  Section \ref{sec:impl} we discuss the implementation details of this design choice.
+In  Section \ref{ch02:sec:impl} we discuss the implementation details of this design choice.
 
 \parbf{How to process the response of a message with a deadline?}
 In the above example of an asynchronous message, the \emph{future} result of processing the  message   
@@ -209,7 +209,7 @@ try {
 \end{lstlisting}
 % \vspace{-20pt}
 
-For example, in Listing \ref{lst:try:catch}, if the \gett \space operation raises an exception  control,  is transferred to line (5);
+For example, in Listing \ref{ch02:lst:try:catch}, if the \gett \space operation raises an exception  control,  is transferred to line (5);
 otherwise, the execution continues in line (3). 
 In the \jtt{catch} block, the programmer has also access to the occurred exception that can be 
 any kind of exception including an exception that is caused by a missed deadline.
@@ -219,7 +219,7 @@ Exceptions in our actor-based model thus are propagated by futures.
 The additional parameter $e$ of the get operation is of type  $\mathsf{T}_{time}$ and specifies a \emph{timeout};
 i.e., the \gett \space operation will timeout after the specified units of time.
 
-% Since, we provide a reference implementation in Java (c.f. Section \ref{sec:impl}), we take advantage of exception ``stack traces''; 
+% Since, we provide a reference implementation in Java (c.f. Section \ref{ch02:sec:impl}), we take advantage of exception ``stack traces''; 
 % i.e. an instance of exception can produce a chain of ``causes'' that has led to the occurrence of the exception.
 % This means that cathing an exception may in turn lead to throwing another exception or just rethrowing it. 
 % Therefore, if the programmer decides not to use a \jtt{try-catch} block, the exception is propagated through the call hierarchy.
@@ -251,7 +251,7 @@ i.e., the \gett \space operation will timeout after the specified units of time.
 % \emph{Starvation?} \Behrooz{Talk about the responsiveness of the system.}
 % 
 % \emph{Discussion?} Compare the approaches: event-based with no get() and exceptions as messages vs. messages with exceptions
-\subsection{Case Study: Fredhopper Distributed Data Processing} \label{sec:frh}
+\subsection{Case Study: Fredhopper Distributed Data Processing} \label{ch02:sec:frh}
 
 \begin{figure}[h]
 % \begin{wrapfigure}{r}{0.4\textwidth}
@@ -261,7 +261,7 @@ i.e., the \gett \space operation will timeout after the specified units of time.
 \end{center}
 % \vspace{-20pt}
 \caption[Life cycle for remote data processing]{Fredhopper's Controller life cycle for remote data processing}
-\label{fig:frh-dm}
+\label{ch02:fig:frh-dm}
 % \vspace{-10pt}
 % \end{wrapfigure}
 \end{figure}
@@ -281,7 +281,7 @@ Controller is responsible to passively manage different service installations fo
 For instance, in one scenario, a customer submits their data along with a processing request to their data hub server.
 Controller, then picks up the data and initiates a data processing job (usually an ETL job) in a data processing service.
 When the data processing is complete, the result is again published to customer environment and additionally becomes available through FAS services.
-Figure \ref{fig:frh-dm} illustrates an example scenario that is described above.
+Figure \ref{ch02:fig:frh-dm} illustrates an example scenario that is described above.
 
 In the current implementation of Controller, at Step 4, a data job instance is submitted to a remote data processing service.
 Afterwards, the future response of the data job is determined by a periodic remote check on the data service (Step 4). 
@@ -296,10 +296,10 @@ According to SLA agreements, this is \emph{not} acceptable.
 It is strongly required that for any data job, the customer should be notified of the result: either a completed job with \textsl{success/failed} status, a job that is not completed, or a job with an unknown state.
 In other words, Controller should be able to guarantee that any data job request terminates.
 
-To illustrate the contribution of this paper, we extract a closed-world simplified version of the scenario in Figure \ref{fig:frh-dm} from Controller.
-In Section \ref{sec:impl}, we provide an implementation-level usage of our work applied to this case study.
+To illustrate the contribution of this paper, we extract a closed-world simplified version of the scenario in Figure \ref{ch02:fig:frh-dm} from Controller.
+In Section \ref{ch02:sec:impl}, we provide an implementation-level usage of our work applied to this case study.
 
-\section{Operational Semantics} \label{sec:sos}
+\section{Operational Semantics} \label{ch02:sec:sos}
 We describe the semantics of the language by means of a two-tiered labeled transition system:
 a local transition system describes the behavior of a single actor and a global transition system
 describes the overall behavior of a system of interacting actors.
@@ -447,7 +447,7 @@ $$
 \langle p , q, \phi\rangle \xrightarrow[]{m(\tau)}  \langle p , \mathsf{insert}(q, m(\overline{v}, d)), \phi\rangle
 $$
 where   $\mathsf{insert}(q, m(\tau))$  defines the result of inserting the process  $(S,\tau)$, where $S$ denotes the body of method $m$,
-in $q$, according to some application-specific policy (described below in Section \ref{sec:impl}).
+in $q$, according to some application-specific policy (described below in Section \ref{ch02:sec:impl}).
 
 
 \parbf{Outgoing message.} 
@@ -531,7 +531,7 @@ for some positive $\delta$.
 % \end{align}
 % 
 % in which the operation \textsf{new()} creates a new instance of a process for the concurrent object.
-% Additionally, as we discssued in Equation \ref{eq:orderedq}, each concurrent object owns an ordered queue for the processes.
+% Additionally, as we discssued in Equation \ref{ch02:eq:orderedq}, each concurrent object owns an ordered queue for the processes.
 % The process queue is ordered based on the result of $\sigma$ function:
 % 
 % $$ \sigma(\dot{p}) = \dot{p}.\jtt{deadline} $$
@@ -562,7 +562,7 @@ for some positive $\delta$.
 % {(o,(x \mapsto \jtt{new Exception},s[f \mapsto \jtt{null}],d),q,\sigma)}
 % \end{align}
 
-\section{Implementation} \label{sec:impl}
+\section{Implementation} \label{ch02:sec:impl}
 We base our implementation on Java's concurrent package: \jtt{java.util.concurrent}. 
 The implementation consists of the following major components:
 \begin{enumerate}
@@ -648,11 +648,11 @@ The customized  watchdog processes are still  executed by a single thread.
 %Additionally, the order of processes needs to be determined by the programmer's custom scheduler that can be application specific.
 
 \parbf{Fredhopper case study.}
-As introduced in Section \ref{sec:frh}, we extract a closed-world simplified version from Fredhopper Controller.
+As introduced in Section \ref{ch02:sec:frh}, we extract a closed-world simplified version from Fredhopper Controller.
 We apply the approach discussed in this paper to use deadlines for asynchronous messages.
-% Controller operates in a high-demand distributed setting as in Figure \ref{fig:ctl:deploy}.
+% Controller operates in a high-demand distributed setting as in Figure \ref{ch02:fig:ctl:deploy}.
 
-Listing \ref{lst:frh:polling} and \ref{lst:frh:deadlines} present the difference in the previous Controller and the approach in Crisp.
+Listing \ref{ch02:lst:frh:polling} and \ref{ch02:lst:frh:deadlines} present the difference in the previous Controller and the approach in Crisp.
 The left code snippet shows the Controller that uses polling to retrieve data processing results.
 The right code snippet shows the one that uses messages with deadlines.
 
@@ -720,14 +720,14 @@ However, in the previous version, the customer may never be able to react to a d
 % \end{center}
 % \vspace{-20pt}
 % \caption{Fredhopper's Controller distribution model}
-% \label{fig:ctl:deploy}
+% \label{ch02:fig:ctl:deploy}
 % \vspace{-15pt}
 % \end{wrapfigure}
 
 In comparison to the Controller using polling, there is a way to express timeouts for future values.
 However, it does not provide language constructs to specify a deadline for a message that is sent to data processing service.
-A deadline may be simulated using a combination of timeout and periodic polling approaches (Listing \ref{lst:frh:polling}).
-Though, this approach cannot guarantee eventual termination in all cases; as discussed before that Step 4 in Figure \ref{fig:frh-dm} may never complete.
+A deadline may be simulated using a combination of timeout and periodic polling approaches (Listing \ref{ch02:lst:frh:polling}).
+Though, this approach cannot guarantee eventual termination in all cases; as discussed before that Step 4 in Figure \ref{ch02:fig:frh-dm} may never complete.
 Controller is required to meet certain customer expectations based on an SLA.
 Thus, Controller needs to take advantage of a language/library solution that can provide a higher level of abstraction for real-time scheduling of concurrent messages.
 When messages in Crisp carry a deadline specification, Controller is able to guarantee that it can provide a response to the customer.
@@ -769,8 +769,8 @@ class DataScheduler extends DefaultSchedulingManager {
 % \vspace{-15pt}
 \end{center}
 
-In the above listings, Listing \ref{lst:frh:sched} defines a custom scheduler that determines the priority of two processes with custom logic for specific customer.
-To use the custom scheduler, the only requirement is that the class \jtt{DataProcessor} defines a specific class variable called \jtt{scheduler} in Listing \ref{lst:frh:dm}.
+In the above listings, Listing \ref{ch02:lst:frh:sched} defines a custom scheduler that determines the priority of two processes with custom logic for specific customer.
+To use the custom scheduler, the only requirement is that the class \jtt{DataProcessor} defines a specific class variable called \jtt{scheduler} in Listing \ref{ch02:lst:frh:dm}.
 The \textsl{custom scheduler} is picked up by Crisp core architecture and is used to schedule the queued processes.
 % In the listing, \jtt{DefaultSchedulingManager} denotes the default EDF scheduler that is implemented in Crisp.
 Thus, all processes from customer \jtt{A} have priority over processes from other customers no matter what their deadlines are.
@@ -786,7 +786,7 @@ $s_1$ & $s_2$ \\ \thickhline
 $88.71\%$ & $94.57\%$ \\ \hline
 \end{tabular}
 \caption{Evaluation Results}
-\label{tbl:eval}
+\label{ch02:tbl:eval}
 % \vspace{-15pt}
 % \end{wraptable}
 \end{table}
@@ -796,12 +796,12 @@ We extracted statistics for completed and never-ended data processing jobs from 
 We replayed the logs with Crisp approach and measured the same property ($s_2$).
 We measured the same property for 180 customers that Fredhopper manages on the cloud.
 In this evaluation, a total number of about 25000 data processing requests were included.
-The results show $6\%$ improvement in Table \ref{tbl:eval} (that amounts to around 1600 better data processing requests). 
+The results show $6\%$ improvement in Table \ref{ch02:tbl:eval} (that amounts to around 1600 better data processing requests). 
 Because of data issues or wrong parameters in the data processing requests, there are requests that still fail or never end and should be handled by a human resource.
 
 You may find more information including documentation and source code of Crisp at \surl{http://nobeh.github.com/crisp}.
 
-\section{Related Work} \label{sec:relwork}
+\section{Related Work} \label{ch02:sec:relwork}
 The programming language presented in this paper is a real-time  extension of the  language introduced in  \cite{crisp-sac}. This new extension features
 \begin{itemize}
  \item integration of  asynchronous messages with  deadlines and futures with timeouts;
@@ -908,7 +908,7 @@ in distributed applications.
 % In this paper we consider real-time information based on an extension of active objects
 % with deadlines and time-outs.
 
-\section{Conclusion and future work} \label{sec:conclusion}
+\section{Conclusion and future work} \label{ch02:sec:conclusion}
 In this paper, we presented both a formal semantics and  an implementation of a real-time actor-based programming language.
 We presented how asynchronous messages with deadline can be used to control application-level scheduling with higher abstractions.
 We illustrated the language usage with a real-world case study from SDL Fredhopper along the discussion for the implementation.
