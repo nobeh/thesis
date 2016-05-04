@@ -33,7 +33,7 @@ We present briefly the results of a set of experiments which provide evidence of
 % \keywords{Actor model, Concurrency, Asynchronous Message, Java, Lambda Expression}
 
 \section{Introduction}
-\label{sec:introduction}
+\label{ch03:sec:introduction}
 Java is beyond doubt one of the mainstream object oriented programming languages 
 that supports a \emph{programming to interfaces} discipline \cite{oop:patterns,oop:survey}.
 Through the years, Java has evolved from a mere programming language to a huge platform to drive and envision standards for mission-critical business applications.
@@ -98,18 +98,18 @@ which lends itself to formal analysis, ABS ~\cite{johnsen2012abs}.
 % We present the operational semantics of such translation and how model extraction be a direct benefit of an implementation based on such API.
 
 The paper continues as follows: 
-in Section \ref{sec:relatedwork}, we briefly discuss a set of related works on actors and concurrent models especially on JVM platform. 
-Section \ref{sec:example} presents an example that we use throughout the paper, we start to model the example using a library. 
-Section \ref{sec:actor:programming} briefly introduces a concurrent modeling language and implements the example.
-Section \ref{sec:j8:features} briefly discusses Java 8 features that this works uses for implementation.
-Section \ref{sec:j8:actors:realization} presents how an actor model maps into programming in Java~8.
-Section \ref{sec:impl:arch} discusses in detail the implementation architecture of the actor API.
-Section \ref{sec:experiments} discusses how a number of benchmarks were performed for the implementation of the API and how they compare with current related works.
-Section \ref{sec:conclusion} concludes the paper and discusses the future work.
+in Section \ref{ch03:sec:relatedwork}, we briefly discuss a set of related works on actors and concurrent models especially on JVM platform. 
+Section \ref{ch03:sec:example} presents an example that we use throughout the paper, we start to model the example using a library. 
+Section \ref{ch03:sec:actor:programming} briefly introduces a concurrent modeling language and implements the example.
+Section \ref{ch03:sec:j8:features} briefly discusses Java 8 features that this works uses for implementation.
+Section \ref{ch03:sec:j8:actors:realization} presents how an actor model maps into programming in Java~8.
+Section \ref{ch03:sec:impl:arch} discusses in detail the implementation architecture of the actor API.
+Section \ref{ch03:sec:experiments} discusses how a number of benchmarks were performed for the implementation of the API and how they compare with current related works.
+Section \ref{ch03:sec:conclusion} concludes the paper and discusses the future work.
 
  
 \section{Related Work}
-\label{sec:relatedwork}
+\label{ch03:sec:relatedwork}
 
 There are numerous works of research and development in the domain of actor modeling and implementation in different languages.
 We discuss a subset of the related work in the level of modeling and implementation with more focus on Java and JVM-based efforts in this section.
@@ -154,11 +154,11 @@ The Business Logic Processor runs entirely in-memory using event sourcing.
 The Business Logic Processor is surrounded by Disruptors - a concurrency component that implements a network of queues that operate without needing locks.
 
 \section{State of the Art: An example}
-\label{sec:example}
+\label{ch03:sec:example}
 In the following, we illustrate the state of the art in actor programming by means of a simple example using
 the Akka~\cite{akka} library which features asynchronous messaging and which is used to program actors in both Scala and Java.
 We want to model in Akka an ``asynchronous ping-pong match'' between two actors represented by the 
-two interfaces \jtt{IPing} and \jtt{IPong} which are depicted in Listings \ref{lst:ping:interface} and \ref{lst:pong:interface}.
+two interfaces \jtt{IPing} and \jtt{IPong} which are depicted in Listings \ref{ch03:lst:ping:interface} and \ref{ch03:lst:pong:interface}.
 An asynchronous call by the actor implementing the \jtt{IPong} interface of the \jtt{ping} method of the actor
 implementing the \jtt{IPing} interface should generate an asynchronous call of the \jtt{pong} method of the callee,
 and vice versa.
@@ -190,7 +190,7 @@ public interface IPong {
 
 To model an actor in Akka by a class, say  \jtt{Ping},  with interface \jtt{IPing}, this class is required  \emph{both} to \emph{extend}
 a given pre-defined  class \jtt{UntypedActor}  and \emph{implement} the interface \jtt{IPing}, 
-as depicted in Listings \ref{lst:ping:akka} and \ref{lst:pong:akka}.
+as depicted in Listings \ref{ch03:lst:ping:akka} and \ref{ch03:lst:pong:akka}.
 The class \jtt{UntypedActor} provides two Akka framework methods \jtt{tell} and \jtt{onReceive} 
 which are used to enqueue and dequeue asynchronous messages.
 An asynchronous call to, for example,  the method \jtt{ping} then can be modeled by passing a user-defined  encoding of this call,
@@ -251,7 +251,7 @@ public class Pong
 \end{center}
 
 Access to the sender of the message in Akka is provided by \jtt{sender()}.
-In the main method as described in Listing \ref{lst:main:akka} we show how the initialize and start the ping/pong match.
+In the main method as described in Listing \ref{ch03:lst:main:akka} we show how the initialize and start the ping/pong match.
 Note that a reference to the ``pong'' actor is passed to the ``ping'' actor.
 
 \begin{figure}[h]
@@ -286,7 +286,7 @@ Akka has recently released a new version that supports Java 8 features
 However, the new features can be categorized as syntax sugar on how incoming messages are filtered through object/class matchers to find the proper type.
 
 \section{Actor Programming in Java}
-\label{sec:actor:programming}
+\label{ch03:sec:actor:programming}
 
 We first describe informally the actor programming model assumed in this paper. This model is based on the
 Abstract Behavioral Specification language (ABS)  
@@ -321,8 +321,8 @@ Asynchronous method calls use futures as dynamically generated references  to re
 The execution of a method can be (temporarily) suspended by release statements which give rise to a form
 of  cooperative scheduling of method invocations inside concurrent (active) objects.
 Release statements can be conditional (e.g., checking a future for the return value).
-Listings \ref{lst:ping:abs}, \ref{lst:pong:abs} and \ref{lst:main:ABS} present an implementation of ping-pong example in ABS.
-By means of the statement on line 6 of Listing \ref{lst:ping:abs}
+Listings \ref{ch03:lst:ping:abs}, \ref{ch03:lst:pong:abs} and \ref{ch03:lst:main:ABS} present an implementation of ping-pong example in ABS.
+By means of the statement on line 6 of Listing \ref{ch03:lst:ping:abs}
 a ``ping'' object  directly calls asynchronously the \jtt{pong} method  of its ``pong'' object, and vice versa.
 Such a call is stored in the message queue and the called method is executed when the message is dequeued.
 Note that variables in ABS are declared by interfaces.
@@ -359,7 +359,7 @@ class ABSPong implements ABSIPong {
 \lstset{language=Java}
 
 \section{Java 8 Features}
-\label{sec:j8:features}
+\label{ch03:sec:j8:features}
 
 In the next section, we describe how ABS actors are implemented in Java~8 as API.
 In this section we provide an overview of the features in Java~8 that facilitate an efficient, expressive, and precise implementation of an actor model
@@ -431,14 +431,14 @@ This feature of Java~8 is indirectly use in ABS API through the extensive use of
 Moreover, in terms of performance, it has been revealed that invoke dynamic is much better than using anonymous inner classes~\cite{lambda:perf}.
 
 \section{Modeling actors in Java~8}
-\label{sec:j8:actors:realization}
+\label{ch03:sec:j8:actors:realization}
 
 In this section, we discuss how we model ABS actors  using Java~8 features.
 % We discuss how the message queue of actor is realized and how co-operative scheduling is achieved.
 In this mapping, we demonstrate how new features of Java~8 are used.
 
 \paragraph{The \jtt{Actor} Interface}
-We introduce an interface to model actors  using Java~8 features discussed in Section~\ref{sec:j8:features}.
+We introduce an interface to model actors  using Java~8 features discussed in Section~\ref{ch03:sec:j8:features}.
 Implementing an interface in Java means that the object exposes public APIs specified by the interface that is considered the behavior of the object.
 Interface implementation is opposed to inheritance extension in which the object is 
 possibly forced to expose behavior that may not be part of its intended interface.  
@@ -453,7 +453,7 @@ All the above must co-exist with the
 fundamental requirement that for an object to act like an actor (in an object-oriented context)
 should \emph{not} require a modification of its intended interface.
 
-The \jtt{Actor} interface (Listings \ref{lst:j8:run} and \ref{lst:j8:enq})
+The \jtt{Actor} interface (Listings \ref{ch03:lst:j8:run} and \ref{ch03:lst:j8:enq})
 provides a set of \bfjtt{default} methods, namely the \jtt{run} and \jtt{send} methods,  which the implementing classes do not need to re-implement.
 This interface further  encapsulates a queue of messages that supports concurrent features of Java API
 \footnote{Such API includes usage of different interfaces and classes in \jtt{java.util.concurrent} package \cite{jsr166}.
@@ -506,12 +506,12 @@ public interface Actor {
 \end{center}
 
 \paragraph{Modeling Asynchronous Messages} 
-\label{par:asynchronous_messages}
+\label{ch03:par:asynchronous_messages}
 We model an asynchronous call 
 $$
 \jtt{Future<V>} \; f = e_0\; !\; m(e_1,\ldots,e_n)
 $$
-to a method in ABS by the Java~8 code snippet of Listing \ref{lst:j8:call0}.
+to a method in ABS by the Java~8 code snippet of Listing \ref{ch03:lst:j8:call0}.
 The final local variables $\jtt{u}_1$, $\ldots$, $\jtt{u}_n$ (of the caller) are used to store the values of
 the Java~8 expressions $\jtt{e}_1$, $\ldots$, $\jtt{e}_n$ corresponding to the actual parameters  $e_1,\ldots,e_n$.
 The types \jtt{T}$_i$, $i=1,\ldots,n$,  are the corresponding Java~8 types of  $e_i$, $i=1,\ldots,n$.
@@ -541,10 +541,10 @@ e$_0$.send(
 
 The lambda expression  which encloses the above method invocation  is an instance of the  functional interface; e.g. \jtt{Callable}.
 Note that the generated object which  represents the  lambda expression will contain the local context of the caller of the method ``$m$'' (including the local variables storing the values of the expressions $e_1,\ldots,e_n$), which will be restored upon execution of the lambda expression. 
-Listing \ref{lst:j8:call1} models an asynchronous call to a method without a return value.
+Listing \ref{ch03:lst:j8:call1} models an asynchronous call to a method without a return value.
 
-As an example, Listings \ref{lst:ping} and \ref{lst:pong} present the running ping/pong example, using the above API.
-The main program to use ping and pong implementation is presented in Listing~\ref{lst:main:api}.
+As an example, Listings \ref{ch03:lst:ping} and \ref{ch03:lst:pong} present the running ping/pong example, using the above API.
+The main program to use ping and pong implementation is presented in Listing~\ref{ch03:lst:main:api}.
 
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
@@ -568,15 +568,15 @@ public class Pong implements IPong, Actor {
 \end{minipage}
 \end{center}
 
-% In Listing \ref{lst:ping}, the implementation uses a reference to another actor; namely \jtt{pong}.
+% In Listing \ref{ch03:lst:ping}, the implementation uses a reference to another actor; namely \jtt{pong}.
 % It sends a message to the actor, captures the result into a future value and waits for the result.
 % The processing of the message in \jtt{pong} leads to the invocation of the method ``pong'' 
-% using the provided argument and returns the result (Listing \ref{lst:pong}).
+% using the provided argument and returns the result (Listing \ref{ch03:lst:pong}).
 % 
 As demonstrated in the above examples, the ``ping'' and ``pong'' objects \emph{preserve} 
-their own \emph{interfaces}  contrary to the example depicted in Section \ref{sec:example} 
+their own \emph{interfaces}  contrary to the example depicted in Section \ref{ch03:sec:example} 
 in which the objects \emph{extend} a specific ``universal actor abstraction'' to inherit methods and behaviors to become an actor.
-Further,  messages are processed \emph{generically} by the \jtt{run} method described in Listing \ref{lst:j8:run}.
+Further,  messages are processed \emph{generically} by the \jtt{run} method described in Listing \ref{ch03:lst:j8:run}.
 Although, in the first place, sending an asynchronous may look like to be able to change the recipient actor's state, this is not correct.
 The variables that can be used in a lambda expression are \emph{effectively} final. 
 In other words, in the context of a lambda expression, the recipient actor only provides a snapshot view of its state that cannot be changed.
@@ -590,7 +590,7 @@ This prevents abuse of lambda expressions to change the receiver's state.
 \paragraph{Modeling Cooperative Scheduling}
 The ABS statement $\bfjtt{await}\; g$, where $g$ is a boolean guard, allows an active object to preempt the current method and schedule another one.
 % We describe the  translation of await statements in the context of a general translation of statements in the ABS language.
-We model cooperative scheduling by means of a call to the \jtt{await} method in Listing~\ref{lst:j8:await}.
+We model cooperative scheduling by means of a call to the \jtt{await} method in Listing~\ref{ch03:lst:j8:await}.
 Note that the preempted process is thus passed as an additional parameter and as such queued in case the guard is false,
 otherwise it is executed.
 Moreover, the generation of the continuation of the process is an optimization task for the code generation process to prevent code duplication.
@@ -626,14 +626,14 @@ void await(final Boolean guard,
 % and $\theta(S')$ denotes the Java~8 realization of the statement $S'$, following inductively the above scheme.
 
 % \textsl{Actor API in Java~8} 
-% \label{par:actor_api_in_java_8}
+% \label{ch03:par:actor_api_in_java_8}
 
 
 
 \section{Implementation Architecture}
-\label{sec:impl:arch}
+\label{ch03:sec:impl:arch}
 
-Figure \ref{fig:actors:arch} presents the general layered architecture of the actor API in Java 8.
+Figure \ref{ch03:fig:actors:arch} presents the general layered architecture of the actor API in Java 8.
 It consists of  three layers: the  routing layer  which
 forms the foundation for the support of distribution and location transparency~\cite{KarmaniSA09} of actors,
 the queuing layer  which allows for different implementations of the message queues, and finally, the processing layer
@@ -653,7 +653,7 @@ The implementation is available at \surl{https://github.com/CrispOSS/abs-api}.
 \includegraphics[scale=.6]{figs/abs-api-java8-2}  
 \end{center}
 \caption{Architecture of Actor API in Java~8}
-\label{fig:actors:arch}
+\label{ch03:fig:actors:arch}
 \end{figure} 
 
 We discuss the architecture from bottom layer to top.
@@ -731,10 +731,10 @@ Further, different plugins can be injected to allow for scheduling of messages e
 % The implementation is available at \surl{https://github.com/CrispOSS/abs-api}.
 % 
 % \section{Distribution of Actors}
-% \label{sec:distributtion}
+% \label{ch03:sec:distributtion}
 
 We discuss next the distribution of actors in this architecture.
-In the architecture presented  in Figure~\ref{fig:actors:arch}, each layer can be \emph{distributed} independently of another layer in a transparent way.
+In the architecture presented  in Figure~\ref{ch03:fig:actors:arch}, each layer can be \emph{distributed} independently of another layer in a transparent way.
 Not only the routing layer can provide distribution, the queue layer of the architecture may also be remote to take advantage of cluster storage for actor messages. 
 A remote routing layer can provide access to actors transparently through standard naming or addresses.
 % The implementation of remote actors is left as an the extension or plugin that is injected into the system.
@@ -772,7 +772,7 @@ However, this resource provisioning should be transparent to the actor and only 
 We extend the ABS API to ABS Remote API\footnote{The implementation is available at \surl{https://github.com/CrispOSS/abs-api-remote}.} 
 that provides the above properties for  actors in a seamless way.
 A complete example of using the remote API has been developed\footnote{An example of ABS Remote API is available at \surl{https://github.com/CrispOSS/abs-api-remote-sample}.}. 
-Expanding our ping-pong example in this paper, Listing~\ref{lst:ping:remote} and \ref{lst:pong:remote} present how a remote server of actors is created for the ping and pong actors.
+Expanding our ping-pong example in this paper, Listing~\ref{ch03:lst:ping:remote} and \ref{ch03:lst:pong:remote} present how a remote server of actors is created for the ping and pong actors.
 In the following listings, \jtt{java.util.Properties} is used provide input parameters of the actor server;
 namely, the address and the port that the actor server responds to.
 
@@ -804,21 +804,21 @@ Pong pong = new Pong();
 \end{minipage}
 \end{center}
 
-In Listing~\ref{lst:ping:remote}, a remote reference to a pong actor is created that exposes the \jtt{IPong} interface.
+In Listing~\ref{ch03:lst:ping:remote}, a remote reference to a pong actor is created that exposes the \jtt{IPong} interface.
 This interface is proxied
 \footnote{Java Proxy: \surl{http://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Proxy.html}} by the implementation 
 to handle the remote communication with the actual pong actor in the other actor server.
 This mechanism hides the communication details from the ping actor and as such allows the ping actor to use 
 the same API to send a message to the pong actor (without even  knowing that the pong actor is actually remote).
 When an actor is initialized in a distributed setting it transparently identifies its actor server and registers with it.
-The above two listings are aligned with the similar main program presented in Listing~\ref{lst:main:api} that presents the same in a local setting.
+The above two listings are aligned with the similar main program presented in Listing~\ref{ch03:lst:main:api} that presents the same in a local setting.
 The above two listings run in separate JVM instances and therefore do not share any objects.
 In each JVM instance, it is required that both interfaces \jtt{IPing} and \jtt{IPong} are visible to the classpath; however, 
 the ping actor server only needs to see \jtt{Ping} class in its classpath and similarly the pong actor server only needs 
 to see \jtt{Pong} class in its classpath.
 
 \section{Experiments}
-\label{sec:experiments}
+\label{ch03:sec:experiments}
 
 In this section, we explain how a series of benchmarks were directed to evaluate the performance and functionality of actor API in Java 8.
 For this benchmark, we use a simple Java application that uses the ``Ping-Pong'' actor example discussed previously. 
@@ -840,7 +840,7 @@ Benchmark results of comparing sampling time of message round trips in ABS API a
 An example reading of above results is that the time shows for $p(90.0000)$ reads as ``message round trips were completed under $10{\mu}s$ for $90\%$ of the sent messages''.
 The first two columns show the ``minimum'' and ``mean'' message round trip times in both implementations.
 }
-\label{fig:benchmarks}
+\label{ch03:fig:benchmarks}
 \end{figure} 
 
 The benchmark is performed on the round trip of a message in the application. 
@@ -858,9 +858,9 @@ In each iteration, a maximum number of 50K samples are collected.
 Each benchmark is executed in an isolated JVM environment with Java 8 version b127.
 Each benchmark is executed on a hardware with 8 cores of CPU and a maximum memory of 8GB for JVM.
 
-The results are presented in Figure \ref{fig:benchmarks}.
+The results are presented in Figure \ref{ch03:fig:benchmarks}.
 The performance difference observed in the measurements can be explained as follows.
-An actor in Akka is expected to expose a certain behavior as discussed in Section \ref{sec:example} (i.e. \jtt{onReceive}).
+An actor in Akka is expected to expose a certain behavior as discussed in Section \ref{ch03:sec:example} (i.e. \jtt{onReceive}).
 This means that every message leads to an eventual invocation of this method inside actor.
 However, in case of an actor in Java~8, there is a need to make a look-up for the actual method to be executed with expected arguments. 
 This means that for every method, although in the presence of caching, there is a need to find the proper method that is expected to be invoked. 
@@ -868,7 +868,7 @@ A constant overhead for the method look-up  in order to adhere to the object-ori
 Thus, this is the minimal performance cost that the actor API in Java~8 pays to support  programming to interfaces.
 
 \section{Conclusion}
-\label{sec:conclusion}
+\label{ch03:sec:conclusion}
 
 In this paper, we discussed an implementation of the actor-based ABS modeling language
 in Java~8 which supports  the basic object-oriented mechanisms
