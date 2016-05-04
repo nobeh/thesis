@@ -31,7 +31,7 @@ and therefore is suitable for component-based software verification.
 % Object Monitoring \sep Runtime Verification \sep Method Call Sequence Specification \sep Code Annotation \sep Component-based Testing
 % \end{keyword}
 
- \section{Introduction} \label{sec:intro}
+ \section{Introduction} \label{ch05:sec:intro}
 Monitoring refers to the activity of tracking observable information from an
 execution of a system with the goal of checking it against the constraints imposed
 by the system specification. The observable information of the monitored system
@@ -77,7 +77,7 @@ they must be compatible; otherwise, the resulting bytecode may contain \emph{con
 \begin{center}
 \includegraphics[scale=0.5]{images/arch-diagram-summary-exec}
 \caption{JMSeq Execution Architecture}
-\label{fig:arch-overview}
+\label{ch05:fig:arch-overview}
 \end{center}
 \end{figure}
 
@@ -91,8 +91,8 @@ Furthermore,  Java annotations themselves have no direct effect on program execu
 they carry metadata that can optionally be used at runtime to perform operations orthogonal to the execution of the main application.
    %Annotations are based on a declarative language to specifiy method call sequences using regular expressions for method signatures.
 %The program is verified against the specifications during runtime and fails as soon as a violation is detected. 
-%The verification is performed in a separate virtual machine to protect the original application from any modification (Figure \ref{fig:arch-overview}). 
-%In the following, we provide a  discussion of what distinguishes JMSeq from other related work (c.f. Section \ref{sec:relworks}) in verification:
+%The verification is performed in a separate virtual machine to protect the original application from any modification (Figure \ref{ch05:fig:arch-overview}). 
+%In the following, we provide a  discussion of what distinguishes JMSeq from other related work (c.f. Section \ref{ch05:sec:relworks}) in verification:
 The main distinguishing overall characteristic of JMSeq is
 the integration of the following main features.
 
@@ -108,7 +108,7 @@ JMSeq annotations specify  method call sequences  in terms of regular expression
    \item[JVM decoupling.]
 To ensure that the target program is in \emph{no} way affected or changed during monitoring, JMSeq runs in a separate JVM from the target application's JVM.
    JMSeq uses Java Platform Debugger API (JPDA) \cite{JPDA_Home} to initiate a separate JVM and verify the target application using events from the target JVM.
-  Figure \ref{fig:arch-overview} displays the high-level execution architecture of JMSeq.
+  Figure \ref{ch05:fig:arch-overview} displays the high-level execution architecture of JMSeq.
    \item[Fail-fast approach.] JMSeq terminates execution as soon as a violation of a specification occurs.  This approach prevents unsafe behavior,
    enables the localization of an error, and facilitates a reaction
    to a failure immediately, thus making the software more robust~\cite{Shore04a}.
@@ -145,26 +145,26 @@ annotating the ``interfaces'' of the system API.
 %   Since Java annotations have no effect on the execution of the application, they behave as metadata at runtime.
 %   JMSeq can detect them and verify the system without the need for a helper program.
 By annotating the  interfaces of a system any service object that implements the interface behavior inherits the annotations and can be verified by JMSeq.
-In this  respect, JMSeq also introduces integration with frameworks such as JUnit (cf. Section \ref{sec:junit}). 
+In this  respect, JMSeq also introduces integration with frameworks such as JUnit (cf. Section \ref{ch05:sec:junit}). 
 
 
 
 The rest of the paper is organized as follows.
 The first three sections describe the usage of JMSeq.
-Section \ref{sec:spec} presents the language for specifying sequences of method calls, 
-and Section \ref{sec:impl_annot} discusses the types of annotations available in JMSeq.
-These two sections are connected via examples in Section \ref{sec:samples}.
-Afterwards, implementation of the JMSeq framework is explained in detail in Section \ref{sec:implementation}.
-The practical applicability of JMSeq is demonstrated by means of a case study from industry in Section \ref{sec:frh} and performance evaluation in Section \ref{sec:results}. 
-Finally, related work is discussed in Section \ref{sec:relworks}.
-Section \ref{sec:conclusion} concludes the paper. %discuss possible future work.
+Section \ref{ch05:sec:spec} presents the language for specifying sequences of method calls, 
+and Section \ref{ch05:sec:impl_annot} discusses the types of annotations available in JMSeq.
+These two sections are connected via examples in Section \ref{ch05:sec:samples}.
+Afterwards, implementation of the JMSeq framework is explained in detail in Section \ref{ch05:sec:implementation}.
+The practical applicability of JMSeq is demonstrated by means of a case study from industry in Section \ref{ch05:sec:frh} and performance evaluation in Section \ref{ch05:sec:results}. 
+Finally, related work is discussed in Section \ref{ch05:sec:relworks}.
+Section \ref{ch05:sec:conclusion} concludes the paper. %discuss possible future work.
 
-\section{Method Call Sequence Specification} \label{sec:spec}
+\section{Method Call Sequence Specification} \label{ch05:sec:spec}
 
 We consider a component to be a collection of compiled Java classes. The
 relevant dynamic behavior of a component can be expressed in terms of specific
 sequences of messages among a small, fixed number of objects. In
-Figure \ref{fig:seq-spec}, we see two UML message sequence diagrams each
+Figure \ref{ch05:fig:seq-spec}, we see two UML message sequence diagrams each
 describing how, and in which order, the four objects interact with each other. In this
 section, we develop a specification language for describing these kinds of
 interactions.
@@ -180,7 +180,7 @@ interactions.
 
 In addition to specifying the order, a specification language for sequences of method calls
 needs to distinguish between the following two cases (depicted in
-Figure \ref{fig:seq-spec}).
+Figure \ref{ch05:fig:seq-spec}).
 \begin{description}
   \item[Case $1$] 
   shows a scenario in which (the call to) \texttt{m\_c} is nested in 
@@ -207,7 +207,7 @@ technique that distinguishes between the \textsl{method calls} and
 \begin{center}
   \includegraphics[scale=0.4]{images/seq-spec}
   \caption{Examples of Method Call Sequence Specification}
-  \label{fig:seq-spec}
+  \label{ch05:fig:seq-spec}
 \end{center}
 \end{figure}
 
@@ -228,7 +228,7 @@ In JMSeq, a specification is written as a post-condition associated with a metho
 specifies the set of possible sequences of method calls, or protocol, of an
 object in the context of the relevant part of its environment. Formally,
 sequences of method calls can be specified by means
-of the grammar in  Figure \ref{fig:spec_grammar}.
+of the grammar in  Figure \ref{ch05:fig:spec_grammar}.
 
 \begin{figure}[h]
 \begin{center}
@@ -236,7 +236,7 @@ of the grammar in  Figure \ref{fig:spec_grammar}.
 \includegraphics[scale=1]{grammar}
 \end{framed}
 \caption{Method Sequence Specification Grammar}
-\label{fig:spec_grammar}
+\label{ch05:fig:spec_grammar}
 \end{center}
 \end{figure}
 
@@ -304,7 +304,7 @@ could be:
 
 Next we give a few examples of correct method sequence specifications. 
 For instance, the specification of the sequence in case $1$ of
-Figure \ref{fig:seq-spec} is given by:
+Figure \ref{ch05:fig:seq-spec} is given by:
 %\begin{flushleft}
 %\includegraphics[scale=1]
 \input{grammar-sample-usage-1-1}
@@ -347,11 +347,11 @@ method call to \texttt{m\_b} or \texttt{m\_c}:
 Such a specification is used in circumstances where the execution of  \texttt{m\_a} is a prerequisite to the execution of either of \texttt{m\_b} or \texttt{m\_c}.
 % 
 % It is \emph{notable} that the meta-grammar provided in Figure
-% \ref{fig:spec_grammar} is a context-free grammar; 
+% \ref{ch05:fig:spec_grammar} is a context-free grammar; 
 It is notable that the actual specifications are regular expressions;
 for example, they may contain  unbounded repetitions and a choice of calls.
 
-\section{Annotations for method call sequences} \label{sec:impl_annot}
+\section{Annotations for method call sequences} \label{ch05:sec:impl_annot}
 Java enables developers to attach extra metadata to their programs using annotations.
 %Java provides a means to annotate parts of a program.
 These metadata do not directly affect the program semantics, but they do affect the
@@ -366,7 +366,7 @@ modifiers (such as {\small\texttt{public}}, {\small\texttt{static}}, or
 We use annotations as an enabling feature to test components without the need to have their source code.
 We only use the metadata loaded from the annotations during runtime.
 These metadata include the specification of the sequences of method calls
-based on the grammar discussed in Section \ref{sec:spec}. The metadata
+based on the grammar discussed in Section \ref{ch05:sec:spec}. The metadata
 is placed on classes or methods in a Java program. 
 Then, they are loaded into JMSeq when it monitors the actual observable
 behavior of the program at runtime.
@@ -382,9 +382,9 @@ some method carrying an annotation for verification.
 To improve readability and performance, JMSeq introduces
 \smalltt{SequencedObject} annotation. This annotation is a marker
 for such classes and notifies the annotation metadata loader (cf.
-Section \ref{sec:annotation_repo}) that the objects instantiated from the annotated
+Section \ref{ch05:sec:annotation_repo}) that the objects instantiated from the annotated
 class contain methods that specify a sequence of method executions. 
-The code is given in Listing \ref{lst:seq_obj}.
+The code is given in Listing \ref{ch05:lst:seq_obj}.
 
 
 \lstset{language=Java}
@@ -396,7 +396,7 @@ public @interface SequencedObject {
 }
 \end{lstlisting}
 
-In Listing~\ref{lst:seq_obj}, {\small\texttt{@Retention(RetentionPolicy.RUNTIME)}} declares that this
+In Listing~\ref{ch05:lst:seq_obj}, {\small\texttt{@Retention(RetentionPolicy.RUNTIME)}} declares that this
 annotation is only applicable during runtime and may  not be used in other scenarios.
 Moreover, {\small\texttt{@Target(ElementType.TYPE)}} declares that this
 annotation can only be used on types including classes, interfaces and
@@ -407,7 +407,7 @@ in a Java class.
 A sequenced method annotation is used to specify the sequences of method
 calls beginning from a given method. The annotation requires a string
 property declaring the sequence specification discussed in Section
-\ref{sec:spec}. Listing \ref{lst:seq_method} presents the declaration of
+\ref{ch05:sec:spec}. Listing \ref{ch05:lst:seq_method} presents the declaration of
 this annotation type.
 
 \lstset{language=Java}
@@ -429,7 +429,7 @@ public @interface SequencedMethod {
 {\small\texttt{@Target(ElementType.METHOD)}} declares that this annotation is
 only applicable to \textit{methods}. The string value from
 {\small\texttt{value()}} holds the sequence specification (cf.
-Section \ref{sec:spec}). 
+Section \ref{ch05:sec:spec}). 
 Additionally, a sequenced method annotation allows verification of
 exceptions during runtime. The tester can configure whether exceptions
 are allowed or not using the combination of \smalltt{allowExceptions()}
@@ -462,7 +462,7 @@ e)}.
 This method
 %\smalltt{handle\-FailedExecution(Execution e)} 
 receives information about the execution through a parameter of
-type \smalltt{Execution} (cf. Section \ref{sec:implementation}).
+type \smalltt{Execution} (cf. Section \ref{ch05:sec:implementation}).
 \smalltt{Execution} is the central data model that carries information
 about the method execution sequences; the trail of the
 executions may be useful to the developer to examine the failure causes.
@@ -470,22 +470,22 @@ executions may be useful to the developer to examine the failure causes.
 If no such handler is provided, verification failure results in termination 
 of program execution with a failure status.
 
-Section \ref{sec:samples} provides more discussion along with different
+Section \ref{ch05:sec:samples} provides more discussion along with different
 examples on using JMSeq.
 
-\section{JMSeq by example} \label{sec:samples}
+\section{JMSeq by example} \label{ch05:sec:samples}
 In this section, we go through different usage scenarios of JMSeq 
 by means of illustrative examples.
 
 \subsection{Sequenced Execution Specification}
-In  Listing \ref{lst:annotated_spec}, we again go through the example
-introduced in Section \ref{sec:spec}.
+In  Listing \ref{ch05:lst:annotated_spec}, we again go through the example
+introduced in Section \ref{ch05:sec:spec}.
 % give two examples of
 % annotations of the class {\small\texttt{Main}} in Figure
-% \ref{fig:seq-spec}. 
+% \ref{ch05:fig:seq-spec}. 
 In this example, we annotate the method \texttt{main()} with the sequences of method calls describing the two scenarios
-given in Figure \ref{fig:seq-spec}. 
-The JMSeq specifications used here are discussed in Section \ref{sec:spec}.
+given in Figure \ref{ch05:fig:seq-spec}. 
+The JMSeq specifications used here are discussed in Section \ref{ch05:sec:spec}.
 The listing shows how to use them in a Java program.
 
 \lstset{language=Java}
@@ -526,14 +526,14 @@ public class Main {
 \subsection{Exception Verification}
 We discuss how JMSeq can be used to verify  occurrence of exceptions during
 execution of an application using the example given in Figure
-\ref{fig:seq-spec} Case 1.
+\ref{ch05:fig:seq-spec} Case 1.
 
 Let's assume that \smalltt{m\_c} may encounter
 \smalltt{NullPointerException} and \smalltt{m\_b} may face
 \smalltt{IOException}. But, we do not hold any assumption on the
 location in the code where the exceptions may be handled or even
 totally ignored. We use the following annotation in Listing
-\ref{lst:case-1-exceptions} to express this situation.
+\ref{ch05:lst:case-1-exceptions} to express this situation.
 
 \lstset{language=Java}
 \begin{lstlisting}[label=lst:case-1-exceptions, caption=Exception
@@ -584,9 +584,9 @@ when no exceptions are allowed, using \smalltt{expect()} has no effect
 on JMSeq verification behavior.
 
 JMSeq additionally supports integration with testing frameworks such as JUnit. 
-An example of such integration is discussed in Section \ref{sec:junit}.
+An example of such integration is discussed in Section \ref{ch05:sec:junit}.
 
-\section{The JMSeq framework} \label{sec:implementation}
+\section{The JMSeq framework} \label{ch05:sec:implementation}
 
 In this section, we present the JMSeq monitoring and verification framework and discuss its implementation, which uses Java $5$ Annotations \cite{Java_5_Annotations} and Java Platform Debugger API \cite{JPDA_Home}. 
 More implementation details, including examples and documentation, can be found at \url{http://github.com/nobeh/jmseq}.
@@ -595,14 +595,14 @@ As discussed above, to use JMSeq, it is assumed that Java components are supplie
 Multiple annotations are possible within the same class, but not for the same method. 
 This implies that a component specification is in fact scattered across its constituent classes, each of which with a local and partial view of the component behavior.
 Only the annotated methods will be monitored by JMSeq.
-The overall verification process in JMSeq is depicted in Figure \ref{fig:alg-verify}.
+The overall verification process in JMSeq is depicted in Figure \ref{ch05:fig:alg-verify}.
 
 \begin{figure*}[t]
 \begin{center}
   \includegraphics[scale=0.47]{images/alg-diagram}
 \end{center}
 \caption{Overview of JMSeq's process to verify a program}
-\label{fig:alg-verify}
+\label{ch05:fig:alg-verify}
 \end{figure*}
 
 As a Java program, JMSeq executes naturally inside a Java virtual machine (JVM); JMSeq additionally initiates another JVM (called the \textsl{Target JVM}) to be able to control the sequenced execution of the target program.
@@ -611,7 +611,7 @@ Furthermore, JMSeq does not verify events from all objects but only those specif
 The target JVM takes advantage of the Java Platform Debugger Architecture (JPDA) to access the needed details on the execution of the application while it is running. 
 
 Before verification starts, JMSeq inspects the classes in the execution class path searching for methods that are annotated for sequenced verification; during this process, it collects all of the available method call sequence metadata. 
-This step (denoted as Load Annotated Metadata in Figure \ref{fig:alg-verify}) does not need the source code, but rather uses the annotations metadata available in the compiled code.
+This step (denoted as Load Annotated Metadata in Figure \ref{ch05:fig:alg-verify}) does not need the source code, but rather uses the annotations metadata available in the compiled code.
 
 The target program subsequently starts its execution and JMSeq reacts to the events it receives.
 JMSeq uses state machines to verify the method calls occurring in an application during runtime.
@@ -629,12 +629,12 @@ The process of matching method execution events with state machine transitions i
 \begin{enumerate}
   \item %A ``call expression'' is constructed based on the information associated to the received event. 
   First, every event received from the target JVM, together with the information associated to the event, is transformed to an instance of \smalltt{Execution} to capture various details about the execution of a method. 
-  Then, at verification time, the instance of \smalltt{Execution} is transformed to an instance of \smalltt{CallExpression} to hold method signature details used by the state machine to make a transition. (Section \ref{sec:event_handling})
-  \item Using the metadata available from the annotations of the methods, then, the   next ``possible call expressions'' of the current state, corresponding to the possible next transitions of the state machine,  are built. (Section \ref{sec:annotation_repo}, \ref{sec:exec_verify})
+  Then, at verification time, the instance of \smalltt{Execution} is transformed to an instance of \smalltt{CallExpression} to hold method signature details used by the state machine to make a transition. (Section \ref{ch05:sec:event_handling})
+  \item Using the metadata available from the annotations of the methods, then, the   next ``possible call expressions'' of the current state, corresponding to the possible next transitions of the state machine,  are built. (Section \ref{ch05:sec:annotation_repo}, \ref{ch05:sec:exec_verify})
   \item A match making is done between the possible call expressions (state machine transitions) and the   current call expression as the candidate.  
   If a match is found,  the transition is made and the method is  accepted; otherwise, it fails. 
   When a failure occurs, JMSeq will execute the custom verification failure handler that is implemented either as part of
-  the component code by the programmer, or externally by the system tester. (Section \ref{sec:exec_verify})
+  the component code by the programmer, or externally by the system tester. (Section \ref{ch05:sec:exec_verify})
 \end{enumerate}
 
 JMSeq computes the possible call expressions on-the-fly instead of constructing the full state machine in the beginning of the verification process. 
@@ -643,7 +643,7 @@ To avoid repeated computations of the same states, JMSeq utilizes dynamic progra
 
 \subsection{JMSeq Architecture}
 
-The overall architecture of JMSeq is given in Figure \ref{fig:arch-diag}. It basically
+The overall architecture of JMSeq is given in Figure \ref{ch05:fig:arch-diag}. It basically
 consists of three main modules: one for handling the events raised by the JVM executing the target program, another module for storing the annotation information, and a third
 one to perform the runtime verification.
 
@@ -651,16 +651,16 @@ one to perform the runtime verification.
 \begin{center}
   \includegraphics[scale=0.35]{images/arch-diagram}
   \caption{Software Architecture for Method Sequence Specification}
-  \label{fig:arch-diag}
+  \label{ch05:fig:arch-diag}
 \end{center}
 \end{figure*}
 
 % The current design of JMSeq is completely \textsl{general} and \textsl{modular};  as it
-% allows for replacing the grammar in Figure \ref{fig:spec_grammar} with other
+% allows for replacing the grammar in Figure \ref{ch05:fig:spec_grammar} with other
 % specification modules, based, for example, on temporal logics or extended
 % regular expressions.
 
-\subsubsection{Event Handling Module} \label{sec:event_handling}
+\subsubsection{Event Handling Module} \label{ch05:sec:event_handling}
 Java Debugger Interface (JDI) is the interface
 of Java Platform Debugger Architecture (JPDA) that gives access to different details during the execution of a program.
 Following the JDI event model, JMSeq takes control over some of the
@@ -695,7 +695,7 @@ is
      verification module.
 \end{enumerate}
 
-\subsubsection{Annotation Metadata Module} \label{sec:annotation_repo}
+\subsubsection{Annotation Metadata Module} \label{ch05:sec:annotation_repo}
 
 As the execution traces are stored in a repository, they are supposed to be
 checked and verified against the formal specifications as described on the
@@ -706,7 +706,7 @@ component in this module is responsible to read and load the metadata of all
 classes that are annotated. This information is used when there is a
 need to verify the conformance of an execution event.
 
-\subsubsection{Execution Verification Module} \label{sec:exec_verify}
+\subsubsection{Execution Verification Module} \label{ch05:sec:exec_verify}
 
 % \note{Most of this paragraph is repetition. If we have time, this repetition can be reduced ideally.}
 During execution of a program, those events that need to be monitored are received and
@@ -722,12 +722,12 @@ For every state machine, an attempt is made to make a valid transition.
 If the transition is successfully made, JMSeq continues.
 Otherwise, an ``invalid'' transition is detected; verification stops.
 At this point, JMSeq checks if an implementation of the
-\smalltt{Verification\-Failure\-Handler} interface is present (cf. Section \ref{sec:impl_annot}).
+\smalltt{Verification\-Failure\-Handler} interface is present (cf. Section \ref{ch05:sec:impl_annot}).
 If present, JMSeq tries to instantiate an instance of the verification failure handler and hands over the execution metadata to this handler. 
 Otherwise, JMSeq terminates and reports how the specification is violated.
 
 An event may also be sent due to occurrence of an exception. 
-In this case, the execution is verified based on the exception specifications expressed using the mechanism described in Section \ref{sec:impl_annot}. 
+In this case, the execution is verified based on the exception specifications expressed using the mechanism described in Section \ref{ch05:sec:impl_annot}. 
 If the exception is allowed and verified the execution continues; otherwise, it fails and control is delegated to verification failure handler as explained above.
 
 
@@ -745,7 +745,7 @@ The execution verification component is composed of the following elements:
   \item \textsl{Call Expression Builder} constructs a call expression out of:
   \begin{enumerate}
     \item A string which is in the format of the JMSeq specification grammar as
-    in Figure \ref{fig:spec_grammar}. This service is used the first time a
+    in Figure \ref{ch05:fig:spec_grammar}. This service is used the first time a
     sequential execution is detected to build the root of the future possible
     (candidate) call expressions.
     \item An execution event; every time an execution is handed over to the
@@ -756,7 +756,7 @@ The execution verification component is composed of the following elements:
   \item \textsl{Call Expression Proposer} is a service proposing \textit{possible
   next call expressions} for a given call expression based on the sequences specified
   in the annotation. As described by the grammar in Figure
-  \ref{fig:spec_grammar}, for each current call expression there can
+  \ref{ch05:fig:spec_grammar}, for each current call expression there can
   be several possible next call expressions that may appear as the next event, but for
   each of them the state machine associated with the grammar can only make one
   transition (that is, the specification is deterministic). Note that since more specification sequences are possible involving
@@ -770,7 +770,7 @@ The execution verification component is composed of the following elements:
   transferred to it for further processing.
 \end{enumerate}
 
-\subsection{JUnit Support} \label{sec:junit}
+\subsection{JUnit Support} \label{ch05:sec:junit}
 To ease the process of verification, JMSeq provides a seamless integration to JUnit \cite{JUnit}. 
 JUnit is a widely accepted unit testing framework for Java programs.
 
@@ -836,7 +836,7 @@ apples to \smalltt{eat()}.
 In terms of JMSeq sequenced specifications, each invocation of
 \smalltt{eat()} in \smalltt{Pat} should be followed by an invocation of
 \smalltt{get()} in \smalltt{Basket}. We specify this scenario in Listing
-\ref{lst:apples}.
+\ref{ch05:lst:apples}.
 
 \lstset{language=Java}
 \begin{lstlisting}[label=lst:apples, caption=Apples JMSeq Specification]
@@ -872,7 +872,7 @@ We develop a JUnit
 test class for this purpose and provide a set of predefined information
 to the base test class. The JMSeq test classes should \textsl{extend}
 the \smalltt{JUnit4Support} that is provided in the library. The code is
-presented in Listing \ref{lst:apples-junit}.
+presented in Listing \ref{ch05:lst:apples-junit}.
 
 \lstset{language=Java}
 \begin{lstlisting}[label=lst:apples-junit, caption=Apples JMSeq JUnit
@@ -896,7 +896,7 @@ public class ApplesDriver extends JUnit4Support {
 }
 \end{lstlisting}
 
-\section{The Fredhopper Access Server: A Case Study} \label{sec:frh}
+\section{The Fredhopper Access Server: A Case Study} \label{ch05:sec:frh}
 
 Fredhopper\footnote{\url{http://www.sdl.com/products/fredhopper/}} is a
 %is an SDL company since 2008 and a leading
@@ -923,7 +923,7 @@ One of the major components of their software is the Fredhopper Access Server (F
 \end{center}
 % \vspace{-20pt}
 \caption[Life cycle for data processing requests from customers]{Fredhopper's Controller life cycle for data processing requests from customers}
-\label{fig:frh-dm}
+\label{ch05:fig:frh-dm}
 % \vspace{-5pt}
 \end{figure}
 % \end{wrapfigure}
@@ -933,7 +933,7 @@ The Controller manages different service installations for each customer.
 For instance, a customer can submit their data along with a processing request to their data hub server.
 The Controller then picks up this data and initiates a data processing job, usually in the cloud.
 When the data processing is complete, the result is published to the customer environment and becomes also available through FAS services.
-Figure \ref{fig:frh-dm} illustrates this example scenario.
+Figure \ref{ch05:fig:frh-dm} illustrates this example scenario.
 
 The Controller provides a simple client API for customers to develop applications that use Fredhopper services.
 Essentially a data job request consists of three major steps:
@@ -960,7 +960,7 @@ In this experiment, we measured the following:
 A successful trigger is one for which data processing completes and the result is reported back to customer data environment.
 \end{enumerate}
 
-Figure \ref{fig:frh:cs} presents the measurements for each setting without using JMSeq and with using JMSeq for both rebuild and update triggers.
+Figure \ref{ch05:fig:frh:cs} presents the measurements for each setting without using JMSeq and with using JMSeq for both rebuild and update triggers.
 The measurements were based on an estimated number of 30300 triggers in the same period.
 Each figure shows the influence of using JMSeq for the data processing task.
 On the left, measurements shows that JMSeq verification for rebuilding the catalog helps to decrease failures by 15\% if using JMSeq verification.
@@ -970,7 +970,7 @@ On the right, measurements shows that JMSeq verification has less influence to i
 \begin{center}
 \includegraphics[scale=0.72]{images/frh-case-study-summary-rev2}
 \caption[Comparison of measurements using JMSeq at Fredhopper]{Result of experiment measurements without and with using JMSeq on Fredhopper Client API directed with live environment data from customers.}
-\label{fig:frh:cs}
+\label{ch05:fig:frh:cs}
 \end{center}
 \end{figure}
 
@@ -995,9 +995,9 @@ interface DataDispatcher {
 }
 \end{lstlisting}
 
-The relevant part of the API of the Fredhopper Controller is presented in Listing \ref{lst:frh:datadispatcher}.
+The relevant part of the API of the Fredhopper Controller is presented in Listing \ref{ch05:lst:frh:datadispatcher}.
 Customer applications use the interface to create a data object reference (using the \smalltt{create(Object)} method) and then use the created data reference to start a data job (using the overloaded \smalltt{dispatch} method, which has an optional \smalltt{Data} parameter).
-Note that the dispatch method allows for two different uses by the customer, for instance in Listing~\ref{lst:frh:c1} the data job to be executed performs only a rebuild of the customer's product catalog and as such does not need to have a data reference.
+Note that the dispatch method allows for two different uses by the customer, for instance in Listing~\ref{ch05:lst:frh:c1} the data job to be executed performs only a rebuild of the customer's product catalog and as such does not need to have a data reference.
 \lstset{language=java}
 \begin{lstlisting}[label=lst:frh:c1, caption=A use case with no data requirement]
 class CustomerApp {
@@ -1008,7 +1008,7 @@ class CustomerApp {
    }
 }
 \end{lstlisting}
-If the customer needs to update their catalog with new products, then first a data reference is created. This reference is used to initiate a data job, as described in Listing \ref{lst:frh:c2}.
+If the customer needs to update their catalog with new products, then first a data reference is created. This reference is used to initiate a data job, as described in Listing \ref{ch05:lst:frh:c2}.
 \lstset{language=java}
 \begin{lstlisting}[label=lst:frh:c2, caption=A use case with data requirement]
 class CustomerApp {
@@ -1023,7 +1023,7 @@ class CustomerApp {
 
 Note that we cannot expect to have the source code of the above listings.  To verify the correct use of the Fredhopper Controller API
 with JMSeq we can create a \smalltt{CustomerAppDriver} class which calls the \smalltt{CustomerApp} methods and monitors the subsequent
-method calls.  The expected usage of the API of the two scenarios above is described by the SequencedMethod annotations in Listing~\ref{lst:frh:c3}.
+method calls.  The expected usage of the API of the two scenarios above is described by the SequencedMethod annotations in Listing~\ref{ch05:lst:frh:c3}.
 If the \smalltt{CustomerApp} does not behave as expected, the verifier detects an error.
 
 \lstset{language=java}
@@ -1052,14 +1052,14 @@ class CustomerAppDriver {
 }
 \end{lstlisting}
 
-%Figure \ref{fig:frh:cs} shows how using JMSeq in an evaluation environment for the customers detects violations and
+%Figure \ref{ch05:fig:frh:cs} shows how using JMSeq in an evaluation environment for the customers detects violations and
 %improves the usage of Controller API and eventually affects the success rate of triggers for customers.
 
 % \newpage
-\subsection{Discussion} \label{sec:discuss-jmop}
+\subsection{Discussion} \label{ch05:sec:discuss-jmop}
 
 We use JavaMOP \cite{chen_rosu_jmop,chen_rosu_mop,MOP} for the same case study from Fredhopper. 
-Listing \ref{lst:frh:jmop} shows a JavaMOP script to describe the same verification goal.
+Listing \ref{ch05:lst:frh:jmop} shows a JavaMOP script to describe the same verification goal.
 
 \lstset{language=[AspectJ]Java, morekeywords={suffix, event,ere, CFG, @fail, @match, __RESET}} 
 \begin{lstlisting}[label=lst:frh:jmop, caption=Fredhopper case study with JavaMOP]
@@ -1091,7 +1091,7 @@ JMSeq on the other hand does not change the source- or bytecode, because JMSeq r
 %Therefore, JMSeq introduces a highly safe approach for runtime verification.
 %Since the customer application is affected in no way by JMSeq, they have more inclination to use such approach to verify their applications.
 
-\section{Performance Results} \label{sec:results}
+\section{Performance Results} \label{ch05:sec:results}
 
 In this section, we present performance measurements of JMSeq and other techniques to verify a program.
 We choose a problem that has been studied in the context of JavaMOP \cite{chen_rosu_jmop} to provide a reference for comparison.
@@ -1103,7 +1103,7 @@ An invocation of \smalltt{next()} presumes that it succeeds an invocation of \sm
 Otherwise, an invocation of \smalltt{next()} may lead to an exception.
 
 We use JMSeq to verify an example code for this scenario. 
-We use the code snippet displayed in Listing \ref{lst:jmseq-iter} that uses JMSeq annotations to express the correct usage. 
+We use the code snippet displayed in Listing \ref{ch05:lst:jmseq-iter} that uses JMSeq annotations to express the correct usage. 
 In the code, we use a variable \smalltt{count} to control the number of times \smalltt{hasNext()} is called before there is a call to \smalltt{next()}. 
 This example always passes the JMSeq verification with success. 
 For performance measurements, we study the ``correct'' use of the example while verification of wrong usages are also possible. 
@@ -1134,7 +1134,7 @@ We measure the execution time of the following cases:
 \item[original{\textbackslash}JMSeq.] We execute the original program and monitor it by JMSeq. We measure the execution time of the original program while being verified by JMSeq.
 \end{description}
 
-Figure \ref{fig:jmseq-performance} displays how different cases compare to each other regarding the execution time. 
+Figure \ref{ch05:fig:jmseq-performance} displays how different cases compare to each other regarding the execution time. 
 As expected, the original program execution has the lowest execution time.
 Since techniques based on instrumentation modify the bytecode of the program, this adds to the execution time of the program.
 The figure shows that compared to instrumentation techniques, JMSeq adds a lower overhead.
@@ -1146,7 +1146,7 @@ The figure shows that compared to instrumentation techniques, JMSeq adds a lower
 In this figure, ``original'' denotes the original program that is measured for execution time;
 ``instrumented'' denotes using a technique such as JavaMOP that uses instrumentation for verification;
  and ``original{\textbackslash}JMSeq'' denotes the measurement of the execution time for the program apart from times for JMSeq.}
-\label{fig:jmseq-performance}
+\label{ch05:fig:jmseq-performance}
 \end{center}
 \end{figure}
 
@@ -1182,7 +1182,7 @@ JMSeq can be used from even a remote machine to verify a program, without the sl
 % \end{tabular}
 % \end{center}
 % \caption{Execution data model performance results with JMSeq}
-% \label{tab:results-handleevent}
+% \label{ch05:tab:results-handleevent}
 % \end{table}
 
 % Using VisualVM, we observed different measurements for both
@@ -1194,8 +1194,8 @@ JMSeq can be used from even a remote machine to verify a program, without the sl
 % execution. In addition, we measure three metrics for the performance:
 % total time for each JMSeq activity, number of invocations of each JMSeq
 % activity, and a computed time for a single JMSeq activity. Table
-% \ref{tab:results-handleevent} summarizes the performance results for
-% execution data model and Table \ref{tab:results-verify} summarizes the
+% \ref{ch05:tab:results-handleevent} summarizes the performance results for
+% execution data model and Table \ref{ch05:tab:results-verify} summarizes the
 % same facts for verification. 
 
 % \begin{table}[t]
@@ -1213,12 +1213,12 @@ JMSeq can be used from even a remote machine to verify a program, without the sl
 % \end{tabular}
 % \end{center}
 % \caption{Verification performance results with JMSeq}
-% \label{tab:results-verify}
+% \label{ch05:tab:results-verify}
 % \end{table}
 
 % The results show that JMSeq has a \textit{linear} co-relation to the
 % number of invocations that it needs to verify (Figure
-% \ref{fig:jmseq-performance}). In this example, we set
+% \ref{ch05:fig:jmseq-performance}). In this example, we set
 % up \smalltt{count} to increase in an ``exponential'' way, thus, JMSeq
 % performance also is affected in an exponential manner pertaining to the
 % linear co-relation to \smalltt{count}. In addition, it is worthwhile
@@ -1238,7 +1238,7 @@ JMSeq can be used from even a remote machine to verify a program, without the sl
 % JVMs is limited to a one-way (and possibly asynchronous) sending of
 % events.
 
-\section{Related Work} \label{sec:relworks}
+\section{Related Work} \label{ch05:sec:relworks}
 
 JML \cite{leavens_baker_ruby_jml_design} provides a robust and rigorous grounds for specification of behavioral checks on methods. 
 Although JML covers a wide range of concerns in assertion checking, it does \textit{not} directly address the problem of method call sequence specification  as it is more directed towards the reasoning about the state of an object. 
@@ -1318,10 +1318,10 @@ what is the running context of the program under test; for instance, if the
 test needs to be run per thread or in a synchronized way. And, \textit{the
 event handlers} section is the one to inject customized code of verification or
 logic when there is a match or fail based on the event expression logic.
-In Section \ref{sec:discuss-jmop}, we discussed how JMSeq contrasts with JavaMOP and similar approaches.
+In Section \ref{ch05:sec:discuss-jmop}, we discussed how JMSeq contrasts with JavaMOP and similar approaches.
 
-% In Listing \ref{lst:sample_mop} we show an example of JavaMOP code with ERE
-% logic for the two specifications given in Figure \ref{fig:seq-spec}.
+% In Listing \ref{ch05:lst:sample_mop} we show an example of JavaMOP code with ERE
+% logic for the two specifications given in Figure \ref{ch05:fig:seq-spec}.
 
 % \lstset{language=[AspectJ]Java, morekeywords={suffix, event,ere, CFG, @fail, @match, __RESET}} \begin{lstlisting}[label=lst:sample_mop, caption=Sample JavaMOP Specification using CFG logic] // Case 1
 % SampleCase1(Main m) {
@@ -1368,9 +1368,9 @@ In Section \ref{sec:discuss-jmop}, we discussed how JMSeq contrasts with JavaMOP
 % }
 % \end{lstlisting}
 
-% The code snippet presented in Listing \ref{lst:sample_mop} is one of
+% The code snippet presented in Listing \ref{ch05:lst:sample_mop} is one of
 % several ways to express the problem described in Figure
-% \ref{fig:seq-spec}. JavaMOP allows the use of AspectJ language to
+% \ref{ch05:fig:seq-spec}. JavaMOP allows the use of AspectJ language to
 % define the scope of the program points to be verified. This may look
 % advantageous since the programmer can use different syntax in
 % AspectJ. However, it leads to low-level specification of control flow
@@ -1379,7 +1379,7 @@ In Section \ref{sec:discuss-jmop}, we discussed how JMSeq contrasts with JavaMOP
 % (scope section), already specifies the logic. In contrast, JMSeq allows
 % for purely declarative specification language which completely captures
 % the operational behavior using regular expressions. For instance,
-% in Section \ref{sec:spec}, we used
+% in Section \ref{ch05:sec:spec}, we used
 % %\begin{flushleft}
 % %\includegraphics[scale=1]{grammar-sample-usage-1}
 % \input{grammar-sample-usage-1-1}
@@ -1389,10 +1389,10 @@ In Section \ref{sec:discuss-jmop}, we discussed how JMSeq contrasts with JavaMOP
 % %\includegraphics[scale=1]
 % \input{grammar-sample-usage-2-1}
 % %\end{flushleft}
-% to specify the same program in Figure \ref{fig:seq-spec}.
+% to specify the same program in Figure \ref{ch05:fig:seq-spec}.
 % Another major difference between JMSeq and JavaMOP is the use of
 % annotations versus instrumentation as already discussed in Section
-% \ref{sec:intro}.
+% \ref{ch05:sec:intro}.
 
 % It is interesting to note that both MOP specifications have \textit{the same
 % ERE expression}. This is because JavaMOP has separated logic and scope
@@ -1407,7 +1407,7 @@ In Section \ref{sec:discuss-jmop}, we discussed how JMSeq contrasts with JavaMOP
 % through the annotations that are used by the programmer user.
 
 
-\section{Conclusion and future work} \label{sec:conclusion}
+\section{Conclusion and future work} \label{ch05:sec:conclusion}
 
 We proposed JMSeq, a framework for specifying sequences of possibly nested method calls using Java annotations. 
 The sequences do not only consist of method names, but may contain information such as object caller and callee, and distinguish overloaded methods. 
