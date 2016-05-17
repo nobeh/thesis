@@ -6,38 +6,35 @@
 \vspace*{-10mm}
 
 Object orientation provides principles for abstraction and encapsulation.
-Abstraction is accomplished by high-level concepts of interfaces, classes, and objects (class instances).
+Abstraction is accomplished by high-level concepts of interfaces, classes, and objects.
 Many object-oriented languages have followed the blocking and synchronous model of messaging. 
 One of the fundamental elements of the actor model is \emph{asynchronous} message passing.
-However, a message is not bound to any interface in the actor model.
-It has been an ongoing research to combine object-oriented programming with the actor model.
-Multicore and distributed computing raised a new challenge: combining object orientation, the actor model, and \emph{concurrency}.
-In a concurrent setting, coroutines enable interactions with collaborative pre-emption.
-Coroutines are not originally established in the object-oriented paradigm.
-In a concurrent setting with objects, multi-threading has been a common approach to provide an object-oriented concurrency model.
-Furthermore, interactions in both coroutines and multi-threading are blocking and synchronous.
-In contrast, the actor model relies on asynchronous communication.
-While a message is processed, an actor cannot be pre-empted or intentionally yield to allow other actors in the system to make progress.
+Unlike object orientation, a message is not bound to any interface in the actor model.
+Ongoing research focus to combine object-oriented programming with the actor model and concurrency.
+In a concurrent setting with objects, multi-threading is a common approach to provide an object-oriented concurrency model.
+In contrast, a message in actor model cannot be pre-empted while being processed.
 Integration of actor model and object orientation leads to the use of asynchronous method calls.
+% Multicore and distributed computing raised a new challenge: combining object orientation, the actor model, and \emph{concurrency}.
+Coroutines can be used for collaborative pre-emption.
+Coroutines are not originally established in the object-oriented paradigm.
+Furthermore, interactions in both coroutines and multi-threading are blocking and synchronous.
+The main challenge is to generate production code from an actor-based language which supports asynchronous method calls and coroutine-style execution.
 
 This thesis contributes to the intersection of object orientation, actor model, and concurrency.
 We choose Java as the main programming language and as one of the mainstream 
 object-oriented languages. 
-We formalize a subset of Java and its concurrency API to 
-facilitate formal verification and reasoning about it.
-We create an abstract mapping from a concurrent-object modeling language, 
-ABS, to the programming semantics of concurrent Java. 
+We formalize a subset of Java and its concurrency API.
+We create an abstract mapping from a actor modeling language, ABS, to the programming semantics of concurrent Java. 
+The mapping ensures a correct translation from a model to its equivalent production-ready code.
 We provide the formal semantics of the mapping and runtime properties of 
 the concurrency layer including deadlines and scheduling policies.
-We provide an implementation of the ABS concurrency layer as a Java API library 
-and framework utilizing the latest language additions 
-in Java~8.
+We provide an implementation of the ABS concurrency layer as a Java API library and framework using Java~8 features.
+The implementation is generic and extensible as it can be used either as a standalone library or as part of a pluggable code generator.
 We design and implement a runtime monitoring framework, JMSeq, to verify the
-correct ordering of execution of methods through code annotations in JVM. 
+correct ordering of execution of methods in possibly interleaved threads through code annotations in JVM. 
 In addition, we design a large-scale monitoring system as a real-world 
 application; the monitoring system is built with ABS concurrent objects 
-and formal semantics that leverages schedulability 
-analysis to verify correctness of the monitors.
+and formal semantics that leverages schedulability analysis to verify correctness of the monitors.
 
 \vspace*{20mm}
 
