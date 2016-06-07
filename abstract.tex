@@ -39,5 +39,61 @@ and formal semantics that leverages schedulability analysis to verify correctnes
 \vspace*{20mm}
 
 {\usekomafont{chapter}Samenvatting}\label{sec:abstract-diff} \\
+%Object orientation provides principles for abstraction and encapsulation.
+Objectgeoriënteerd programmeren biedt ondersteuning voor abstractie en encapsulatie.
+%Abstraction is accomplished by high-level concepts of interfaces, classes, and objects.
+Abstractie wordt bereikt door de introductie van high-level concepten als interfaces,
+klassen en objecten.
+%Many object-oriented languages have followed the blocking and synchronous model of messaging. 
+Veel objectgeoriënteerde talen gebruiken blokkerende, synchrone communicatie voor het zenden van berichten (messages) tussen objecten.
+%\emph{Asynchronous} message passing is one of the fundamental elements of the actor model.
+\emph{Asynchrone} communicatie (message passing) vormt een fundamenteel element van het zogenaamde actor model.
+%Unlike in object orientation, a message is not bound to any interface in the actor model.
+Anders dan in objectoriëntatie is een message niet gebonden aan of beperkt tot een specifieke interface.
 
-\TODO{Translate to Dutch; kindly by Stijn de Gouw.}
+%Ongoing research focuses on combining object-oriented programming with the actor model and concurrency.
+Huidig onderzoek focust op het combineren van objectoriëntatie met het actor model en concurrency (meerdere taken kunnen tegelijk actief zijn).
+%In a concurrent setting with objects, multi-threading is a common approach to provide an object-oriented concurrency model.
+Voor het uitbreiden van objectoriëntatie naar een concurrent omgeving is multi-threading een veelgebruikte aanpak.
+%In contrast, a message in actor model cannot be pre-empted while being processed.
+??? TODO
+%Integration of actor model and object orientation leads to the use of asynchronous method calls.
+Integratie van objectoriëntatie met het actor model leidt tot het gebruik van asynchrone methode aanroepen.
+%Coroutines can be used for collaborative pre-emption.
+TODO
+%Coroutines are not originally established in the object-oriented paradigm.
+TODO
+%Furthermore, interactions in both coroutines and multi-threading are blocking and synchronous.
+TODO
+%The main challenge is to generate production code from an actor-based language which supports asynchronous method calls and coroutine-style execution.
+De belangrijkste uitdaging is de generatie van productie code uit een actor gebaseerde taal die ondersteuning biedt voor asynchrone methode aanroepen en een flexibele co-routine stijl van executie.
+
+%This thesis contributes to the intersection of object orientation, the actor model, and concurrency.
+Dit proefschrift draagt bij aan de kennis over de combinatie van objectoriëntatie, het actor model en concurrency.
+%We choose Java as the main target programming language and as one of the mainstream 
+%object-oriented languages. 
+We kiezen Java, als een volwassen en een van de meest gebruikte programmeertalen in productie omgevingen, als de target language voor code generatie vanuit een actor gebaseerde taal.
+%We formalize a subset of Java and its concurrency API.
+We formaliseren een deel van Java en zijn concurrency library (API).
+%We create an abstract mapping from an actor-based modeling language, ABS, to the programming semantics of concurrent Java. 
+Vervolgens creëren we een abstracte relatie (een functie) van de actor gebaseerde taal ABS naar concurrent Java.
+%The mapping ensures a correct translation from a model to its equivalent production-ready code.
+Deze abstracte functie garandeert een correcte vertaling van een abstract ABS model naar executeerbare productie code.
+%We provide the formal semantics of the mapping and runtime properties of 
+%the concurrency layer including deadlines and scheduling policies.
+We geven de formele semantiek van de functie en de eigenschappen van de concurrency
+laag tijdens executie, inclusief deadlines en scheduling policies.
+%We provide an implementation of the ABS concurrency layer as a Java API library and framework using Java~8 features.
+Daarna implementeren we de concurrency laag van ABS als een Java API library, met behulp van Java~8.
+%The implementation is generic and extensible as it can be used either as a standalone library or as part of a pluggable code generator.
+Deze implementatie is generiek en uitbreidbaar, en kan zowel gebruikt worden als
+standalone library, of als een inplugbare code generator.
+%We design and implement a runtime monitoring framework, JMSeq, to verify the
+%correct ordering of execution of methods in possibly interleaved threads through code annotations in JVM. 
+We ontwerpen en implementeren een monitoring framework genaamd JMSeq waarmee
+de correcte ordening van methode aanroepen, gespecificeerd met code annotaties, geverifieerd kan worden in een multi-threaded omgeving.
+%In addition, we design a large-scale monitoring system as a real-world 
+%application; the monitoring system is built with ABS concurrent objects 
+%and formal semantics that leverages schedulability analysis to verify correctness of the monitors.
+Tevens ontwerpen we een grootschalig real-world monitoring systeem met
+ABS concurrent objecten en een formele semantiek. We gebruiken state-of-the-art technologie voor schedulability analyse om de correctheid van de monitors te verifiëren.
