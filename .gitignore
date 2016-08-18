@@ -1,6 +1,7 @@
 # Tex Ignore List
 *.aux
 *.bbl
+*.bcf
 *.blg
 thesis-blg.*
 *.fdb_latexmk
