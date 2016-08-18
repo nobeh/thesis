@@ -172,7 +172,7 @@ how method arguments may affect the use of an actor model in an object-oriented 
 \lstset{language=Java}
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Ping as an interface,label=lst:ping:interface]
+\begin{lstlisting}[caption=Ping as an interface,label=ch03:lst:ping:interface]
 public interface IPing {
   void ping(String msg);
 }
@@ -180,7 +180,7 @@ public interface IPing {
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Pong as an interface,label=lst:pong:interface]
+\begin{lstlisting}[caption=Pong as an interface,label=ch03:lst:pong:interface]
 public interface IPong {
   void pong(String msg);
 }
@@ -202,7 +202,7 @@ the implementation of the \jtt{onReceive} method as provided by the \jtt{Ping} c
 \lstset{language=Java}
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Ping actor in Akka,label=lst:ping:akka]
+\begin{lstlisting}[caption=Ping actor in Akka,label=ch03:lst:ping:akka]
 public class Ping(ActorRef pong)
   extends UntypedActor 
   implements IPing {
@@ -225,7 +225,7 @@ public class Ping(ActorRef pong)
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Pong class in Akka,label=lst:pong:akka]
+\begin{lstlisting}[caption=Pong class in Akka,label=ch03:lst:pong:akka]
 public class Pong 
   extends UntypedActor 
   implements IPong {
@@ -257,7 +257,7 @@ Note that a reference to the ``pong'' actor is passed to the ``ping'' actor.
 \begin{figure}[h]
 % \begin{wrapfigure}{r}{0.48\textwidth}
 % \vspace{-20pt}
-\begin{lstlisting}[caption=main in Akka,label=lst:main:akka]
+\begin{lstlisting}[caption=main in Akka,label=ch03:lst:main:akka]
 ActorSystem s = ActorSystem.create();
 ActorRef pong = s.actorOf(Props.create(Pong.class));
 ActorRef ping = s.actorOf(Props.create(Ping.class, pong));
@@ -307,7 +307,7 @@ sequential code that may send messages.
 \begin{figure}[h]
 % \begin{wrapfigure}{r}{0.48\textwidth}
 % \vspace{-20pt}
-\begin{lstlisting}[caption=main in ABS,label=lst:main:ABS]
+\begin{lstlisting}[caption=main in ABS,label=ch03:lst:main:ABS]
 ABSIPong pong;
 pong = new ABSPong;
 ping = new ABSPing(pong);
@@ -331,7 +331,7 @@ In ABS, \jtt{Unit} is similar to \jtt{void} in Java.
 \lstset{language=abs}
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Ping in ABS,label=lst:ping:abs]
+\begin{lstlisting}[caption=Ping in ABS,label=ch03:lst:ping:abs]
 interface ABSIPing {
   Unit ping(String msg);
 }
@@ -344,7 +344,7 @@ class ABSPing(ABSIPong pong) implements ABSIPing {
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Pong in ABS,label=lst:pong:abs]
+\begin{lstlisting}[caption=Pong in ABS,label=ch03:lst:pong:abs]
 interface ABSIPong {
   Unit pong(String msg);
 }
@@ -468,7 +468,7 @@ which is returned to the caller, in case of an instance of \jtt{Callable}.
 
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Actor interface (1) ,label=lst:j8:run]
+\begin{lstlisting}[caption=Actor interface (1) ,label=ch03:lst:j8:run]
 public interface Actor {
   public void run() {
     Object m = queue.take();
@@ -487,7 +487,7 @@ public interface Actor {
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Actor interface (2),label=lst:j8:enq]
+\begin{lstlisting}[caption=Actor interface (2),label=ch03:lst:j8:enq]
 
   public void send(Runnable m) {
     queue.offer(m);
@@ -517,7 +517,7 @@ the Java~8 expressions $\jtt{e}_1$, $\ldots$, $\jtt{e}_n$ corresponding to the a
 The types \jtt{T}$_i$, $i=1,\ldots,n$,  are the corresponding Java~8 types of  $e_i$, $i=1,\ldots,n$.
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[mathescape,caption=Async messages with futures,label=lst:j8:call0]
+\begin{lstlisting}[mathescape,caption=Async messages with futures,label=ch03:lst:j8:call0]
 final T$_1$ u$_1$ = e$_1$;
 . . . 
 final T$_n$ u$_n$ = e$_n$;
@@ -528,7 +528,7 @@ Future<V> v = e$_0$.send(
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[mathescape,caption=Async messages w/o futures,label=lst:j8:call1]
+\begin{lstlisting}[mathescape,caption=Async messages w/o futures,label=ch03:lst:j8:call1]
 final T$_1$ u$_1$ = e$_1$;
 . . . 
 final T$_n$ u$_n$ = e$_n$;
@@ -548,7 +548,7 @@ The main program to use ping and pong implementation is presented in Listing~\re
 
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[mathescape, caption=Ping as an Actor,label=lst:ping]
+\begin{lstlisting}[mathescape, caption=Ping as an Actor,label=ch03:lst:ping]
 public class Ping(IPong pong) implements IPing, Actor {
  public void ping(String msg) {
   pong.send( () $\to$ { pong.("ponged," + msg) } );
@@ -558,7 +558,7 @@ public class Ping(IPong pong) implements IPing, Actor {
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[mathescape, caption=Pong as an Actor,label=lst:pong]
+\begin{lstlisting}[mathescape, caption=Pong as an Actor,label=ch03:lst:pong]
 public class Pong implements IPong, Actor {
   public void pong(String msg) {
     sender().send(( ) $\to$ { ping.("pinged," + msg) } );
@@ -600,7 +600,7 @@ Moreover, the generation of the continuation of the process is an optimization t
 %  this.await($b$, $()\rightarrow \{S\}$)
 %  // S is the continuation
 % \end{lstlisting}
-\begin{lstlisting}[mathescape,caption=main in ABS API,label=lst:main:api]
+\begin{lstlisting}[mathescape,caption=main in ABS API,label=ch03:lst:main:api]
 IPong pong = new Pong();
 IPing ping = new Ping(pong);
 ping.send(
@@ -610,7 +610,7 @@ ping.send(
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[mathescape,caption=Java~8 await implementation,label=lst:j8:await]
+\begin{lstlisting}[mathescape,caption=Java~8 await implementation,label=ch03:lst:j8:await]
 void await(final Boolean guard, 
            final Runnable cont) {
   if (!guard) { 
@@ -778,7 +778,7 @@ namely, the address and the port that the actor server responds to.
 
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Remote ping actor main,label=lst:ping:remote]
+\begin{lstlisting}[caption=Remote ping actor main,label=ch03:lst:ping:remote]
 Properties p =  new Properties();
 p.put("host", "localhost");
 p.put("port", "7777");
@@ -794,7 +794,7 @@ ping.send(
 \end{minipage}
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
-\begin{lstlisting}[caption=Remote pong actor main,label=lst:pong:remote]
+\begin{lstlisting}[caption=Remote pong actor main,label=ch03:lst:pong:remote]
 Properties p = new Properties();
 p.put("host", "localhost");
 p.put("port", "8888");

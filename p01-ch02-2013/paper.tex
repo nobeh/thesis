@@ -198,7 +198,7 @@ Exceptions can be caught by \jtt{try-catch} blocks.
 
 \lstset{language=Creol,escapeinside={(*}{*)}} 
 % \vspace{-20pt}
-\begin{lstlisting}[float=h, label=lst:try:catch, caption=Using try-catch for processing future values]
+\begin{lstlisting}[float=h, label=ch02:lst:try:catch, caption=Using try-catch for processing future values]
 try {
 	x = f.get(e)
 	S_1
@@ -659,7 +659,7 @@ The right code snippet shows the one that uses messages with deadlines.
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
 % \vspace{-25pt}
-\begin{lstlisting}[label=lst:frh:polling, caption=With polling]
+\begin{lstlisting}[label=ch02:lst:frh:polling, caption=With polling]
 class DataProcessor begin
 	op process(d: Data) ==
 		var p := allocDataProcessor(d)
@@ -677,7 +677,7 @@ end
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
 % \vspace{-25pt}
-\begin{lstlisting}[label=lst:frh:deadlines, caption=With deadlines]
+\begin{lstlisting}[label=ch02:lst:frh:deadlines, caption=With deadlines]
 class DataProcessor begin
 	op process(d: Data) == 
 		var p := allocDataProcessor(d)
@@ -743,7 +743,7 @@ To model and implement this custom behavior, a custom scheduler is developed for
 \begin{center}
 \begin{minipage}[t]{0.48\textwidth}
 % \vspace{-30pt}
-\begin{lstlisting}[label=lst:frh:dm, caption=Data Processor class]
+\begin{lstlisting}[label=ch02:lst:frh:dm, caption=Data Processor class]
 class DataProcessor begin
 	var scheduler := new DataScheduler()
 	op process(d: Data) ==
@@ -754,7 +754,7 @@ end
 \hfill
 \begin{minipage}[t]{0.48\textwidth}
 % \vspace{-30pt}
-\begin{lstlisting}[label=lst:frh:sched, caption=Custom scheduler]
+\begin{lstlisting}[label=ch02:lst:frh:sched, caption=Custom scheduler]
 class DataScheduler extends DefaultSchedulingManager {
 	boolean isPrior(Process p1, Process p2) {
 		if (p1.getCustomer().equals("A")) {
@@ -777,12 +777,16 @@ Thus, all processes from customer \jtt{A} have priority over processes from othe
 We use Controller's logs for the period of February and March 2013 to examine the evaluation of Crisp approach.
 We define \emph{customer satisfaction} as a property that represents the effectiveness of futures with deadline.
 
-\begin{table}[h]
+\begin{table}[t]
+\centering
 % \begin{wraptable}{l}{0.25\textwidth}
 % \vspace{-15pt}
-\begin{tabular}{c c}\thickhline
-$s_1$ & $s_2$ \\ \thickhline
-$88.71\%$ & $94.57\%$ \\ \hline
+\begin{tabular}{c c}
+\toprule
+$s_1$ & $s_2$ \\ 
+\toprule
+$88.71\%$ & $94.57\%$ \\ 
+\bottomrule
 \end{tabular}
 \caption{Evaluation Results}
 \label{ch02:tbl:eval}

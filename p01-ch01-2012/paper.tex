@@ -5,7 +5,7 @@
 % 
 \label{ch:p01:ch01}
 % 
-\chapterauthor{Behrooz Nobakht, Frank S. de Boer, Mohammad Mahdi Jaghoori,  Rudolph Schlatte}
+\chapterauthor{Behrooz Nobakht, Frank S. de Boer, Mohammad Mahdi Jaghoori, Rudolf Schlatte}
 
 \section*{Abstract}
 % Active objects provide a natural means for programming distributed systems.
@@ -128,8 +128,7 @@ To explain extending Creol with priority specification and scheduling, we take a
 Each {caller} object is viewed as a client for the {callee} object who behaves as a server. 
 We define priorities at the level of language constructs like method invocation or definition rather than low-level concepts like processes.
 
-\begin{lstlisting}[float=t, label=lst:exres, caption=Exclusive Resource in Creol %, multicols=2
-]
+\begin{lstlisting}[float=t, label=ch01:lst:exres, caption=Exclusive Resource in Creol]
 interface Resource begin
 	(* \label{ch01:lst:priority_range} *)(*
 	%with User  \label{ch01:lst:with} 

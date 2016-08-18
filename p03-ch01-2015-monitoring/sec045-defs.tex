@@ -106,12 +106,12 @@ In our framework,
 We abstract from a specific implementation of the monitoring platform $P$ through an API in Listing~\ref{ch04:lst:platform}. 
 % 
 
-\lstset{language=java,aboveskip=-20pt,belowskip=-20pt}
+\lstset{language=java}
 \begin{figure}[h]
 % \begin{wrapfigure}{r}{0.5\textwidth}
 % \vspace{-15pt}
 \begin{center}
-\begin{lstlisting}[mathescape,caption=Platform API,label=lst:platform]
+\begin{lstlisting}[mathescape,caption=Platform API,label=ch04:lst:platform]
 interface Platform {
   void    allocate(Service s);
   void    deallocate(Service s);

@@ -388,7 +388,7 @@ The code is given in Listing \ref{ch05:lst:seq_obj}.
 
 
 \lstset{language=Java}
-\begin{lstlisting}[label=lst:seq_obj, caption=SequencedObject Annotation Declaration]
+\begin{lstlisting}[label=ch05:lst:seq_obj, caption=SequencedObject Annotation Declaration]
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface SequencedObject {
@@ -411,7 +411,7 @@ property declaring the sequence specification discussed in Section
 this annotation type.
 
 \lstset{language=Java}
-\begin{lstlisting}[label=lst:seq_method, caption=SequencedMethod Annotation Declaration]
+\begin{lstlisting}[label=ch05:lst:seq_method, caption=SequencedMethod Annotation Declaration]
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface SequencedMethod {
@@ -489,7 +489,7 @@ The JMSeq specifications used here are discussed in Section \ref{ch05:sec:spec}.
 The listing shows how to use them in a Java program.
 
 \lstset{language=Java}
-\begin{lstlisting}[label=lst:annotated_spec, caption=Sample annotated specification]
+\begin{lstlisting}[label=ch05:lst:annotated_spec, caption=Sample annotated specification]
 
 // Case 1
 @SequencedObject
@@ -536,7 +536,7 @@ totally ignored. We use the following annotation in Listing
 \ref{ch05:lst:case-1-exceptions} to express this situation.
 
 \lstset{language=Java}
-\begin{lstlisting}[label=lst:case-1-exceptions, caption=Exception
+\begin{lstlisting}[label=ch05:lst:case-1-exceptions, caption=Exception
 Specification for Case 1]
 // Case 1
 @SequencedObject
@@ -839,7 +839,7 @@ In terms of JMSeq sequenced specifications, each invocation of
 \ref{ch05:lst:apples}.
 
 \lstset{language=Java}
-\begin{lstlisting}[label=lst:apples, caption=Apples JMSeq Specification]
+\begin{lstlisting}[label=ch05:lst:apples, caption=Apples JMSeq Specification]
 @SequencedObject
 public class Apples {
 
@@ -875,7 +875,7 @@ the \smalltt{JUnit4Support} that is provided in the library. The code is
 presented in Listing \ref{ch05:lst:apples-junit}.
 
 \lstset{language=Java}
-\begin{lstlisting}[label=lst:apples-junit, caption=Apples JMSeq JUnit
+\begin{lstlisting}[label=ch05:lst:apples-junit, caption=Apples JMSeq JUnit
 Test Unit]
 public class ApplesDriver extends JUnit4Support {
 
@@ -987,7 +987,7 @@ The runtime environment stops as soon as an incorrect sequence of calls is detec
 
 %Fredhopper Controller exposes an interface to prepare data, submit the data and then receive/collect the data job results.
 \lstset{language=java}
-\begin{lstlisting}[label=lst:frh:datadispatcher, caption=Controller Data Dispatcher Interface API]
+\begin{lstlisting}[label=ch05:lst:frh:datadispatcher, caption=Controller Data Dispatcher Interface API]
 interface DataDispatcher {
    Data create(Object object);
    Future<?> dispatch(String dataId);
@@ -999,7 +999,7 @@ The relevant part of the API of the Fredhopper Controller is presented in Listin
 Customer applications use the interface to create a data object reference (using the \smalltt{create(Object)} method) and then use the created data reference to start a data job (using the overloaded \smalltt{dispatch} method, which has an optional \smalltt{Data} parameter).
 Note that the dispatch method allows for two different uses by the customer, for instance in Listing~\ref{ch05:lst:frh:c1} the data job to be executed performs only a rebuild of the customer's product catalog and as such does not need to have a data reference.
 \lstset{language=java}
-\begin{lstlisting}[label=lst:frh:c1, caption=A use case with no data requirement]
+\begin{lstlisting}[label=ch05:lst:frh:c1, caption=A use case with no data requirement]
 class CustomerApp {
    public void rebuildCatalog() {
       Future<?> result = 
@@ -1010,7 +1010,7 @@ class CustomerApp {
 \end{lstlisting}
 If the customer needs to update their catalog with new products, then first a data reference is created. This reference is used to initiate a data job, as described in Listing \ref{ch05:lst:frh:c2}.
 \lstset{language=java}
-\begin{lstlisting}[label=lst:frh:c2, caption=A use case with data requirement]
+\begin{lstlisting}[label=ch05:lst:frh:c2, caption=A use case with data requirement]
 class CustomerApp {
    public void updateCatalog(Catalog catalog) {
       Data data = dispatcher.create(catalog);
@@ -1027,7 +1027,7 @@ method calls.  The expected usage of the API of the two scenarios above is descr
 If the \smalltt{CustomerApp} does not behave as expected, the verifier detects an error.
 
 \lstset{language=java}
-\begin{lstlisting}[float=t,label=lst:frh:c3, caption=How to verify Fredhopper API usage]
+\begin{lstlisting}[float=t,label=ch05:lst:frh:c3, caption=How to verify Fredhopper API usage]
 @SequencedObject
 class CustomerAppDriver {
 
@@ -1062,7 +1062,7 @@ We use JavaMOP \cite{chen_rosu_jmop,chen_rosu_mop,MOP} for the same case study f
 Listing \ref{ch05:lst:frh:jmop} shows a JavaMOP script to describe the same verification goal.
 
 \lstset{language=[AspectJ]Java, morekeywords={suffix, event,ere, CFG, @fail, @match, __RESET}} 
-\begin{lstlisting}[label=lst:frh:jmop, caption=Fredhopper case study with JavaMOP]
+\begin{lstlisting}[label=ch05:lst:frh:jmop, caption=Fredhopper case study with JavaMOP]
 UpdateCatalog(Catalog catalog) {
    event create_data before(DataDispatcher d):
       call(* DataDispatcher.create(..)) && target(d) {}
@@ -1108,7 +1108,7 @@ In the code, we use a variable \smalltt{count} to control the number of times \s
 This example always passes the JMSeq verification with success. 
 For performance measurements, we study the ``correct'' use of the example while verification of wrong usages are also possible. 
 \lstset{language=Java}
-\begin{lstlisting}[label=lst:jmseq-iter, caption=Iterator usage with
+\begin{lstlisting}[label=ch05:lst:jmseq-iter, caption=Iterator usage with
 JMSeq Annotations]
    @SequencedMethod(
      value = "{call(* java..Vector.iterator())}$"
@@ -1323,7 +1323,7 @@ In Section \ref{ch05:sec:discuss-jmop}, we discussed how JMSeq contrasts with Ja
 % In Listing \ref{ch05:lst:sample_mop} we show an example of JavaMOP code with ERE
 % logic for the two specifications given in Figure \ref{ch05:fig:seq-spec}.
 
-% \lstset{language=[AspectJ]Java, morekeywords={suffix, event,ere, CFG, @fail, @match, __RESET}} \begin{lstlisting}[label=lst:sample_mop, caption=Sample JavaMOP Specification using CFG logic] // Case 1
+% \lstset{language=[AspectJ]Java, morekeywords={suffix, event,ere, CFG, @fail, @match, __RESET}} \begin{lstlisting}[label=ch05:lst:sample_mop, caption=Sample JavaMOP Specification using CFG logic] // Case 1
 % SampleCase1(Main m) {
 %  event method_m_a before(A a):
 %     call(* A.m_a(..)) && target(a) {}
