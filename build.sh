@@ -3,13 +3,13 @@
 # Commands
 CMD_LATEX="latex -interaction=batchmode -halt-on-error -shell-escape -enable-write18"
 CMD_PDFLATEX="pdflatex -interaction=batchmode -halt-on-error -shell-escape -enable-write18"
-CMD_BIB="bibtex"
+CMD_BIB="biber"
 
 # Cleans LaTeX files
 function clean {
    if [[ -f ".gitignore" ]]; then
       for f in $(cat .gitignore); do
-         [[ -f $f && $f != ".todo.md" ]] && rm $f
+         [[ -f $f && $f != ".todo.md" ]] && rm -rf "$f" && echo "Removed $f"
       done 
    fi
 }
