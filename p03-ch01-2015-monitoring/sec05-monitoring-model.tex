@@ -49,6 +49,7 @@ In the automata, we use a conditional statement to check the service characteris
 If the condition fails, $M_{\alpha_s}$ requests $P$ to \jtt{allocate} a new resource to $s$ and $M_{\beta_s}$ requests $P$ to \jtt{deallocate} a resource.
 In addition, $M_{\alpha_s}$ triggers a new task $\jtt{verify}_\alpha$ with deadline $t_G$.
 Intuitively, this means the service characteristic $\alpha(s,\tau,t_c)$ is verified to be within the expected thresholds after at most $t_G$ time.
+
 \begin{figure}[h]
 % \vspace{-15pt}
 \captionsetup[subfigure]{font=footnotesize}
@@ -99,8 +100,8 @@ Intuitively, this means the service characteristic $\alpha(s,\tau,t_c)$ is verif
 \end{tikzpicture}
 }
 % \vspace{-10pt}
-% \caption{{\scriptsize Task Automata for $\alpha(s,\tau,t_c)$ and $\beta(s,\tau)$}}
 % \vspace{-10pt}
+\caption{{\scriptsize Task Automata for $\alpha(s,\tau,t_c)$ and $\beta(s,\tau)$}}
 \end{figure}
 
 We use a separate task automaton for each service characteristic to verify the SLA of the service after $t_G$ time.
@@ -108,6 +109,7 @@ Respectively, $M^{\alpha}_{\jtt{V}}$ and $M^{\beta}_{\jtt{V}}$ execute tasks $\j
 $M^{\alpha}_{\jtt{V}}$ uses \bfjtt{await} to ensure the condition of the SLA.
 In addition, the task is controlled by the scheduler using a deadline that is specified as $t_G$ in the generated task $\jtt{verify}_\alpha(s,t_G)$ in $M_{\alpha_s}$. 
 If $t_G$ passes before the guard statement in \bfjtt{await} statement holds, it leads to a \emph{missed deadline}.
+
 \begin{figure}[h]
 % \vspace{-20pt}
 \captionsetup[subfigure]{font=scriptsize}
@@ -143,8 +145,8 @@ If $t_G$ passes before the guard statement in \bfjtt{await} statement holds, it 
 \end{tikzpicture}%
 }
 % \vspace{-10pt}
-% \caption{{\scriptsize Task automata to execute $\jtt{verify}_\alpha$ and $\jtt{verify}_\beta$}}
 % \vspace{-10pt}
+\caption{{\scriptsize Task automata to execute $\jtt{verify}_\alpha$ and $\jtt{verify}_\beta$}}
 \end{figure}
 
 Both $M_{\alpha_s}$ and $M_{\beta_s}$ are specific to one particular service $s$.
