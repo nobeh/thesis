@@ -7,11 +7,15 @@ CMD_BIB="biber"
 
 # Cleans LaTeX files
 function clean {
+   echo "Cleaning ... "
+   echo -n "      "
    if [[ -f ".gitignore" ]]; then
       for f in $(cat .gitignore); do
-         [[ -f $f && $f != ".todo.md" ]] && rm -rf "$f" && echo "Removed $f"
+         [[ -f $f && $f != ".todo.md" ]] && rm -rf "$f" && echo -n "$f "
       done 
    fi
+   echo ""
+   echo ""
 }
 
 # Build the LaTeX documents
