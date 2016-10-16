@@ -122,17 +122,12 @@ disabled as long as the guard is not true. Whenever the processor is free, an
 enabled process is {\em nondeterministically} selected for execution, i.e.,
 scheduling is left unspecified in standard Creol in favor of more abstract modeling.
 
-%\Mahdi{Do we want to talk about with clauses?}
-
 To explain extending Creol with priority specification and scheduling, we take a {\em client/server} perspective.
 Each {caller} object is viewed as a client for the {callee} object who behaves as a server. 
 We define priorities at the level of language constructs like method invocation or definition rather than low-level concepts like processes.
 
 \begin{lstlisting}[float=t, label=ch01:lst:exres, caption=Exclusive Resource in Creol]
-interface Resource begin
-	(* \label{ch01:lst:priority_range} *)(*
-	%with User  \label{ch01:lst:with} 
-	*)
+interface Resource begin (* \label{ch01:lst:priority_range} *)
 		op request()
 		op release()
 end
@@ -154,17 +149,15 @@ range} that is available to all clients. For instance, in Line
 \ref{ch01:lst:priority_range} of {\footnotesize\texttt{Resource}} in Listing
 \ref{ch01:lst:exres}, we can define a priority range: 
 
-\begin{lstlisting}[frame=none, numbers=none]
-priority range 0..9
-\end{lstlisting}
-
+\begin{quote}
+\lstinline{priority range 0..9}
+\end{quote}
 
 On the client side, method calls may be given priorities within the range specified in the server interface. For example, calling the \ftt{request} method of the \ftt{mutex} object: 
 
-\begin{lstlisting}[frame=none, numbers=none]
-mutex ! request() priority(7);
-\end{lstlisting}
-
+\begin{quote}
+\lstinline{mutex ! request() priority(7);}
+\end{quote}
 
 Scheduling \textit{only} on the basis of client-side priority requirements is too restrictive.
 For example, if there are many \ftt{request} messages with high priorities and a low priority \ftt{release}, the server might block as it would fail to schedule the \ftt{release}.
@@ -173,11 +166,10 @@ prioritize their methods.
 This involves a declaration of a priority range generally depending on the structure of the class. 
 In our example, assuming a range 0..2 added in Line \ref{ch01:lst:priority_class}, this requires changing the method signatures in the {\ftt{Exclusive\-Resource}} class: 
 
-\begin{lstlisting}[frame=none, numbers=none]
-op request() priority(2) == ...
-op release() priority(0) == ...
-\end{lstlisting}
-
+\begin{quote}
+\lstinline{op request() priority(2) == ...}\\
+\lstinline{op release() priority(0) == ...}
+\end{quote}
 
 This gives \ftt{release}  a higher priority over \ftt{request}, because by default, the smaller values indicate higher priorities.
 Furthermore, the server may also introduce priorities on certain 
@@ -185,10 +177,9 @@ characteristics of a method invocation such as the kind of ``release statement''
 being executed. 
 For example, a process waiting at Line \ref{ch01:lst:await_taken} could be given a higher priority over new requests by assigning a smaller value:
 
-\begin{lstlisting}[frame=none, numbers=none]
-await (*$\sim$*)taken priority(1);
-\end{lstlisting}
-
+\begin{quote}
+\lstinline{await ~taken priority(1);}
+\end{quote}
 
 The priority can be specified in general as an expression; we used here
 only constant values.
@@ -221,7 +212,7 @@ In this case, we have dynamic priorities.
 
 For example, in {\ftt{ExclusiveResource}}, we have two different levels of priorities, namely  the client-side and server-side priorities, which range over $P_1 = \{0, \ldots, 9\}$ and $P_2 = \{0, 1, 2\}$, respectively. 
 So, we define $\delta: P_1 \times P_2 \rightarrow P$ as:
-%
+
 \[
 \delta(p_1, p_2) = p_1 + p_2 \times |P_1|
 \]
