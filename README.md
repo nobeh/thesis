@@ -35,3 +35,10 @@ correct ordering of execution of methods in possibly interleaved threads through
 In addition, we design a large-scale monitoring system as a real-world 
 application; the monitoring system is built with ABS concurrent objects 
 and formal semantics that leverages schedulability analysis to verify correctness of the monitors.
+
+## LICENSE
+
+Licensed with GPL v3 from original work of Behrooz Nobakht \<behrooz.nobakht@gmail.com\>
+
+
+
